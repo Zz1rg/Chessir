@@ -9,6 +9,7 @@ import java.io.IOException;
 
 public class Piece {
 
+    public boolean isFirstMove = true;
     public int col, row;
     public int xPos, yPos;
 
@@ -19,7 +20,7 @@ public class Piece {
     BufferedImage sheet;
     {
         try {
-            sheet = ImageIO.read(ClassLoader.getSystemResourceAsStream("pieces.png"));
+            sheet = ImageIO.read(ClassLoader.getSystemResource("pieces.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -37,4 +38,23 @@ public class Piece {
     public void paint(Graphics2D g2d) {
         g2d.drawImage(sprite, xPos, yPos, null);
     }
+
+    public boolean isValidMovement(int col, int row) {
+        return true;
+    }
+
+    public boolean moveCollidesWithPiece(int col, int row) {
+        return false;
+    }
+
+    public void firstMoved() {
+        this.isFirstMove = false;
+    }
+
+    /*public void move(int col, int row) {
+        this.col = col;
+        this.row = row;
+        this.xPos = col * board.tileSize;
+        this.yPos = row * board.tileSize;
+    }*/
 }
