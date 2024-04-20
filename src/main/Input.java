@@ -9,9 +9,11 @@ import java.awt.event.MouseMotionListener;
 
 public class Input extends MouseAdapter {
     public Board board;
+
     public Input(Board board) {
         this.board = board;
     }
+
     @Override
     public void mousePressed(MouseEvent e) {
         int col = e.getX() / board.tileSize;
@@ -19,9 +21,14 @@ public class Input extends MouseAdapter {
 
         Piece piece = board.getPiece(col, row);
 
-        if (piece != null) {
-            board.selectedPiece = piece;
+        if (piece == null) {
+            return;
         }
+        if (piece.isWhite != board.isWhiteTurn()) {
+            return;
+        }
+
+        board.selectedPiece = piece;
     }
 
     @Override
@@ -33,6 +40,7 @@ public class Input extends MouseAdapter {
             Move move = new Move(board, board.selectedPiece, col, row);
             if (board.isValidMove(move)) {
                 board.makeMove(move);
+                board.swapTurn();
             } else {
                 board.selectedPiece.xPos = board.selectedPiece.col * board.tileSize;
                 board.selectedPiece.yPos = board.selectedPiece.row * board.tileSize;
