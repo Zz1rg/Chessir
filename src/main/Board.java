@@ -135,6 +135,9 @@ public class Board extends JPanel {
         if(move.piece.moveCollidesWithPiece(move.newCol, move.newRow)) {
             return false;
         }
+        if(move.newCol < 0 || move.newCol > 7 || move.newRow < 0 || move.newRow > 7) {
+            return false;
+        }
 
         return true;
     }
@@ -148,6 +151,15 @@ public class Board extends JPanel {
 
     public int getTileNum(int col, int row) {
         return row * rows + col;
+    }
+
+    public Piece findKing(boolean isWhite) {
+        for (Piece piece : pieceList) {
+            if (piece instanceof King && piece.isWhite == isWhite) {
+                return piece;
+            }
+        }
+        return null;
     }
 
     public void paintComponent(Graphics g) {
