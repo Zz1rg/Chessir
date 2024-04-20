@@ -19,6 +19,8 @@ public class Board extends JPanel {
 
     Input input = new Input(this);
 
+    public int enPassantTile = -1;
+
     public Board() {
         this.setPreferredSize(new Dimension(cols * tileSize, rows * tileSize));
 
@@ -65,20 +67,60 @@ public class Board extends JPanel {
     }
 
     public void makeMove(Move move) {
+        if (move.piece instanceof Pawn) {
+            movePawn(move);
+        } else {
+            move.piece.col = move.newCol;
+            move.piece.row = move.newRow;
+            move.piece.xPos = move.newCol * tileSize;
+            move.piece.yPos = move.newRow * tileSize;
+
+            if (move.piece.isFirstMove) {
+                move.piece.firstMoved();
+            }
+
+            capture(move.capturedPiece);
+        }
+    }
+
+    public void movePawn(Move move) {
+        //enPassant
+        int colorIndex = move.piece.isWhite ? 1 : -1;
+        int promotionRow = move.piece.isWhite ? 0 : 7;
+
+        if (getTileNum(move.newCol, move.newRow) == enPassantTile) {
+            move.capturedPiece = getPiece(move.newCol, move.newRow + colorIndex);
+        }
+        if (Math.abs(move.newRow - move.piece.row) == 2) {
+            enPassantTile = getTileNum(move.newCol, move.newRow + colorIndex);
+        } else {
+            enPassantTile = -1;
+        }
+
+        //Promotion
+        if (move.newRow == promotionRow) {
+            promotePawn(move.piece);
+        }
+
         move.piece.col = move.newCol;
         move.piece.row = move.newRow;
         move.piece.xPos = move.newCol * tileSize;
         move.piece.yPos = move.newRow * tileSize;
 
-        if(move.piece.isFirstMove) {
+        if (move.piece.isFirstMove) {
             move.piece.firstMoved();
         }
 
-        capture(move);
+        capture(move.capturedPiece);
     }
 
-    public void capture(Move move) {
-        pieceList.remove(move.capturedPiece);
+    public void promotePawn(Piece pawn) {
+        pieceList.remove(pawn);
+        pieceList.add(new Queen(this, pawn.col, pawn.row, pawn.isWhite));
+    }
+
+    public void capture(Piece piece) {
+        pieceList.remove(piece);
     }
 
     public boolean isValidMove(Move move) {
@@ -102,6 +144,10 @@ public class Board extends JPanel {
             return false;
         }
         return piece1.isWhite == piece2.isWhite;
+    }
+
+    public int getTileNum(int col, int row) {
+        return row * rows + col;
     }
 
     public void paintComponent(Graphics g) {
