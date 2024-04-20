@@ -1,5 +1,6 @@
 package main;
 
+import controller.GameController;
 import pieces.Piece;
 
 import java.awt.event.MouseAdapter;
@@ -9,9 +10,11 @@ import java.awt.event.MouseMotionListener;
 
 public class Input extends MouseAdapter {
     public Board board;
+    private GameController gameController;
 
     public Input(Board board) {
         this.board = board;
+        this.gameController = board.getGameController();
     }
 
     @Override
@@ -24,7 +27,7 @@ public class Input extends MouseAdapter {
         if (piece == null) {
             return;
         }
-        if (piece.isWhite != board.isWhiteTurn()) {
+        if (piece.isWhite != gameController.isWhiteTurn()) {
             return;
         }
 
@@ -40,7 +43,7 @@ public class Input extends MouseAdapter {
             Move move = new Move(board, board.selectedPiece, col, row);
             if (board.isValidMove(move)) {
                 board.makeMove(move);
-                board.swapTurn();
+                gameController.swapTurn();
             } else {
                 board.selectedPiece.xPos = board.selectedPiece.col * board.tileSize;
                 board.selectedPiece.yPos = board.selectedPiece.row * board.tileSize;

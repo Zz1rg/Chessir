@@ -1,10 +1,10 @@
 package main;
 
+import controller.GameController;
 import pieces.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class Board extends JPanel {
@@ -17,7 +17,9 @@ public class Board extends JPanel {
 
     public Piece selectedPiece;
 
-    private boolean isWhiteTurn = true;
+    // TODO: migrate game logic into GameController class ?
+    private final GameController gameController = new GameController();
+
     Input input = new Input(this);
 
     public Board() {
@@ -134,11 +136,7 @@ public class Board extends JPanel {
         }
     }
 
-    public void swapTurn() {
-        isWhiteTurn = !isWhiteTurn;
-    }
-
-    public boolean isWhiteTurn() {
-        return isWhiteTurn;
+    public GameController getGameController() {
+        return gameController;
     }
 }
