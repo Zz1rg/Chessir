@@ -102,7 +102,7 @@ public class Board extends JPanel {
 
         //Promotion
         if (move.newRow == promotionRow) {
-            promotePawn(move.piece);
+            promotePawn(move);
         }
 
         move.piece.col = move.newCol;
@@ -117,9 +117,9 @@ public class Board extends JPanel {
         capture(move.capturedPiece);
     }
 
-    public void promotePawn(Piece pawn) {
-        pieceList.remove(pawn);
-        pieceList.add(new Queen(this, pawn.col, pawn.row, pawn.isWhite));
+    public void promotePawn(Move move) {
+        pieceList.add(new Queen(this, move.newCol, move.newRow, move.piece.isWhite));
+        capture(move.piece);
     }
 
     public void capture(Piece piece) {
