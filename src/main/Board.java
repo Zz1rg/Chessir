@@ -17,6 +17,7 @@ public class Board extends JPanel {
 
     public Piece selectedPiece;
 
+    private boolean isWhiteTurn = true;
     Input input = new Input(this);
 
     public int enPassantTile = -1;
@@ -191,4 +192,11 @@ public class Board extends JPanel {
         }
     }
 
+    public void swapTurn() {
+        isWhiteTurn = !isWhiteTurn;
+    }
+
+    public boolean isWhiteTurn() {
+        return isWhiteTurn;
+    }
 }
