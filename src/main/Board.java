@@ -11,6 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 
 import java.util.ArrayList;
+import java.util.function.Function;
 
 public class Board extends GridPane {
 
@@ -34,80 +35,61 @@ public class Board extends GridPane {
         this.setPrefWidth(cols * tileSize);
 
         //set numbers of col and row
-        for (int i=0; i<cols; i++) {
+        for (int i = 0; i < cols; i++) {
             this.getColumnConstraints().add(new ColumnConstraints(tileSize));
         }
-        for (int i=0; i<rows; i++) {
+        for (int i = 0; i < rows; i++) {
             this.getRowConstraints().add(new RowConstraints(tileSize));
         }
 
-        this.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent e) {
-                int col = (int) (e.getX() / getBoard().tileSize);
-                int row = (int) (e.getY() / getBoard().tileSize);
+        this.setOnMousePressed(e -> {
+            int col = (int) (e.getX() / tileSize);
+            int row = (int) (e.getY() / tileSize);
+            Piece clickedPiece = getPiece(col, row);
 
-                Piece piece = getBoard().getPiece(col, row);
-
-                if (piece == null) {
-                    return;
-                }
-                if (piece.isWhite != gameController.isWhiteTurn()) {
-                    return;
-                }
-
-                getBoard().selectedPiece = piece;
-            }
-        });
-
-        this.setOnMouseReleased(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent e) {
-                int col = (int) (e.getX() / getBoard().tileSize);
-                int row = (int) (e.getY() / getBoard().tileSize);
-
-                if (getBoard().selectedPiece != null) {
-                    Move move = new Move(getBoard(), getBoard().selectedPiece, col, row);
-                    if (getBoard().isValidMove(move)) {
-                        getBoard().makeMove(move);
+            if (selectedPiece == null) {
+                selectPiece(clickedPiece);
+            } else {
+                if (clickedPiece == null) {
+                    Move move = new Move(this, selectedPiece, col, row);
+                    // TODO: move isValidMove(move) into makeMove(Move) ?
+                    if (isValidMove(move)) {
+                        makeMove(move);
+                        // TODO: Move swapTurn into makeMove(Move)
                         gameController.swapTurn();
-                    } else {
-                        getBoard().selectedPiece.xPos = getBoard().selectedPiece.col * getBoard().tileSize;
-                        getBoard().selectedPiece.yPos = getBoard().selectedPiece.row * getBoard().tileSize;
                     }
-                    getBoard().selectedPiece = null;
-                    getBoard().getChildren().clear();
-                    getBoard().paint();
+                    selectedPiece = null;
+                } else if (clickedPiece == selectedPiece) {
+                    selectedPiece = null;
+                } else {
+                    selectPiece(clickedPiece);
                 }
             }
-        });
-
-        this.setOnMouseDragged(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent e) {
-                if (getBoard().selectedPiece != null) {
-                    getBoard().selectedPiece.xPos = (int) (e.getX());
-                    getBoard().selectedPiece.yPos = (int) (e.getY());
-
-                    if (e.getY() / getBoard().tileSize >= 0 && e.getY() / getBoard().tileSize <= 8
-                            && e.getX() / getBoard().tileSize >= 0 && e.getX() / getBoard().tileSize <= 8) {
-                        getBoard().getChildren().clear();
-                        getBoard().paint();
-                    }
-                }
-            }
+            getChildren().clear();
+            paint();
         });
 
         addPieces();
         paint();
     }
 
+    // This function is only used in onMousePressed
+    private void selectPiece(Piece piece) {
+        if (piece == null) {
+            return;
+        }
+        if (piece.isWhite != gameController.isWhiteTurn()) {
+            return;
+        }
+        selectedPiece = piece;
+    }
+
     public void addPieces() {
-        for (int i=0; i<=7; i++) {
+        for (int i = 0; i <= 7; i++) {
             pieceList.add(new Pawn(this, i, 1, false));
         }
 
-        for (int i=0; i<=7; i++) {
+        for (int i = 0; i <= 7; i++) {
             pieceList.add(new Pawn(this, i, 6, true));
         }
 
@@ -196,21 +178,21 @@ public class Board extends GridPane {
     }
 
     public boolean isValidMove(Move move) {
-        if(sameTeam(move.piece, move.capturedPiece)) {
+        if (sameTeam(move.piece, move.capturedPiece)) {
             return false;
         }
 
-        if(!move.piece.isValidMovement(move.newCol, move.newRow)) {
+        if (!move.piece.isValidMovement(move.newCol, move.newRow)) {
             return false;
         }
 
-        if(move.piece.moveCollidesWithPiece(move.newCol, move.newRow)) {
+        if (move.piece.moveCollidesWithPiece(move.newCol, move.newRow)) {
             return false;
         }
-        if(move.newCol < 0 || move.newCol > 7 || move.newRow < 0 || move.newRow > 7) {
+        if (move.newCol < 0 || move.newCol > 7 || move.newRow < 0 || move.newRow > 7) {
             return false;
         }
-        if(checkScanner.isKingChecked(move)) {
+        if (checkScanner.isKingChecked(move)) {
             return false;
         }
 
@@ -242,19 +224,19 @@ public class Board extends GridPane {
 
         //paint board
         for (int r = 0; r < rows; r++) {
-            for (int c=0; c < cols; c++) {
+            for (int c = 0; c < cols; c++) {
                 //black tile
                 Pane blackPane = new Pane();
-                blackPane.setBackground(new Background(new BackgroundFill(Color.color(234.0/255, 191.0/255, 153.0/255), null, null)));
+                blackPane.setBackground(new Background(new BackgroundFill(Color.color(234.0 / 255, 191.0 / 255, 153.0 / 255), null, null)));
                 blackPane.setPrefHeight(tileSize);
                 blackPane.setPrefWidth(tileSize);
                 //white tile
                 Pane whitePane = new Pane();
-                whitePane.setBackground(new Background(new BackgroundFill(Color.color(178.0/255, 110.0/255, 55.0/255), null, null)));
+                whitePane.setBackground(new Background(new BackgroundFill(Color.color(178.0 / 255, 110.0 / 255, 55.0 / 255), null, null)));
                 whitePane.setPrefHeight(tileSize);
                 whitePane.setPrefWidth(tileSize);
                 //this.setColor((c+r)%2 == 0 ? new Color(234, 191, 153) : new Color(178, 110, 55));
-                if ((c+r)%2 == 0) {
+                if ((c + r) % 2 == 0) {
                     this.add(blackPane, c, r);
                 } else {
                     this.add(whitePane, c, r);
@@ -271,7 +253,7 @@ public class Board extends GridPane {
                         if (isValidMove(new Move(this, selectedPiece, c, r))) {
                             //available move tile
                             Pane greenPane = new Pane();
-                            greenPane.setBackground(new Background(new BackgroundFill(Color.color(0, 255.0/255, 0, 50.0/100), null, null)));
+                            greenPane.setBackground(new Background(new BackgroundFill(Color.color(0, 255.0 / 255, 0, 50.0 / 100), null, null)));
                             greenPane.setPrefHeight(tileSize);
                             greenPane.setPrefWidth(tileSize);
                             /*this.setColor(new Color(0, 255, 0, 100));
