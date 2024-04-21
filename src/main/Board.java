@@ -47,22 +47,27 @@ public class Board extends GridPane {
             int row = (int) (e.getY() / tileSize);
             Piece clickedPiece = getPiece(col, row);
 
+            // TODO: This looks too complicated, simplify it?
             if (selectedPiece == null) {
                 selectPiece(clickedPiece);
             } else {
-                if (clickedPiece == null) {
-                    Move move = new Move(this, selectedPiece, col, row);
-                    // TODO: move isValidMove(move) into makeMove(Move) ?
-                    if (isValidMove(move)) {
-                        makeMove(move);
-                        // TODO: Move swapTurn into makeMove(Move)
-                        gameController.swapTurn();
-                    }
-                    selectedPiece = null;
-                } else if (clickedPiece == selectedPiece) {
+                if (clickedPiece == selectedPiece) {
                     selectedPiece = null;
                 } else {
-                    selectPiece(clickedPiece);
+                    if (sameTeam(clickedPiece, selectedPiece)) {
+                        selectPiece(clickedPiece);
+                    } else {
+                        Move move = new Move(this, selectedPiece, col, row);
+                        // TODO: Move isValidMove(move) into makeMove(Move)?
+                        //       (Not important) Check clickedPiece != selectedPiece in isValidMove(Move)?
+                        if (isValidMove(move)) {
+                            // TODO: makeMove(Move) should also clear selectedPiece? a bit redundant but it probably should do that
+                            makeMove(move);
+                            // TODO: Move swapTurn into makeMove(Move)
+                            gameController.swapTurn();
+                        }
+                        selectedPiece = null;
+                    }
                 }
             }
             getChildren().clear();
@@ -181,11 +186,9 @@ public class Board extends GridPane {
         if (sameTeam(move.piece, move.capturedPiece)) {
             return false;
         }
-
         if (!move.piece.isValidMovement(move.newCol, move.newRow)) {
             return false;
         }
-
         if (move.piece.moveCollidesWithPiece(move.newCol, move.newRow)) {
             return false;
         }
