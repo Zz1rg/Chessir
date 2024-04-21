@@ -176,7 +176,6 @@ public class Board extends GridPane {
     }
 
     public boolean isValidMove(Move move) {
-<<<<<<< HEAD
         // TODO: change Board.sameTeam(Piece, Piece) to Piece.isSameTeam(Piece) ?
         if (sameTeam(move.piece, move.capturedPiece)) {
             return false;
@@ -184,26 +183,13 @@ public class Board extends GridPane {
         if (!move.piece.isValidMovement(move.newCol, move.newRow)) {
             return false;
         }
-=======
-        if (sameTeam(move.piece, move.capturedPiece)) {
-            return false;
-        }
-
-        if (!move.piece.isValidMovement(move.newCol, move.newRow)) {
-            return false;
-        }
-
->>>>>>> main
         if (move.piece.moveCollidesWithPiece(move.newCol, move.newRow)) {
             return false;
         }
         if (move.newCol < 0 || move.newCol > 7 || move.newRow < 0 || move.newRow > 7) {
             return false;
         }
-        if (checkScanner.isKingChecked(move)) {
-            return false;
-        }
-        return true;
+        return !checkScanner.isKingChecked(move);
     }
 
     public boolean sameTeam(Piece piece1, Piece piece2) {
@@ -232,28 +218,12 @@ public class Board extends GridPane {
         //paint board
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
-<<<<<<< HEAD
                 if ((c + r) % 2 == 0) {
                     Pane blackTile = new Pane();
                     blackTile.setBackground(new Background(new BackgroundFill(Color.color(234.0 / 255, 191.0 / 255, 153.0 / 255), null, null)));
                     blackTile.setPrefHeight(tileSize);
                     blackTile.setPrefWidth(tileSize);
                     this.add(blackTile, c, r);
-=======
-                //black tile
-                Pane blackPane = new Pane();
-                blackPane.setBackground(new Background(new BackgroundFill(Color.color(234.0 / 255, 191.0 / 255, 153.0 / 255), null, null)));
-                blackPane.setPrefHeight(tileSize);
-                blackPane.setPrefWidth(tileSize);
-                //white tile
-                Pane whitePane = new Pane();
-                whitePane.setBackground(new Background(new BackgroundFill(Color.color(178.0 / 255, 110.0 / 255, 55.0 / 255), null, null)));
-                whitePane.setPrefHeight(tileSize);
-                whitePane.setPrefWidth(tileSize);
-                //this.setColor((c+r)%2 == 0 ? new Color(234, 191, 153) : new Color(178, 110, 55));
-                if ((c + r) % 2 == 0) {
-                    this.add(blackPane, c, r);
->>>>>>> main
                 } else {
                     Pane whiteTile = new Pane();
                     whiteTile.setBackground(new Background(new BackgroundFill(Color.color(178.0 / 255, 110.0 / 255, 55.0 / 255), null, null)));
