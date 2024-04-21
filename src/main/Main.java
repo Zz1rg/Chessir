@@ -32,14 +32,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        /*final SwingNode swingNode = new SwingNode();
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                Board board = new Board();
-                swingNode.setContent(board);
-            }
-        });*/
         HBox root = new HBox();
         root.setPadding(new Insets(60, 0, 0, 0));
         root.setPrefHeight(800);
@@ -50,7 +42,6 @@ public class Main extends Application {
         Scene newScene = new Scene(root);
         stage.setScene(newScene);
         stage.setTitle("Chessir");
-        //RootPane.getInstance().getChildren().add(swingNode);
         stage.show();
     }
 }

@@ -30,15 +30,10 @@ public class Board extends GridPane {
     public int enPassantTile = -1;
 
     public Board() {
-        /*this.setPreferredSize(new Dimension(cols * tileSize, rows * tileSize));
-
-        this.addMouseListener(input);
-        this.addMouseMotionListener(input);*/
         this.setPrefHeight(rows * tileSize);
         this.setPrefWidth(cols * tileSize);
 
         //set numbers of col and row
-        //this.setGridLinesVisible(true);
         for (int i=0; i<cols; i++) {
             this.getColumnConstraints().add(new ColumnConstraints(tileSize));
         }
@@ -94,8 +89,11 @@ public class Board extends GridPane {
                     getBoard().selectedPiece.xPos = (int) (e.getX());
                     getBoard().selectedPiece.yPos = (int) (e.getY());
 
-                    getBoard().getChildren().clear();
-                    getBoard().paint();
+                    if (e.getY() / getBoard().tileSize >= 0 && e.getY() / getBoard().tileSize <= 8
+                            && e.getX() / getBoard().tileSize >= 0 && e.getX() / getBoard().tileSize <= 8) {
+                        getBoard().getChildren().clear();
+                        getBoard().paint();
+                    }
                 }
             }
         });
