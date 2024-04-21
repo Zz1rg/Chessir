@@ -1,5 +1,8 @@
 package pieces;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import main.Board;
 
 import javax.imageio.ImageIO;
@@ -7,7 +10,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-public class Piece {
+public class Piece extends HBox {
 
     public boolean isFirstMove = true;
     public int col, row;
@@ -33,11 +36,14 @@ public class Piece {
 
     public Piece (Board board) {
         this.board = board;
+        this.setPrefHeight(board.tileSize);
+        this.setPrefWidth(board.tileSize);
     }
 
-    public void paint(Graphics2D g2d) {
-        g2d.drawImage(sprite, xPos, yPos, null);
-    }
+    /*public void paint(Board board) {
+        //g2d.drawImage(sprite, xPos, yPos, null);
+        board.getChildren().add(this);
+    }*/
 
     public boolean isValidMovement(int col, int row) {
         return true;
@@ -50,11 +56,4 @@ public class Piece {
     public void firstMoved() {
         this.isFirstMove = false;
     }
-
-    /*public void move(int col, int row) {
-        this.col = col;
-        this.row = row;
-        this.xPos = col * board.tileSize;
-        this.yPos = row * board.tileSize;
-    }*/
 }

@@ -1,5 +1,7 @@
 package pieces;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import main.Board;
 
 import java.awt.image.BufferedImage;
@@ -15,7 +17,12 @@ public class Rook extends Piece {
         this.isWhite = isWhite;
         this.name = "Rook";
 
-        this.sprite = sheet.getSubimage(4 * sheetScale, isWhite ? 0:sheetScale, sheetScale, sheetScale).getScaledInstance(board.tileSize, board.tileSize, BufferedImage.SCALE_SMOOTH);
+        String imagePath = isWhite ? "white_rook.png" : "black_rook.png";
+        String classLoaderPath = ClassLoader.getSystemResource(imagePath).toString();
+        this.sprite = new Image(classLoaderPath, board.tileSize, board.tileSize, false, false);
+
+        ImageView imageView = new ImageView(sprite);
+        this.getChildren().add(imageView);
     }
 
     @Override

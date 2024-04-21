@@ -10,4 +10,8 @@ public class GameController {
     public boolean isWhiteTurn() {
         return isWhiteTurn;
     }
+
+    public void endGame() {
+        System.exit(0);
+    }
 }

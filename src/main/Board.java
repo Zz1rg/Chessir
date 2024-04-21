@@ -1,38 +1,107 @@
 package main;
 
 import controller.GameController;
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import pieces.*;
 
 import javax.swing.*;
 import java.awt.*;
+
 import java.util.ArrayList;
 
-public class Board extends JPanel {
+public class Board extends GridPane {
 
     public int tileSize = 85;
-    int cols = 8;
-    int rows = 8;
+    public int cols = 8;
+    public int rows = 8;
 
-    ArrayList<Piece> pieceList = new ArrayList<>();
+    public ArrayList<Piece> pieceList = new ArrayList<>();
 
     public Piece selectedPiece;
 
     // TODO: migrate game logic into GameController class ?
     private final GameController gameController = new GameController();
 
-    Input input = new Input(this);
-
-    CheckScanner checkScanner = new CheckScanner(this);
+    public CheckScanner checkScanner = new CheckScanner(this);
 
     public int enPassantTile = -1;
 
     public Board() {
-        this.setPreferredSize(new Dimension(cols * tileSize, rows * tileSize));
+        /*this.setPreferredSize(new Dimension(cols * tileSize, rows * tileSize));
 
         this.addMouseListener(input);
-        this.addMouseMotionListener(input);
+        this.addMouseMotionListener(input);*/
+        this.setPrefHeight(rows * tileSize);
+        this.setPrefWidth(cols * tileSize);
+
+        //set numbers of col and row
+        //this.setGridLinesVisible(true);
+        for (int i=0; i<cols; i++) {
+            this.getColumnConstraints().add(new ColumnConstraints(tileSize));
+        }
+        for (int i=0; i<rows; i++) {
+            this.getRowConstraints().add(new RowConstraints(tileSize));
+        }
+
+        this.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent e) {
+                int col = (int) (e.getX() / getBoard().tileSize);
+                int row = (int) (e.getY() / getBoard().tileSize);
+
+                Piece piece = getBoard().getPiece(col, row);
+
+                if (piece == null) {
+                    return;
+                }
+                if (piece.isWhite != gameController.isWhiteTurn()) {
+                    return;
+                }
+
+                getBoard().selectedPiece = piece;
+            }
+        });
+
+        this.setOnMouseReleased(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent e) {
+                int col = (int) (e.getX() / getBoard().tileSize);
+                int row = (int) (e.getY() / getBoard().tileSize);
+
+                if (getBoard().selectedPiece != null) {
+                    Move move = new Move(getBoard(), getBoard().selectedPiece, col, row);
+                    if (getBoard().isValidMove(move)) {
+                        getBoard().makeMove(move);
+                        gameController.swapTurn();
+                    } else {
+                        getBoard().selectedPiece.xPos = getBoard().selectedPiece.col * getBoard().tileSize;
+                        getBoard().selectedPiece.yPos = getBoard().selectedPiece.row * getBoard().tileSize;
+                    }
+                    getBoard().selectedPiece = null;
+                    getBoard().getChildren().clear();
+                    getBoard().paint();
+                }
+            }
+        });
+
+        this.setOnMouseDragged(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent e) {
+                if (getBoard().selectedPiece != null) {
+                    getBoard().selectedPiece.xPos = (int) (e.getX());
+                    getBoard().selectedPiece.yPos = (int) (e.getY());
+
+                    getBoard().getChildren().clear();
+                    getBoard().paint();
+                }
+            }
+        });
 
         addPieces();
+        paint();
     }
 
     public void addPieces() {
@@ -170,25 +239,47 @@ public class Board extends JPanel {
         return null;
     }
 
-    public void paintComponent(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g;
+    public void paint() {
         Piece king = findKing(gameController.isWhiteTurn());
 
         //paint board
         for (int r = 0; r < rows; r++) {
             for (int c=0; c < cols; c++) {
-                g2d.setColor((c+r)%2 == 0 ? new Color(234, 191, 153) : new Color(178, 110, 55));
-                g2d.fillRect(c * tileSize, r * tileSize, tileSize, tileSize);
+                //black tile
+                Pane blackPane = new Pane();
+                blackPane.setBackground(new Background(new BackgroundFill(Color.color(234.0/255, 191.0/255, 153.0/255), null, null)));
+                blackPane.setPrefHeight(tileSize);
+                blackPane.setPrefWidth(tileSize);
+                //white tile
+                Pane whitePane = new Pane();
+                whitePane.setBackground(new Background(new BackgroundFill(Color.color(178.0/255, 110.0/255, 55.0/255), null, null)));
+                whitePane.setPrefHeight(tileSize);
+                whitePane.setPrefWidth(tileSize);
+                //this.setColor((c+r)%2 == 0 ? new Color(234, 191, 153) : new Color(178, 110, 55));
+                if ((c+r)%2 == 0) {
+                    this.add(blackPane, c, r);
+                } else {
+                    this.add(whitePane, c, r);
+                }
+                //this.fillRect(c * tileSize, r * tileSize, tileSize, tileSize);
             }
         }
 
         //paint movable squares
-        for (int r = 0; r < rows; r++) {
-            for (int c=0; c < cols; c++) {
-                if (selectedPiece != null) {
-                    if(isValidMove(new Move(this, selectedPiece, c, r))) {
-                        g2d.setColor(new Color(0, 255, 0, 100));
-                        g2d.fillRect(c * tileSize, r * tileSize, tileSize, tileSize);
+        if (selectedPiece != null) {
+            for (int r = 0; r < rows; r++) {
+                for (int c = 0; c < cols; c++) {
+                    if (selectedPiece != null) {
+                        if (isValidMove(new Move(this, selectedPiece, c, r))) {
+                            //available move tile
+                            Pane greenPane = new Pane();
+                            greenPane.setBackground(new Background(new BackgroundFill(Color.color(0, 255.0/255, 0, 50.0/100), null, null)));
+                            greenPane.setPrefHeight(tileSize);
+                            greenPane.setPrefWidth(tileSize);
+                            /*this.setColor(new Color(0, 255, 0, 100));
+                            this.fillRect(c * tileSize, r * tileSize, tileSize, tileSize);*/
+                            this.add(greenPane, c, r);
+                        }
                     }
                 }
             }
@@ -196,17 +287,27 @@ public class Board extends JPanel {
 
         //paint checked king
         if (checkScanner.isKingChecked(new Move(this, king, king.col, king.row))) {
-            g2d.setColor(new Color(255, 0, 0, 121));
-            g2d.fillRect(king.col * tileSize, king.row * tileSize, tileSize, tileSize);
+            //checked king tile
+            Pane redPane = new Pane();
+            redPane.setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
+            redPane.setPrefHeight(tileSize);
+            redPane.setPrefWidth(tileSize);
+            //this.setColor(new Color(255, 0, 0, 121));
+            //this.fillRect(king.col * tileSize, king.row * tileSize, tileSize, tileSize);
+            this.add(redPane, king.col, king.row);
         }
 
         //paint pieces
         for (Piece piece : pieceList) {
-            piece.paint(g2d);
+            this.add(piece, piece.xPos / tileSize, piece.yPos / tileSize);
         }
     }
 
     public GameController getGameController() {
         return gameController;
+    }
+
+    public Board getBoard() {
+        return this;
     }
 }
