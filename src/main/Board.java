@@ -22,6 +22,8 @@ public class Board extends JPanel {
 
     Input input = new Input(this);
 
+    CheckScanner checkScanner = new CheckScanner(this);
+
     public int enPassantTile = -1;
 
     public Board() {
@@ -141,6 +143,9 @@ public class Board extends JPanel {
         if(move.newCol < 0 || move.newCol > 7 || move.newRow < 0 || move.newRow > 7) {
             return false;
         }
+        if(checkScanner.isKingChecked(move)) {
+            return false;
+        }
 
         return true;
     }
@@ -167,6 +172,7 @@ public class Board extends JPanel {
 
     public void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
+        Piece king = findKing(gameController.isWhiteTurn());
 
         //paint board
         for (int r = 0; r < rows; r++) {
@@ -186,6 +192,12 @@ public class Board extends JPanel {
                     }
                 }
             }
+        }
+
+        //paint checked king
+        if (checkScanner.isKingChecked(new Move(this, king, king.col, king.row))) {
+            g2d.setColor(new Color(255, 0, 0, 121));
+            g2d.fillRect(king.col * tileSize, king.row * tileSize, tileSize, tileSize);
         }
 
         //paint pieces
