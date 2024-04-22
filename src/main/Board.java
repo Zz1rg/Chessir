@@ -122,7 +122,11 @@ public class Board extends GridPane {
     }
 
     public void makeMove(Move move) {
-        if (!isValidMove(move)) return;
+        if (!isValidMove(move)) {
+            selectedPiece = null;
+            return;
+        }
+
         if (move.piece instanceof Pawn) {
             movePawn(move);
         } else if (move.piece instanceof King) {
@@ -139,8 +143,8 @@ public class Board extends GridPane {
 
             capture(move.capturedPiece);
             gameController.swapTurn();
-            selectedPiece = null;
         }
+        selectedPiece = null;
         gameController.checkForMate(gameController.isWhiteTurn(), root);
     }
 
@@ -170,7 +174,6 @@ public class Board extends GridPane {
 
         capture(move.capturedPiece);
         gameController.swapTurn();
-        selectedPiece = null;
     }
 
     public void movePawn(Move move) {
@@ -203,7 +206,6 @@ public class Board extends GridPane {
 
         capture(move.capturedPiece);
         gameController.swapTurn();
-        selectedPiece = null;
     }
 
     public void promotePawn(Move move) {
@@ -279,8 +281,14 @@ public class Board extends GridPane {
             }
         }
 
-        //paint movable squares
         if (selectedPiece != null) {
+            // paint selected piece
+            Pane bluePane = new Pane();
+            bluePane.setBackground(new Background(new BackgroundFill(Color.color(0, 0, 1), null, null)));
+            bluePane.setPrefHeight(tileSize);
+            bluePane.setPrefWidth(tileSize);
+            this.add(bluePane, selectedPiece.getCol(), selectedPiece.getRow());
+            //paint movable squares
             for (int r = 0; r < rows; r++) {
                 for (int c = 0; c < cols; c++) {
                     if (isValidMove(new Move(this, selectedPiece, c, r))) {
