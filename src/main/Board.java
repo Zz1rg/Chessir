@@ -31,7 +31,10 @@ public class Board extends GridPane {
 
     public int enPassantTile = -1;
 
-    public Board() {
+    public HBox root;
+
+    public Board(HBox root) {
+        this.root = root;
         this.setPrefHeight(rows * tileSize);
         this.setPrefWidth(cols * tileSize);
 

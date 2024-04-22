@@ -24,11 +24,6 @@ public class Piece extends HBox {
         this.setPrefWidth(board.tileSize);
     }
 
-    /*public void paint(Board board) {
-        //g2d.drawImage(sprite, xPos, yPos, null);
-        board.getChildren().add(this);
-    }*/
-
     public boolean isValidMovement(int col, int row) {
         return true;
     }

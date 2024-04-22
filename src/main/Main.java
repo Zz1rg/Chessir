@@ -38,7 +38,7 @@ public class Main extends Application {
         root.setPrefWidth(1000);
         root.setAlignment(Pos.CENTER);
         root.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
-        root.getChildren().add(new Board());
+        root.getChildren().add(new Board(root));
         Scene newScene = new Scene(root);
         stage.setScene(newScene);
         stage.setTitle("Chessir");
