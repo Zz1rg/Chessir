@@ -24,6 +24,7 @@ public class Board extends GridPane {
     public Piece selectedPiece;
 
     // TODO: migrate game logic into GameController class ?
+    //  (e.g. checkScanner, enPassantTile, makeMove, isValidMove, sameTeam, getPiece, findKing, capture, getTileNum, paint)
     private final GameController gameController = new GameController();
 
     public CheckScanner checkScanner = new CheckScanner(this);
@@ -47,7 +48,7 @@ public class Board extends GridPane {
             int row = (int) (e.getY() / tileSize);
             Piece clickedPiece = getPiece(col, row);
 
-            // TODO: This looks too complicated, simplify it?
+            // TODO: This looks too complicated, simplify it? ----IT's FINE
             if (selectedPiece == null) {
                 selectPiece(clickedPiece);
             } else {
@@ -58,15 +59,11 @@ public class Board extends GridPane {
                         selectPiece(clickedPiece);
                     } else {
                         Move move = new Move(this, selectedPiece, col, row);
-                        // TODO: Move isValidMove(move) into makeMove(Move)?
-                        //       (Not important) Check clickedPiece != selectedPiece in isValidMove(Move)?
-                        if (isValidMove(move)) {
-                            // TODO: makeMove(Move) should also clear selectedPiece? a bit redundant but it probably should do that
-                            makeMove(move);
-                            // TODO: Move swapTurn into makeMove(Move)
-                            gameController.swapTurn();
-                        }
-                        selectedPiece = null;
+                        makeMove(move);
+                        // TODO: Move isValidMove(move) into makeMove(Move)? ----DONE
+                        // (Not important) Check clickedPiece != selectedPiece in isValidMove(Move)? ----Not needed
+                        // TODO: makeMove(Move) should also clear selectedPiece? a bit redundant but it probably should do that ----DONE
+                        // TODO: Move swapTurn into makeMove(Move) ----DONE
                     }
                 }
             }
@@ -126,19 +123,23 @@ public class Board extends GridPane {
     }
 
     public void makeMove(Move move) {
-        if (move.piece instanceof Pawn) {
-            movePawn(move);
-        } else {
-            move.piece.col = move.newCol;
-            move.piece.row = move.newRow;
-            move.piece.xPos = move.newCol * tileSize;
-            move.piece.yPos = move.newRow * tileSize;
+        if (isValidMove(move)) {
+            if (move.piece instanceof Pawn) {
+                movePawn(move);
+            } else {
+                move.piece.col = move.newCol;
+                move.piece.row = move.newRow;
+                move.piece.xPos = move.newCol * tileSize;
+                move.piece.yPos = move.newRow * tileSize;
 
-            if (move.piece.isFirstMove) {
-                move.piece.firstMoved();
+                if (move.piece.isFirstMove) {
+                    move.piece.firstMoved();
+                }
+
+                capture(move.capturedPiece);
+                gameController.swapTurn();
+                selectedPiece = null;
             }
-
-            capture(move.capturedPiece);
         }
     }
 
@@ -171,6 +172,8 @@ public class Board extends GridPane {
         }
 
         capture(move.capturedPiece);
+        gameController.swapTurn();
+        selectedPiece = null;
     }
 
     public void promotePawn(Move move) {
