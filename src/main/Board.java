@@ -129,6 +129,8 @@ public class Board extends GridPane {
         if (isValidMove(move)) {
             if (move.piece instanceof Pawn) {
                 movePawn(move);
+            } else if (move.piece instanceof King) {
+                moveKing(move);
             } else {
                 move.piece.col = move.newCol;
                 move.piece.row = move.newRow;
@@ -144,6 +146,35 @@ public class Board extends GridPane {
                 selectedPiece = null;
             }
         }
+    }
+
+    private void moveKing(Move move) {
+        //castling
+        if (Math.abs(move.newCol - move.piece.col) == 2) {
+            Piece rook;
+            if (move.piece.col < move.newCol) {
+                rook = getPiece(7, move.piece.row);
+                rook.setCol(5);
+            } else {
+                rook = getPiece(0, move.piece.row);
+                rook.setCol(3);
+            }
+            rook.setFirstMove(false);
+            rook.setxPos(rook.getCol() * tileSize);
+        }
+
+        move.piece.col = move.newCol;
+        move.piece.row = move.newRow;
+        move.piece.xPos = move.newCol * tileSize;
+        move.piece.yPos = move.newRow * tileSize;
+
+        if (move.piece.isFirstMove) {
+            move.piece.firstMoved();
+        }
+
+        capture(move.capturedPiece);
+        gameController.swapTurn();
+        selectedPiece = null;
     }
 
     public void movePawn(Move move) {

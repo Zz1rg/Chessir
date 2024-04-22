@@ -72,6 +72,10 @@ public class Piece extends HBox {
         return isFirstMove;
     }
 
+    public void setFirstMove(boolean firstMove) {
+        isFirstMove = firstMove;
+    }
+
     public boolean isWhite() {
         return isWhite;
     }
