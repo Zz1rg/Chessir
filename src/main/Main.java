@@ -1,19 +1,14 @@
 package main;
 
 import javafx.application.Application;
-import javafx.embed.swing.SwingNode;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-
-import javax.swing.*;
-import java.awt.*;
 
 public class Main extends Application {
     public static void main(String[] args) {

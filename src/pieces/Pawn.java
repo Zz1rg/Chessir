@@ -3,16 +3,18 @@ package pieces;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import main.Board;
+import util.Coordinate;
+import util.MoveType;
 
-import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class Pawn extends Piece {
     public Pawn(Board board, int col, int row, boolean isWhite) {
         super(board);
         this.col = col;
         this.row = row;
-        this.xPos = col* board.tileSize;
-        this.yPos = row* board.tileSize;
+        this.xPos = col * board.tileSize;
+        this.yPos = row * board.tileSize;
 
         this.isWhite = isWhite;
         this.name = "Pawn";
@@ -60,5 +62,20 @@ public class Pawn extends Piece {
         }
 
         return false;
+    }
+
+    @Override
+    public boolean canMove() {
+        ArrayList<Coordinate> possibleRelativeCoordinates = new ArrayList<Coordinate>();
+        // Use PAWN_FIRST_MOVE, so it'll always check everything
+        if (isWhite()) {
+            possibleRelativeCoordinates.addAll(MoveType.WHITE_PAWN_ATTACK.getRelativeCoordinates());
+            possibleRelativeCoordinates.addAll(MoveType.WHITE_PAWN_FIRST_MOVE.getRelativeCoordinates());
+        } else {
+            possibleRelativeCoordinates.addAll(MoveType.BLACK_PAWN_ATTACK.getRelativeCoordinates());
+            possibleRelativeCoordinates.addAll(MoveType.BLACK_PAWN_FIRST_MOVE.getRelativeCoordinates());
+        }
+
+        return checkMovesFrom(possibleRelativeCoordinates);
     }
 }

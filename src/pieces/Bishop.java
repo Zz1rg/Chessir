@@ -3,16 +3,15 @@ package pieces;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import main.Board;
-
-import java.awt.image.BufferedImage;
+import util.MoveType;
 
 public class Bishop extends Piece {
     public Bishop(Board board, int col, int row, boolean isWhite) {
         super(board);
         this.col = col;
         this.row = row;
-        this.xPos = col* board.tileSize;
-        this.yPos = row* board.tileSize;
+        this.xPos = col * board.tileSize;
+        this.yPos = row * board.tileSize;
 
         this.isWhite = isWhite;
         this.name = "Bishop";
@@ -33,32 +32,32 @@ public class Bishop extends Piece {
     @Override
     public boolean moveCollidesWithPiece(int col, int row) {
         //up left
-        if(this.col > col && this.row > row) {
-            for (int c=this.col-1, r=this.row-1; c>col; c--, r--) {
+        if (this.col > col && this.row > row) {
+            for (int c = this.col - 1, r = this.row - 1; c > col; c--, r--) {
                 if (board.getPiece(c, r) != null) {
                     return true;
                 }
             }
         }
         //up right
-        if(this.col < col && this.row > row) {
-            for (int c=this.col+1, r=this.row-1; c<col; c++, r--) {
+        if (this.col < col && this.row > row) {
+            for (int c = this.col + 1, r = this.row - 1; c < col; c++, r--) {
                 if (board.getPiece(c, r) != null) {
                     return true;
                 }
             }
         }
         //down left
-        if(this.col > col && this.row < row) {
-            for (int c=this.col-1, r=this.row+1; c>col; c--, r++) {
+        if (this.col > col && this.row < row) {
+            for (int c = this.col - 1, r = this.row + 1; c > col; c--, r++) {
                 if (board.getPiece(c, r) != null) {
                     return true;
                 }
             }
         }
         //down right
-        if(this.col < col && this.row < row) {
-            for (int c=this.col+1, r=this.row+1; c<col; c++, r++) {
+        if (this.col < col && this.row < row) {
+            for (int c = this.col + 1, r = this.row + 1; c < col; c++, r++) {
                 if (board.getPiece(c, r) != null) {
                     return true;
                 }
@@ -66,5 +65,10 @@ public class Bishop extends Piece {
         }
 
         return false;
+    }
+
+    @Override
+    public boolean canMove() {
+        return checkMovesFrom(MoveType.DIAGONAL.getRelativeCoordinates());
     }
 }

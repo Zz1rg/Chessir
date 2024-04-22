@@ -1,17 +1,11 @@
 package main;
 
 import controller.GameController;
-import javafx.event.EventHandler;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import pieces.*;
 
-import javax.swing.*;
-import java.awt.*;
-
 import java.util.ArrayList;
-import java.util.function.Function;
 
 public class Board extends GridPane {
 
@@ -25,7 +19,7 @@ public class Board extends GridPane {
 
     // TODO: migrate game logic into GameController class ?
     //  (e.g. checkScanner, enPassantTile, makeMove, isValidMove, sameTeam, getPiece, findKing, capture, getTileNum, paint)
-    private final GameController gameController = new GameController();
+    private final GameController gameController = new GameController(this);
 
     public CheckScanner checkScanner = new CheckScanner(this);
 
@@ -128,26 +122,26 @@ public class Board extends GridPane {
     }
 
     public void makeMove(Move move) {
-        if (isValidMove(move)) {
-            if (move.piece instanceof Pawn) {
-                movePawn(move);
-            } else if (move.piece instanceof King) {
-                moveKing(move);
-            } else {
-                move.piece.col = move.newCol;
-                move.piece.row = move.newRow;
-                move.piece.xPos = move.newCol * tileSize;
-                move.piece.yPos = move.newRow * tileSize;
+        if (!isValidMove(move)) return;
+        if (move.piece instanceof Pawn) {
+            movePawn(move);
+        } else if (move.piece instanceof King) {
+            moveKing(move);
+        } else {
+            move.piece.col = move.newCol;
+            move.piece.row = move.newRow;
+            move.piece.xPos = move.newCol * tileSize;
+            move.piece.yPos = move.newRow * tileSize;
 
-                if (move.piece.isFirstMove) {
-                    move.piece.firstMoved();
-                }
-
-                capture(move.capturedPiece);
-                gameController.swapTurn();
-                selectedPiece = null;
+            if (move.piece.isFirstMove()) {
+                move.piece.firstMoved();
             }
+
+            capture(move.capturedPiece);
+            gameController.swapTurn();
+            selectedPiece = null;
         }
+        gameController.checkForMate(gameController.isWhiteTurn(), root);
     }
 
     private void moveKing(Move move) {
@@ -262,8 +256,6 @@ public class Board extends GridPane {
     }
 
     public void paint() {
-        Piece king = findKing(gameController.isWhiteTurn());
-
         //paint board
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
@@ -305,6 +297,7 @@ public class Board extends GridPane {
             }
         }
 
+        Piece king = findKing(gameController.isWhiteTurn());
         //paint checked king
         if (checkScanner.isKingChecked(new Move(this, king, king.col, king.row))) {
             //checked king tile

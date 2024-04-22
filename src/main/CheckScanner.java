@@ -22,10 +22,10 @@ public class CheckScanner {
             kingRow = move.newRow;
         }
 
-        return hitByRook   (move.newCol, move.newRow, king, kingCol, kingRow, 0, 1) || //up
-                hitByRook  (move.newCol, move.newRow, king, kingCol, kingRow, 1, 0) || //right
-                hitByRook  (move.newCol, move.newRow, king, kingCol, kingRow, 0, -1) || //down
-                hitByRook  (move.newCol, move.newRow, king, kingCol, kingRow, -1, 0) || //left
+        return hitByRook(move.newCol, move.newRow, king, kingCol, kingRow, 0, 1) || //up
+                hitByRook(move.newCol, move.newRow, king, kingCol, kingRow, 1, 0) || //right
+                hitByRook(move.newCol, move.newRow, king, kingCol, kingRow, 0, -1) || //down
+                hitByRook(move.newCol, move.newRow, king, kingCol, kingRow, -1, 0) || //left
 
                 hitByBishop(move.newCol, move.newRow, king, kingCol, kingRow, -1, -1) || //up left
                 hitByBishop(move.newCol, move.newRow, king, kingCol, kingRow, 1, -1) || //up right
@@ -33,12 +33,12 @@ public class CheckScanner {
                 hitByBishop(move.newCol, move.newRow, king, kingCol, kingRow, -1, 1) || //down left
 
                 hitByKnight(move.newCol, move.newRow, king, kingCol, kingRow) ||
-                hitByKing  (king, kingCol, kingRow) ||
-                hitByPawn  (move.newCol, move.newRow, king, kingCol, kingRow);
+                hitByKing(king, kingCol, kingRow) ||
+                hitByPawn(move.newCol, move.newRow, king, kingCol, kingRow);
     }
 
     private boolean hitByRook(int col, int row, Piece king, int kingCol, int kingRow, int colVal, int rowVal) {
-        for (int i=1; i<8; i++) {
+        for (int i = 1; i < 8; i++) {
             if (kingCol + (i * colVal) == col && kingRow + (i * rowVal) == row) {
                 break;
             }
@@ -54,7 +54,7 @@ public class CheckScanner {
     }
 
     private boolean hitByBishop(int col, int row, Piece king, int kingCol, int kingRow, int colVal, int rowVal) {
-        for (int i=1; i<8; i++) {
+        for (int i = 1; i < 8; i++) {
             if (kingCol - (i * colVal) == col && kingRow - (i * rowVal) == row) {
                 break;
             }
