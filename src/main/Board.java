@@ -255,17 +255,15 @@ public class Board extends GridPane {
         if (selectedPiece != null) {
             for (int r = 0; r < rows; r++) {
                 for (int c = 0; c < cols; c++) {
-                    if (selectedPiece != null) {
-                        if (isValidMove(new Move(this, selectedPiece, c, r))) {
-                            //available move tile
-                            Pane greenPane = new Pane();
-                            greenPane.setBackground(new Background(new BackgroundFill(Color.color(0, 255.0 / 255, 0, 50.0 / 100), null, null)));
-                            greenPane.setPrefHeight(tileSize);
-                            greenPane.setPrefWidth(tileSize);
-                            /*this.setColor(new Color(0, 255, 0, 100));
-                            this.fillRect(c * tileSize, r * tileSize, tileSize, tileSize);*/
-                            this.add(greenPane, c, r);
-                        }
+                    if (isValidMove(new Move(this, selectedPiece, c, r))) {
+                        //available move tile
+                        Pane greenPane = new Pane();
+                        greenPane.setBackground(new Background(new BackgroundFill(Color.color(0, 255.0 / 255, 0, 50.0 / 100), null, null)));
+                        greenPane.setPrefHeight(tileSize);
+                        greenPane.setPrefWidth(tileSize);
+                        /*this.setColor(new Color(0, 255, 0, 100));
+                           this.fillRect(c * tileSize, r * tileSize, tileSize, tileSize);*/
+                        this.add(greenPane, c, r);
                     }
                 }
             }
