@@ -37,6 +37,8 @@ public class Board extends GridPane {
         this.root = root;
         this.setPrefHeight(rows * tileSize);
         this.setPrefWidth(cols * tileSize);
+        this.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(6))));
+        this.setGridLinesVisible(true);
 
         //set numbers of col and row
         for (int i = 0; i < cols; i++) {

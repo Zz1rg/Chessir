@@ -33,11 +33,11 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         HBox root = new HBox();
-        root.setPadding(new Insets(60, 0, 0, 0));
+        root.setPadding(new Insets(60, 0, 60, 0));
         root.setPrefHeight(800);
         root.setPrefWidth(1000);
         root.setAlignment(Pos.CENTER);
-        root.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
+        root.setBackground(new Background(new BackgroundFill(Color.GRAY, null, null)));
         root.getChildren().add(new Board(root));
         Scene newScene = new Scene(root);
         stage.setScene(newScene);
