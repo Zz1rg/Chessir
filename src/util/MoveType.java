@@ -11,6 +11,10 @@ public enum MoveType {
         add(new CoordinateRC(-1, 0));
         add(new CoordinateRC(1, 0));
     }}),
+    CROSS(new ArrayList<Coordinate>() {{
+        addAll(MoveType.HORIZONTAL.getRelativeCoordinates());
+        addAll(MoveType.VERTICAL.getRelativeCoordinates());
+    }}),
     DIAGONAL(new ArrayList<Coordinate>() {{
         add(new CoordinateRC(-1, -1));
         add(new CoordinateRC(-1, 1));
@@ -18,8 +22,7 @@ public enum MoveType {
         add(new CoordinateRC(1, 1));
     }}),
     KING(new ArrayList<Coordinate>() {{
-        addAll(MoveType.HORIZONTAL.getRelativeCoordinates());
-        addAll(MoveType.VERTICAL.getRelativeCoordinates());
+        addAll(MoveType.CROSS.getRelativeCoordinates());
         addAll(MoveType.DIAGONAL.getRelativeCoordinates());
     }}),
     KNIGHT(new ArrayList<Coordinate>() {{

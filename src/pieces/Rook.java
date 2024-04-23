@@ -69,6 +69,6 @@ public class Rook extends Piece {
 
     @Override
     public boolean canMove() {
-        return checkMovesFrom(MoveType.HORIZONTAL.getRelativeCoordinates());
+        return checkMovesFrom(MoveType.CROSS.getRelativeCoordinates());
     }
 }
