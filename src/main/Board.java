@@ -110,6 +110,11 @@ public class Board extends GridPane {
         pieceList.add(new Bishop(this, 5, 7, true));
         pieceList.add(new Queen(this, 3, 0, false));
         pieceList.add(new Queen(this, 3, 7, true));
+        /*
+        pieceList.add(new Queen(this, 1, 2, true));
+        pieceList.add(new Queen(this, 0, 1, true));
+        pieceList.add(new King(this, 7, 7, true));
+        pieceList.add(new King(this, 7, 0, false));*/
     }
 
     public Piece getPiece(int col, int row) {

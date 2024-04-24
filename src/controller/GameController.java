@@ -33,6 +33,18 @@ public class GameController {
         Piece king = board.findKing(isWhite);
         //Checkmate
         if (board.checkScanner.isKingChecked(new Move(board, king, king.getCol(), king.getRow()))) {
+            for (Piece piece : board.pieceList) {
+                if (piece.isWhite == isWhite) {
+                    for (int r = 0; r < 8; r++) {
+                        for (int c = 0; c < 8; c++) {
+                            if (board.isValidMove(new Move(board, piece, c, r))) {
+                                System.out.println("C Not checkmate " + piece.name + " " + c + " " + r);
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
             System.out.println("Checkmate");
             Text checkMateText = new Text("Checkmate!");
             root.getChildren().clear();
@@ -40,6 +52,18 @@ public class GameController {
         }
         //Stalemate
         else {
+            for (Piece piece : board.pieceList) {
+                if (piece.isWhite == isWhite) {
+                    for (int r = 0; r < 8; r++) {
+                        for (int c = 0; c < 8; c++) {
+                            if (board.isValidMove(new Move(board, piece, c, r))) {
+                                System.out.println("S Not checkmate " + piece.name + " " + c + " " + r);
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
             System.out.println("Stalemate");
             Text staleMateText = new Text("Stalemate!");
             root.getChildren().clear();

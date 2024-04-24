@@ -17,7 +17,7 @@ public class CheckScanner {
         int kingCol = king.col;
         int kingRow = king.row;
 
-        if (board.selectedPiece != null && board.selectedPiece instanceof King) {
+        if (board.selectedPiece != null && board.selectedPiece instanceof King || move.piece instanceof King) {
             kingCol = move.newCol;
             kingRow = move.newRow;
         }
@@ -43,7 +43,7 @@ public class CheckScanner {
                 break;
             }
             Piece piece = board.getPiece(kingCol + (i * colVal), kingRow + (i * rowVal));
-            if (piece != null && piece != board.selectedPiece) {
+            if (piece != null && piece != board.selectedPiece && piece != king) {
                 if (!board.sameTeam(piece, king) && (piece instanceof Rook || piece instanceof Queen)) {
                     return true;
                 }
@@ -59,7 +59,7 @@ public class CheckScanner {
                 break;
             }
             Piece piece = board.getPiece(kingCol - (i * colVal), kingRow - (i * rowVal));
-            if (piece != null && piece != board.selectedPiece) {
+            if (piece != null && piece != board.selectedPiece && piece != king) {
                 if (!board.sameTeam(piece, king) && (piece instanceof Bishop || piece instanceof Queen)) {
                     return true;
                 }
