@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import main.Board;
 import main.Move;
@@ -27,7 +28,7 @@ public class GameController {
     }
 
     // Called everytime after making a move
-    public void checkForMate(Boolean isWhite, HBox root) {
+    public void checkForMate(Boolean isWhite, Pane root) {
         if (currentPlayerCanMove()) return;
 
         Piece king = board.findKing(isWhite);

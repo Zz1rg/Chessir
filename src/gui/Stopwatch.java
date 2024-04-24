@@ -8,24 +8,22 @@ import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 
-// Make Stopwatch extend Label or the class we want Stopwatch to be ?
-public class Stopwatch {
+public class Stopwatch extends Label {
 
-    private final Label label = new Label();
     private final Timeline timeline = new Timeline();
     private int second;
 
     public Stopwatch(int second) {
         this.second = second;
-        label.setText(Integer.toString(second));
-        label.setTextFill(Color.BLACK);
-        label.setFont(Font.font(12));
-        label.setTextAlignment(TextAlignment.CENTER);
+        setText(Integer.toString(second));
+        setTextFill(Color.BLACK);
+        setFont(Font.font(12));
+        setTextAlignment(TextAlignment.CENTER);
         timeline.getKeyFrames().add(
                 new KeyFrame(
                         Duration.seconds(0),
                         actionEvent -> {
-                            label.setText(Integer.toString(this.second));
+                            setText(Integer.toString(this.second));
                         }
                 )
         );
@@ -34,7 +32,7 @@ public class Stopwatch {
                         Duration.seconds(1),
                         actionEvent -> {
                             this.second--;
-                            label.setText(Integer.toString(this.second));
+                            setText(Integer.toString(this.second));
                         }
                 )
         );
@@ -42,10 +40,6 @@ public class Stopwatch {
 
     public Stopwatch() {
         this(0);
-    }
-
-    public Label getLabel() {
-        return label;
     }
 
     public void startTimer(int countdownSec) {
