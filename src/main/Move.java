@@ -1,6 +1,7 @@
 package main;
 
 import pieces.Piece;
+import util.Coordinate;
 
 public class Move {
     public int oldCol;
@@ -18,6 +19,10 @@ public class Move {
         this.newCol = newCol;
         this.newRow = newRow;
         this.capturedPiece = board.getPiece(newCol, newRow);
+    }
+
+    public Move(Board board, Piece piece, Coordinate newCoordinate) {
+        this(board, piece, newCoordinate.getCol(), newCoordinate.getRow());
     }
 
     public int getOldCol() {

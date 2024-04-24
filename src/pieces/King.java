@@ -4,16 +4,15 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import main.Board;
 import main.Move;
-
-import java.awt.image.BufferedImage;
+import util.MoveType;
 
 public class King extends Piece {
     public King(Board board, int col, int row, boolean isWhite) {
         super(board);
         this.col = col;
         this.row = row;
-        this.xPos = col* board.tileSize;
-        this.yPos = row* board.tileSize;
+        this.xPos = col * board.tileSize;
+        this.yPos = row * board.tileSize;
 
         this.isWhite = isWhite;
         this.name = "King";
@@ -29,6 +28,11 @@ public class King extends Piece {
     @Override
     public boolean isValidMovement(int col, int row) {
         return Math.abs(this.col - col) <= 1 && Math.abs(this.row - row) <= 1 || canCastle(col, row);
+    }
+
+    @Override
+    public boolean canMove() {
+        return checkMovesFrom(MoveType.KING.getRelativeCoordinates());
     }
 
     private boolean canCastle(int col, int row) {

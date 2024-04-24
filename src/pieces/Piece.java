@@ -3,8 +3,13 @@ package pieces;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import main.Board;
+import main.Move;
+import util.Coordinate;
+import util.CoordinateRC;
 
-public class Piece extends HBox {
+import java.util.ArrayList;
+
+public abstract class Piece extends HBox {
 
     public boolean isFirstMove = true;
     public int col, row;
@@ -18,7 +23,7 @@ public class Piece extends HBox {
 
     Board board;
 
-    public Piece (Board board) {
+    public Piece(Board board) {
         this.board = board;
         this.setPrefHeight(board.tileSize);
         this.setPrefWidth(board.tileSize);
@@ -86,5 +91,22 @@ public class Piece extends HBox {
 
     public void setValue(int value) {
         this.value = value;
+    }
+
+    public Coordinate getCoordinate() {
+        return new CoordinateRC(row, col);
+    }
+
+    public abstract boolean canMove();
+
+    protected boolean checkMovesFrom(ArrayList<Coordinate> relativeCoordinates) {
+        for (Coordinate relativeCoordinate : relativeCoordinates) {
+            Move move = new Move(board, this, getCoordinate().add(relativeCoordinate));
+            if (board.isValidMove(move)) {
+                System.out.println(getClass().toString() + " at rc(" + move.getNewRow() + "," + move.getNewCol() + ")");
+                return true;
+            }
+        }
+        return false;
     }
 }
