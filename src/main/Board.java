@@ -11,13 +11,15 @@ import java.util.ArrayList;
 
 public class Board extends GridPane {
 
-    public int tileSize = 85;
-    public int cols = 8;
-    public int rows = 8;
+    public final int tileSize = 85;
+    public final int cols = 8;
+    public final int rows = 8;
 
     private boolean kingChecked = false;
 
     public ArrayList<Piece> pieceList = new ArrayList<>();
+
+    public ArrayList<Move> moveHistory = new ArrayList<>();
 
     public Piece selectedPiece;
 
@@ -29,9 +31,9 @@ public class Board extends GridPane {
 
     public int enPassantTile = -1;
 
-    public Pane root;
+    public BorderPane root;
 
-    public Board(Pane root) {
+    public Board(BorderPane root) {
         this.root = root;
         this.setPrefHeight(rows * tileSize);
         this.setPrefWidth(cols * tileSize);
@@ -74,6 +76,10 @@ public class Board extends GridPane {
             paint();
         });
 
+        initBoard();
+    }
+
+    public void initBoard() {
         addPieces();
         paint();
     }
@@ -90,7 +96,7 @@ public class Board extends GridPane {
     }
 
     public void addPieces() {
-        for (int i = 0; i <= 7; i++) {
+        /*for (int i = 0; i <= 7; i++) {
             pieceList.add(new Pawn(this, i, 1, false));
         }
 
@@ -113,12 +119,12 @@ public class Board extends GridPane {
         pieceList.add(new Bishop(this, 2, 7, true));
         pieceList.add(new Bishop(this, 5, 7, true));
         pieceList.add(new Queen(this, 3, 0, false));
-        pieceList.add(new Queen(this, 3, 7, true));
+        pieceList.add(new Queen(this, 3, 7, true));*/
 
-        /*pieceList.add(new Queen(this, 1, 2, true));
+        pieceList.add(new Queen(this, 1, 2, true));
         pieceList.add(new Queen(this, 0, 1, true));
         pieceList.add(new King(this, 7, 7, true));
-        pieceList.add(new King(this, 7, 0, false));*/
+        pieceList.add(new King(this, 7, 0, false));
     }
 
     public Piece getPiece(int col, int row) {
@@ -154,6 +160,7 @@ public class Board extends GridPane {
             gameController.swapTurn();
         }
         selectedPiece = null;
+        moveHistory.add(move);
         gameController.checkForMate(gameController.isWhiteTurn(), root);
         AudioClip sound;
         URL resource;
@@ -364,5 +371,21 @@ public class Board extends GridPane {
 
     public void setKingChecked(boolean kingChecked) {
         this.kingChecked = kingChecked;
+    }
+
+    public int getCols() {
+        return cols;
+    }
+
+    public int getRows() {
+        return rows;
+    }
+
+    public ArrayList<Piece> getPieceList() {
+        return pieceList;
+    }
+
+    public ArrayList<Move> getMoveHistory() {
+        return moveHistory;
     }
 }

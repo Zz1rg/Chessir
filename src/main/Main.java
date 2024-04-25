@@ -1,6 +1,7 @@
 package main;
 
 import gui.Stopwatch;
+import gui.UndoButton;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -44,7 +45,8 @@ public class Main extends Application {
         BorderPane.setAlignment(blackStopwatch, Pos.CENTER);
         root.setBottom(whiteStopwatch);
         BorderPane.setAlignment(whiteStopwatch, Pos.CENTER);
-        BorderPane.setMargin(board, new Insets(0, 160, 0, 160));
+        BorderPane.setMargin(board, new Insets(0, 160, 0, 60));
+        root.setLeft(new UndoButton(board));
 
         whiteStopwatch.startTimer(60);
 

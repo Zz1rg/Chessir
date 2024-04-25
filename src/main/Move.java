@@ -29,47 +29,23 @@ public class Move {
         return oldCol;
     }
 
-    public void setOldCol(int oldCol) {
-        this.oldCol = oldCol;
-    }
-
     public int getOldRow() {
         return oldRow;
-    }
-
-    public void setOldRow(int oldRow) {
-        this.oldRow = oldRow;
     }
 
     public int getNewCol() {
         return newCol;
     }
 
-    public void setNewCol(int newCol) {
-        this.newCol = newCol;
-    }
-
     public int getNewRow() {
         return newRow;
-    }
-
-    public void setNewRow(int newRow) {
-        this.newRow = newRow;
     }
 
     public Piece getPiece() {
         return piece;
     }
 
-    public void setPiece(Piece piece) {
-        this.piece = piece;
-    }
-
     public Piece getCapturedPiece() {
         return capturedPiece;
-    }
-
-    public void setCapturedPiece(Piece capturedPiece) {
-        this.capturedPiece = capturedPiece;
     }
 }
