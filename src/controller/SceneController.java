@@ -38,9 +38,6 @@ public final class SceneController {
     public static void switchToMainMenu() {
         VBox root = new VBox();
         root.setAlignment(Pos.CENTER);
-        // ???????
-        root.setPrefHeight(800);
-        root.setPrefWidth(1000);
         root.setBackground(Background.fill(Color.GRAY));
 
         Button playBtn = new Button();
@@ -54,7 +51,7 @@ public final class SceneController {
     }
 
     private static void showScene(Parent root) {
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(root, 1100, 950);
         appStage.setScene(scene);
         appStage.show();
     }
