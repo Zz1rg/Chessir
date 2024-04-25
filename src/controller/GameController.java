@@ -1,7 +1,11 @@
 package controller;
 
+import gui.MoveHistoryPane;
 import gui.Stopwatch;
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -81,12 +85,13 @@ public class GameController {
         return false;
     }
 
-    private void resetGame() {
+    public void resetGame() {
         board.getChildren().clear();
         board.pieceList.clear();
         board.moveHistory.clear();
         board.initBoard();
         isWhiteTurn = true;
+        updateMoveHistory();
     }
 
     public void undoMove() {
@@ -99,6 +104,18 @@ public class GameController {
         }
         board.getChildren().clear();
         board.paint();
+        updateMoveHistory();
+    }
+
+    public void updateMoveHistory() {
+        GridPane rightComp = (GridPane) board.getRoot().getRight();
+        ObservableList<Node> children = rightComp.getChildren();
+        for (Node child : children) {
+            if (child instanceof MoveHistoryPane) {
+                ((MoveHistoryPane) child).addMove(board.getMoveHistory());
+                break;
+            }
+        }
     }
 
     public void timeout(Team team) {

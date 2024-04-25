@@ -1,14 +1,14 @@
 package main;
 
 import controller.GameController;
+import gui.MoveHistoryPane;
 import gui.Stopwatch;
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.layout.*;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
-import pieces.King;
-import pieces.Pawn;
-import pieces.Piece;
-import pieces.Queen;
+import pieces.*;
 import util.Team;
 
 import java.net.URL;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class Board extends GridPane {
 
-    public final int tileSize = 85;
+    public final int tileSize = 75;
     public final int cols = 8;
     public final int rows = 8;
 
@@ -105,7 +105,7 @@ public class Board extends GridPane {
     }
 
     public void addPieces() {
-        /*for (int i = 0; i <= 7; i++) {
+        for (int i = 0; i <= 7; i++) {
             pieceList.add(new Pawn(this, i, 1, false));
         }
 
@@ -128,12 +128,12 @@ public class Board extends GridPane {
         pieceList.add(new Bishop(this, 2, 7, true));
         pieceList.add(new Bishop(this, 5, 7, true));
         pieceList.add(new Queen(this, 3, 0, false));
-        pieceList.add(new Queen(this, 3, 7, true));*/
+        pieceList.add(new Queen(this, 3, 7, true));
 
-        pieceList.add(new Queen(this, 1, 2, true));
+        /*pieceList.add(new Queen(this, 1, 2, true));
         pieceList.add(new Queen(this, 0, 1, true));
         pieceList.add(new King(this, 7, 7, true));
-        pieceList.add(new King(this, 7, 0, false));
+        pieceList.add(new King(this, 7, 0, false));*/
     }
 
     public Piece getPiece(int col, int row) {
@@ -171,6 +171,7 @@ public class Board extends GridPane {
         selectedPiece = null;
         moveHistory.add(move);
         gameController.checkForMate(gameController.isWhiteTurn(), root);
+        gameController.updateMoveHistory();
         AudioClip sound;
         URL resource;
         if (move.capturedPiece == null) {
@@ -396,6 +397,10 @@ public class Board extends GridPane {
 
     public ArrayList<Move> getMoveHistory() {
         return moveHistory;
+    }
+
+    public BorderPane getRoot() {
+        return root;
     }
 
     public Stopwatch getBlackStopwatch() {
