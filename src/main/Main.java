@@ -1,9 +1,7 @@
 package main;
 
-import gui.Stopwatch;
 import javafx.application.Application;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -39,14 +37,10 @@ public class Main extends Application {
 
         Board board = new Board(root);
         root.setCenter(board);
-        Stopwatch whiteStopwatch = new Stopwatch(), blackStopwatch = new Stopwatch();
-        root.setTop(blackStopwatch);
-        BorderPane.setAlignment(blackStopwatch, Pos.CENTER);
-        root.setBottom(whiteStopwatch);
-        BorderPane.setAlignment(whiteStopwatch, Pos.CENTER);
-        BorderPane.setMargin(board, new Insets(0, 160, 0, 160));
+        BorderPane.setMargin(board, new Insets(20, 160, 20, 160));
 
-        whiteStopwatch.startTimer(60);
+        root.setTop(board.getBlackStopwatch());
+        root.setBottom(board.getWhiteStopwatch());
 
         Scene newScene = new Scene(root);
         stage.setResizable(false);

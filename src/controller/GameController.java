@@ -1,22 +1,40 @@
 package controller;
 
-import javafx.scene.layout.HBox;
+import gui.Stopwatch;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import main.Board;
 import main.Move;
 import pieces.Piece;
+import util.Team;
 
 public class GameController {
     private final Board board;
+    private final Stopwatch blackStopwatch, whiteStopwatch;
     private boolean isWhiteTurn = true;
 
     public GameController(Board board) {
         this.board = board;
+        this.blackStopwatch = board.getBlackStopwatch();
+        this.whiteStopwatch = board.getWhiteStopwatch();
+        this.blackStopwatch.setGameController(this);
+        this.whiteStopwatch.setGameController(this);
+        this.whiteStopwatch.startTimer();
     }
 
     public void swapTurn() {
         isWhiteTurn = !isWhiteTurn;
+        switchTimer();
+    }
+
+    private void switchTimer() {
+        if (isWhiteTurn) {
+            blackStopwatch.stopTimer();
+            whiteStopwatch.startTimer();
+        } else {
+            whiteStopwatch.stopTimer();
+            blackStopwatch.startTimer();
+        }
     }
 
     public boolean isWhiteTurn() {
@@ -77,5 +95,20 @@ public class GameController {
             if (piece.isWhite == isWhiteTurn() && piece.canMove()) return true;
         }
         return false;
+    }
+
+    public void timeout(Team team) {
+        switch (team) {
+            case WHITE: {
+//                blackStopwatch.stopTimer();
+                System.out.println("WHITE TIMEOUT");
+                break;
+            }
+            case BLACK: {
+//                whiteStopwatch.stopTimer();
+                System.out.println("BLACK TIMEOUT");
+                break;
+            }
+        }
     }
 }

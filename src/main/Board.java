@@ -1,10 +1,12 @@
 package main;
 
 import controller.GameController;
+import gui.Stopwatch;
 import javafx.scene.layout.*;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import pieces.*;
+import util.Team;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -17,13 +19,17 @@ public class Board extends GridPane {
 
     private boolean kingChecked = false;
 
+    private final Stopwatch whiteStopwatch = new Stopwatch(Team.WHITE, 10);
+    private final Stopwatch blackStopwatch = new Stopwatch(Team.BLACK, 10);
+    // gameController must go AFTER stopwatch
+    private final GameController gameController = new GameController(this);
+
     public ArrayList<Piece> pieceList = new ArrayList<>();
 
     public Piece selectedPiece;
 
     // TODO: migrate game logic into GameController class ?
     //  (e.g. checkScanner, enPassantTile, makeMove, isValidMove, sameTeam, getPiece, findKing, capture, getTileNum, paint)
-    private final GameController gameController = new GameController(this);
 
     public CheckScanner checkScanner = new CheckScanner(this);
 
@@ -300,7 +306,7 @@ public class Board extends GridPane {
         if (selectedPiece != null) {
             // paint selected piece
             Pane bluePane = new Pane();
-            bluePane.setBackground(new Background(new BackgroundFill(Color.color(80.0/255, 64.0/255, 1, 0.8), null, null)));
+            bluePane.setBackground(new Background(new BackgroundFill(Color.color(80.0 / 255, 64.0 / 255, 1, 0.8), null, null)));
             bluePane.setPrefHeight(tileSize);
             bluePane.setPrefWidth(tileSize);
             this.add(bluePane, selectedPiece.getCol(), selectedPiece.getRow());
@@ -365,4 +371,13 @@ public class Board extends GridPane {
     public void setKingChecked(boolean kingChecked) {
         this.kingChecked = kingChecked;
     }
+
+    public Stopwatch getBlackStopwatch() {
+        return blackStopwatch;
+    }
+
+    public Stopwatch getWhiteStopwatch() {
+        return whiteStopwatch;
+    }
+
 }
