@@ -8,11 +8,24 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+
+import java.net.URL;
 
 public class Main extends Application {
     public static void main(String[] args) {
+        URL resource = ClassLoader.getSystemResource("sincerely.mp3");
+        MediaPlayer bgm = new MediaPlayer(new Media(resource.toString()));
+        bgm.setOnEndOfMedia(new Runnable() {
+            public void run() {
+                bgm.seek(Duration.ZERO);
+            }
+        });
+        bgm.play();
         launch();
     }
 
@@ -31,10 +44,12 @@ public class Main extends Application {
         BorderPane.setAlignment(blackStopwatch, Pos.CENTER);
         root.setBottom(whiteStopwatch);
         BorderPane.setAlignment(whiteStopwatch, Pos.CENTER);
+        BorderPane.setMargin(board, new Insets(5, 0, 5, 160));
 
         whiteStopwatch.startTimer(60);
 
         Scene newScene = new Scene(root);
+        stage.setResizable(false);
         stage.setScene(newScene);
         stage.setTitle("Chessir");
         stage.show();

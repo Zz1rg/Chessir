@@ -42,8 +42,8 @@ public class King extends Piece {
                 if (rook != null && rook instanceof Rook && rook.isFirstMove) {
                     return board.getPiece(5, row) == null
                             && board.getPiece(6, row) == null
-                            && !board.checkScanner.isKingChecked(new Move(board, this, 5, row))
-                            && !board.checkScanner.isKingChecked(new Move(board, this, 4, row));
+                            && !board.checkScanner.isKingChecked(new Move(board, this, 5, row), false)
+                            && !board.checkScanner.isKingChecked(new Move(board, this, 4, row), false);
                 }
             } else if (col == 2) {
                 Piece rook = board.getPiece(0, row);
@@ -51,8 +51,8 @@ public class King extends Piece {
                     return board.getPiece(1, row) == null
                             && board.getPiece(2, row) == null
                             && board.getPiece(3, row) == null
-                            && !board.checkScanner.isKingChecked(new Move(board, this, 3, row))
-                            && !board.checkScanner.isKingChecked(new Move(board, this, 4, row));
+                            && !board.checkScanner.isKingChecked(new Move(board, this, 3, row), false)
+                            && !board.checkScanner.isKingChecked(new Move(board, this, 4, row), false);
                 }
             }
         }

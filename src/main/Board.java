@@ -1,11 +1,12 @@
 package main;
 
 import controller.GameController;
-import javafx.geometry.Pos;
 import javafx.scene.layout.*;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import pieces.*;
 
+import java.net.URL;
 import java.util.ArrayList;
 
 public class Board extends GridPane {
@@ -13,6 +14,8 @@ public class Board extends GridPane {
     public int tileSize = 85;
     public int cols = 8;
     public int rows = 8;
+
+    private boolean kingChecked = false;
 
     public ArrayList<Piece> pieceList = new ArrayList<>();
 
@@ -65,6 +68,7 @@ public class Board extends GridPane {
                     }
                 }
             }
+
             getChildren().clear();
             paint();
         });
@@ -109,8 +113,8 @@ public class Board extends GridPane {
         pieceList.add(new Bishop(this, 5, 7, true));
         pieceList.add(new Queen(this, 3, 0, false));
         pieceList.add(new Queen(this, 3, 7, true));
-        /*
-        pieceList.add(new Queen(this, 1, 2, true));
+
+        /*pieceList.add(new Queen(this, 1, 2, true));
         pieceList.add(new Queen(this, 0, 1, true));
         pieceList.add(new King(this, 7, 7, true));
         pieceList.add(new King(this, 7, 0, false));*/
@@ -150,6 +154,15 @@ public class Board extends GridPane {
         }
         selectedPiece = null;
         gameController.checkForMate(gameController.isWhiteTurn(), root);
+        AudioClip sound;
+        URL resource;
+        if (move.capturedPiece == null) {
+            resource = ClassLoader.getSystemResource("move-self.mp3");
+        } else {
+            resource = ClassLoader.getSystemResource("capture.mp3");
+        }
+        sound = new AudioClip(resource.toString());
+        sound.play();
     }
 
     private void moveKing(Move move) {
@@ -234,7 +247,7 @@ public class Board extends GridPane {
         if (move.newCol < 0 || move.newCol > 7 || move.newRow < 0 || move.newRow > 7) {
             return false;
         }
-        if (checkScanner.isKingChecked(move)) {
+        if (checkScanner.isKingChecked(move, false)) {
             return false;
         }
 
@@ -275,20 +288,18 @@ public class Board extends GridPane {
                 whitePane.setBackground(new Background(new BackgroundFill(Color.color(178.0 / 255, 110.0 / 255, 55.0 / 255), null, null)));
                 whitePane.setPrefHeight(tileSize);
                 whitePane.setPrefWidth(tileSize);
-                //this.setColor((c+r)%2 == 0 ? new Color(234, 191, 153) : new Color(178, 110, 55));
                 if ((c + r) % 2 == 0) {
                     this.add(blackPane, c, r);
                 } else {
                     this.add(whitePane, c, r);
                 }
-                //this.fillRect(c * tileSize, r * tileSize, tileSize, tileSize);
             }
         }
 
         if (selectedPiece != null) {
             // paint selected piece
             Pane bluePane = new Pane();
-            bluePane.setBackground(new Background(new BackgroundFill(Color.color(0, 0, 1), null, null)));
+            bluePane.setBackground(new Background(new BackgroundFill(Color.color(80.0/255, 64.0/255, 1, 0.8), null, null)));
             bluePane.setPrefHeight(tileSize);
             bluePane.setPrefWidth(tileSize);
             this.add(bluePane, selectedPiece.getCol(), selectedPiece.getRow());
@@ -301,8 +312,6 @@ public class Board extends GridPane {
                         greenPane.setBackground(new Background(new BackgroundFill(Color.color(0, 255.0 / 255, 0, 50.0 / 100), null, null)));
                         greenPane.setPrefHeight(tileSize);
                         greenPane.setPrefWidth(tileSize);
-                        /*this.setColor(new Color(0, 255, 0, 100));
-                           this.fillRect(c * tileSize, r * tileSize, tileSize, tileSize);*/
                         this.add(greenPane, c, r);
                     }
                 }
@@ -311,15 +320,27 @@ public class Board extends GridPane {
 
         Piece king = findKing(gameController.isWhiteTurn());
         //paint checked king
-        if (checkScanner.isKingChecked(new Move(this, king, king.col, king.row))) {
+        if (checkScanner.isKingChecked(new Move(this, king, king.col, king.row), true) && !this.isKingChecked()) {
+            //System.out.println("King is checked");
             //checked king tile
+            setKingChecked(true);
             Pane redPane = new Pane();
             redPane.setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
             redPane.setPrefHeight(tileSize);
             redPane.setPrefWidth(tileSize);
-            //this.setColor(new Color(255, 0, 0, 121));
-            //this.fillRect(king.col * tileSize, king.row * tileSize, tileSize, tileSize);
             this.add(redPane, king.col, king.row);
+            AudioClip sound = new AudioClip(ClassLoader.getSystemResource("notify.mp3").toString());
+            sound.play();
+        } else if (checkScanner.isKingChecked(new Move(this, king, king.col, king.row), true) && this.isKingChecked()) {
+            //System.out.println("King is still checked");
+            Pane redPane = new Pane();
+            redPane.setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
+            redPane.setPrefHeight(tileSize);
+            redPane.setPrefWidth(tileSize);
+            this.add(redPane, king.col, king.row);
+        } else {
+            //System.out.println("King is not checked");
+            setKingChecked(false);
         }
 
         //paint pieces
@@ -334,5 +355,13 @@ public class Board extends GridPane {
 
     public Board getBoard() {
         return this;
+    }
+
+    public boolean isKingChecked() {
+        return kingChecked;
+    }
+
+    public void setKingChecked(boolean kingChecked) {
+        this.kingChecked = kingChecked;
     }
 }

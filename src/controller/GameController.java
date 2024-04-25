@@ -33,7 +33,7 @@ public class GameController {
 
         Piece king = board.findKing(isWhite);
         //Checkmate
-        if (board.checkScanner.isKingChecked(new Move(board, king, king.getCol(), king.getRow()))) {
+        if (board.checkScanner.isKingChecked(new Move(board, king, king.getCol(), king.getRow()), false)) {
             for (Piece piece : board.pieceList) {
                 if (piece.isWhite == isWhite) {
                     for (int r = 0; r < 8; r++) {

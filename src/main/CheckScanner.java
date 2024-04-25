@@ -10,7 +10,7 @@ public class CheckScanner {
         this.board = board;
     }
 
-    public boolean isKingChecked(Move move) {
+    public boolean isKingChecked(Move move, boolean forPaint) {
         Piece king = board.findKing(move.piece.isWhite);
         assert king != null;
 
@@ -22,48 +22,67 @@ public class CheckScanner {
             kingRow = move.newRow;
         }
 
-        return hitByRook(move.newCol, move.newRow, king, kingCol, kingRow, 0, 1) || //up
-                hitByRook(move.newCol, move.newRow, king, kingCol, kingRow, 1, 0) || //right
-                hitByRook(move.newCol, move.newRow, king, kingCol, kingRow, 0, -1) || //down
-                hitByRook(move.newCol, move.newRow, king, kingCol, kingRow, -1, 0) || //left
+        return hitByRook(move.newCol, move.newRow, king, kingCol, kingRow, 0, 1, forPaint) || //up
+                hitByRook(move.newCol, move.newRow, king, kingCol, kingRow, 1, 0, forPaint) || //right
+                hitByRook(move.newCol, move.newRow, king, kingCol, kingRow, 0, -1, forPaint) || //down
+                hitByRook(move.newCol, move.newRow, king, kingCol, kingRow, -1, 0, forPaint) || //left
 
-                hitByBishop(move.newCol, move.newRow, king, kingCol, kingRow, -1, -1) || //up left
-                hitByBishop(move.newCol, move.newRow, king, kingCol, kingRow, 1, -1) || //up right
-                hitByBishop(move.newCol, move.newRow, king, kingCol, kingRow, 1, 1) || //down right
-                hitByBishop(move.newCol, move.newRow, king, kingCol, kingRow, -1, 1) || //down left
+                hitByBishop(move.newCol, move.newRow, king, kingCol, kingRow, -1, -1, forPaint) || //up left
+                hitByBishop(move.newCol, move.newRow, king, kingCol, kingRow, 1, -1, forPaint) || //up right
+                hitByBishop(move.newCol, move.newRow, king, kingCol, kingRow, 1, 1, forPaint) || //down right
+                hitByBishop(move.newCol, move.newRow, king, kingCol, kingRow, -1, 1, forPaint) || //down left
 
                 hitByKnight(move.newCol, move.newRow, king, kingCol, kingRow) ||
                 hitByKing(king, kingCol, kingRow) ||
                 hitByPawn(move.newCol, move.newRow, king, kingCol, kingRow);
     }
 
-    private boolean hitByRook(int col, int row, Piece king, int kingCol, int kingRow, int colVal, int rowVal) {
+    private boolean hitByRook(int col, int row, Piece king, int kingCol, int kingRow, int colVal, int rowVal, boolean forPaint) {
         for (int i = 1; i < 8; i++) {
             if (kingCol + (i * colVal) == col && kingRow + (i * rowVal) == row) {
                 break;
             }
             Piece piece = board.getPiece(kingCol + (i * colVal), kingRow + (i * rowVal));
-            if (piece != null && piece != board.selectedPiece && piece != king) {
-                if (!board.sameTeam(piece, king) && (piece instanceof Rook || piece instanceof Queen)) {
-                    return true;
+            if (forPaint) {
+                if (piece != null && piece != king) {
+                    if (!board.sameTeam(piece, king) && (piece instanceof Rook || piece instanceof Queen)) {
+                        return true;
+                    }
+                    break;
                 }
-                break;
+            } else {
+                if (piece != null && piece != board.selectedPiece && piece != king) {
+                    if (!board.sameTeam(piece, king) && (piece instanceof Rook || piece instanceof Queen)) {
+                        return true;
+                    }
+                    break;
+                }
+
             }
         }
         return false;
     }
 
-    private boolean hitByBishop(int col, int row, Piece king, int kingCol, int kingRow, int colVal, int rowVal) {
+    private boolean hitByBishop(int col, int row, Piece king, int kingCol, int kingRow, int colVal, int rowVal, boolean forPaint) {
         for (int i = 1; i < 8; i++) {
             if (kingCol - (i * colVal) == col && kingRow - (i * rowVal) == row) {
                 break;
             }
             Piece piece = board.getPiece(kingCol - (i * colVal), kingRow - (i * rowVal));
-            if (piece != null && piece != board.selectedPiece && piece != king) {
-                if (!board.sameTeam(piece, king) && (piece instanceof Bishop || piece instanceof Queen)) {
-                    return true;
+            if (forPaint) {
+                if (piece != null && piece != king) {
+                    if (!board.sameTeam(piece, king) && (piece instanceof Bishop || piece instanceof Queen)) {
+                        return true;
+                    }
+                    break;
                 }
-                break;
+            } else {
+                if (piece != null && piece != board.selectedPiece && piece != king) {
+                    if (!board.sameTeam(piece, king) && (piece instanceof Bishop || piece instanceof Queen)) {
+                        return true;
+                    }
+                    break;
+                }
             }
         }
         return false;
