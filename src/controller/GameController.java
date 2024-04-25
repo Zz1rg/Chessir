@@ -35,7 +35,7 @@ public class GameController {
         switchTimer();
     }
 
-    private void switchTimer() {
+    public void switchTimer() {
         if (isWhiteTurn) {
             blackStopwatch.stopTimer();
             whiteStopwatch.startTimer();
@@ -96,12 +96,18 @@ public class GameController {
 
     public void undoMove() {
         if (board.moveHistory.isEmpty()) return;
+        Move lastMove = board.moveHistory.get(board.moveHistory.size() - 1);
         board.moveHistory.remove(board.getMoveHistory().size() - 1);
-        ArrayList<Move> moveHistoryCopy = new ArrayList<>(board.getMoveHistory());
-        resetGame();
-        for (Move move : moveHistoryCopy) {
-            board.makeMove(new Move(board, board.getPiece(move.getOldCol(), move.getOldRow()), move.getNewCol(), move.getNewRow()));
+        lastMove.getPiece().setCol(lastMove.getOldCol());
+        lastMove.getPiece().setRow(lastMove.getOldRow());
+        lastMove.getPiece().setxPos(lastMove.getOldCol() * board.tileSize);
+        lastMove.getPiece().setyPos(lastMove.getOldRow() * board.tileSize);
+        if (lastMove.getCapturedPiece() != null) {
+            lastMove.getCapturedPiece().setCol(lastMove.getNewCol());
+            lastMove.getCapturedPiece().setRow(lastMove.getNewRow());
+            board.getPieceList().add(lastMove.getCapturedPiece());
         }
+        swapTurn();
         board.getChildren().clear();
         board.paint();
         updateMoveHistory();

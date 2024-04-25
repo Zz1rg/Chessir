@@ -16,6 +16,7 @@ public class UndoButton extends Button {
             @Override
             public void handle(MouseEvent event) {
                 board.getGameController().undoMove();
+                board.getGameController().switchTimer();
             }
         });
     }
