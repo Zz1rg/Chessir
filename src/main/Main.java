@@ -44,7 +44,7 @@ public class Main extends Application {
         BorderPane.setAlignment(blackStopwatch, Pos.CENTER);
         root.setBottom(whiteStopwatch);
         BorderPane.setAlignment(whiteStopwatch, Pos.CENTER);
-        BorderPane.setMargin(board, new Insets(5, 0, 5, 160));
+        BorderPane.setMargin(board, new Insets(0, 160, 0, 160));
 
         whiteStopwatch.startTimer(60);
 
