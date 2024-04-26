@@ -38,9 +38,13 @@ public class GameController {
     private void switchTimer() {
         if (isWhiteTurn) {
             blackStopwatch.stopTimer();
+            blackStopwatch.addIncrement();
+
             whiteStopwatch.startTimer();
         } else {
             whiteStopwatch.stopTimer();
+            whiteStopwatch.addIncrement();
+
             blackStopwatch.startTimer();
         }
     }

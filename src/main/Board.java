@@ -1,14 +1,12 @@
 package main;
 
 import controller.GameController;
-import gui.MoveHistoryPane;
 import gui.Stopwatch;
-import javafx.collections.ObservableList;
-import javafx.scene.Node;
 import javafx.scene.layout.*;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import pieces.*;
+import util.Gamemode;
 import util.Team;
 
 import java.net.URL;
@@ -22,10 +20,8 @@ public class Board extends GridPane {
 
     private boolean kingChecked = false;
 
-    private final Stopwatch whiteStopwatch = new Stopwatch(Team.WHITE, 10);
-    private final Stopwatch blackStopwatch = new Stopwatch(Team.BLACK, 10);
-    // gameController must go AFTER stopwatch
-    private final GameController gameController = new GameController(this);
+    private final Stopwatch whiteStopwatch, blackStopwatch;
+    private final GameController gameController;
 
     public ArrayList<Piece> pieceList = new ArrayList<>();
 
@@ -42,11 +38,16 @@ public class Board extends GridPane {
 
     public BorderPane root;
 
-    public Board(BorderPane root) {
+    public Board(BorderPane root, Gamemode gamemode) {
         this.root = root;
         this.setPrefHeight(rows * tileSize);
         this.setPrefWidth(cols * tileSize);
         this.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(5))));
+
+        this.whiteStopwatch = new Stopwatch(Team.WHITE, gamemode.getSeconds(), gamemode.getIncrementSecs());
+        this.blackStopwatch = new Stopwatch(Team.WHITE, gamemode.getSeconds(), gamemode.getIncrementSecs());
+        // gameController must go after stopwatch
+        this.gameController = new GameController(this);
 
         //set numbers of col and row
         for (int i = 0; i < cols; i++) {
