@@ -18,6 +18,7 @@ public class Stopwatch extends HBox {
     private final Team team;
     private GameController gameController;
     private long timerMs = 0;
+    private long incrementMs = 0;
     private final AnimationTimer animationTimer = new AnimationTimer() {
         private long startingMs;
         private long startingTime = 0;
@@ -41,14 +42,16 @@ public class Stopwatch extends HBox {
         @Override
         public void stop() {
             super.stop();
+            // add a little bit of delay
             startingTime = 0;
         }
     };
     private final Label timeLabel = new Label();
 
-    public Stopwatch(Team team, int seconds) {
+    public Stopwatch(Team team, int seconds, int incrementSecs) {
         this.team = team;
         setTimerMs(seconds * 1000L);
+        setIncrementMs(incrementSecs * 1000L);
         setTimeText(this.timerMs);
         setAlignment(Pos.CENTER);
 
@@ -70,7 +73,7 @@ public class Stopwatch extends HBox {
     }
 
     public Stopwatch(Team team) {
-        this(team, 0);
+        this(team, 0, 0);
     }
 
     public void startTimer(int countdownSec) {
@@ -110,12 +113,20 @@ public class Stopwatch extends HBox {
         this.timerMs = timerMs;
     }
 
+    public void setIncrementMs(long incrementMs) {
+        if (incrementMs < 0) {
+            incrementMs = 0;
+        }
+        this.incrementMs = incrementMs;
+    }
+
     public Team getTeam() {
         return team;
     }
 
-    public void addSeconds(int incrementSeconds) {
-        setTimerMs(timerMs + incrementSeconds * 1000L);
+    public void addIncrement() {
+        setTimerMs(timerMs + incrementMs);
+        setTimeText(timerMs);
     }
 
     public void setGameController(GameController gameController) {
