@@ -109,6 +109,15 @@ public final class SceneController {
 
         root.getChildren().addAll(new GamemodeRow[]{bulletRow, blitzRow, rapidRow});
 
+        Button exitBtn = new Button("Exit");
+        exitBtn.setOnAction(actionEvent -> {
+            System.exit(0);
+        });
+        exitBtn.setPrefWidth(150);
+        exitBtn.setPrefHeight(60);
+        exitBtn.setFont(Font.font("", FontWeight.BOLD, 24));
+        root.getChildren().add(exitBtn);
+
         showScene(root);
     }
 
