@@ -7,6 +7,7 @@ import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import pieces.*;
 import util.Gamemode;
+import util.MoveRecord;
 import util.Team;
 
 import java.net.URL;
@@ -25,7 +26,7 @@ public class Board extends GridPane {
 
     public ArrayList<Piece> pieceList = new ArrayList<>();
 
-    public ArrayList<Move> moveHistory = new ArrayList<>();
+    public ArrayList<MoveRecord> moveHistory = new ArrayList<>();
 
     public Piece selectedPiece;
 
@@ -34,7 +35,7 @@ public class Board extends GridPane {
 
     public CheckScanner checkScanner = new CheckScanner(this);
 
-    public int enPassantTile = -1;
+    private int enPassantTile = -1;
 
     public BorderPane root;
 
@@ -152,6 +153,9 @@ public class Board extends GridPane {
             return;
         }
 
+        // add move record to move history before states change
+        moveHistory.add(new MoveRecord(move, getEnPassantTile(), move.piece.isFirstMove()));
+
         if (move.piece instanceof Pawn) {
             movePawn(move);
         } else if (move.piece instanceof King) {
@@ -170,7 +174,6 @@ public class Board extends GridPane {
             gameController.swapTurn();
         }
         selectedPiece = null;
-        moveHistory.add(move);
         gameController.checkForMate(gameController.isWhiteTurn(), root);
         gameController.updateMoveHistory();
         AudioClip sound;
@@ -396,7 +399,7 @@ public class Board extends GridPane {
         return pieceList;
     }
 
-    public ArrayList<Move> getMoveHistory() {
+    public ArrayList<MoveRecord> getMoveHistory() {
         return moveHistory;
     }
 
@@ -414,5 +417,16 @@ public class Board extends GridPane {
 
     public Gamemode getGamemode() {
         return gamemode;
+    }
+
+    public int getEnPassantTile() {
+        return enPassantTile;
+    }
+
+    public void setEnPassantTile(int enPassantTile) {
+        if (enPassantTile < 0 || 7 < enPassantTile) {
+            enPassantTile = -1;
+        }
+        this.enPassantTile = enPassantTile;
     }
 }

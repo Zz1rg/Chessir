@@ -10,6 +10,7 @@ import main.Board;
 import main.Move;
 import pieces.Knight;
 import pieces.Pawn;
+import util.MoveRecord;
 
 import java.util.ArrayList;
 
@@ -37,7 +38,7 @@ public class MoveHistoryPane extends Pane {
         scrollPane.setPrefHeight(515);
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        scrollPane.setBackground(new Background(new BackgroundFill(Color.color(61.0/255, 179.0/255, 192.0/255, 1), new CornerRadii(10), Insets.EMPTY)));
+        scrollPane.setBackground(new Background(new BackgroundFill(Color.color(61.0 / 255, 179.0 / 255, 192.0 / 255, 1), new CornerRadii(10), Insets.EMPTY)));
         scrollPane.setContent(moveHistory);
     }
 
@@ -54,11 +55,12 @@ public class MoveHistoryPane extends Pane {
         moveHistory.getChildren().add(title);
     }
 
-    public void addMove(ArrayList<Move> moves) {
+    public void addMoveRecord(ArrayList<MoveRecord> moveRecords) {
         reset();
-        int i=1;
-        for (Move move : moves) {
+        int i = 1;
+        for (MoveRecord moveRecord : moveRecords) {
             HBox moveBox = new HBox();
+            Move move = moveRecord.move();
             if (move.getPiece().isWhite) {
                 moveBox.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, null, null)));
             } else {
@@ -69,18 +71,17 @@ public class MoveHistoryPane extends Pane {
             if (!(move.getPiece() instanceof Pawn)) {
                 if (move.getPiece() instanceof Knight) {
                     moveString += "N ";
-                }
-                else {
+                } else {
                     moveString += move.getPiece().name.charAt(0) + " ";
                 }
             }
-            moveString += colNames[move.getOldCol()] + "" + (move.getOldRow()+1);
+            moveString += colNames[move.getOldCol()] + "" + (move.getOldRow() + 1);
             if (move.getCapturedPiece() != null) {
                 moveString += "x";
             } else {
                 moveString += "->";
             }
-            moveString += colNames[move.getNewCol()] + "" + (move.getNewRow()+1);
+            moveString += colNames[move.getNewCol()] + "" + (move.getNewRow() + 1);
             newMove.setText(moveString);
             newMove.setFont(Font.font(15));
             moveBox.getChildren().add(newMove);

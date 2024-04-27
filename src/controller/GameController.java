@@ -10,6 +10,7 @@ import main.Board;
 import main.Move;
 import pieces.Piece;
 import util.EndGame;
+import util.MoveRecord;
 import util.Team;
 
 public class GameController {
@@ -87,17 +88,25 @@ public class GameController {
 
     public void undoMove() {
         if (board.moveHistory.isEmpty()) return;
-        Move lastMove = board.moveHistory.get(board.moveHistory.size() - 1);
+        MoveRecord lastMoveRecord = board.moveHistory.get(board.moveHistory.size() - 1);
         board.moveHistory.remove(board.getMoveHistory().size() - 1);
-        lastMove.getPiece().setCol(lastMove.getOldCol());
-        lastMove.getPiece().setRow(lastMove.getOldRow());
-        lastMove.getPiece().setxPos(lastMove.getOldCol() * board.tileSize);
-        lastMove.getPiece().setyPos(lastMove.getOldRow() * board.tileSize);
-        if (lastMove.getCapturedPiece() != null) {
-            lastMove.getCapturedPiece().setCol(lastMove.getNewCol());
-            lastMove.getCapturedPiece().setRow(lastMove.getNewRow());
-            board.getPieceList().add(lastMove.getCapturedPiece());
+        Move lastMove = lastMoveRecord.move();
+        board.setEnPassantTile(lastMoveRecord.enPassantTile());
+
+        Piece lastPiece = lastMove.getPiece();
+        lastPiece.setCol(lastMove.getOldCol());
+        lastPiece.setRow(lastMove.getOldRow());
+        lastPiece.setxPos(lastMove.getOldCol() * board.tileSize);
+        lastPiece.setyPos(lastMove.getOldRow() * board.tileSize);
+        lastPiece.setFirstMove(lastMoveRecord.isPieceFirstMove());
+
+        Piece lastCapturedPiece = lastMove.getCapturedPiece();
+        if (lastCapturedPiece != null) {
+            lastCapturedPiece.setCol(lastMove.getNewCol());
+            lastCapturedPiece.setRow(lastMove.getNewRow());
+            board.getPieceList().add(lastCapturedPiece);
         }
+
         swapTurn();
         board.getChildren().clear();
         board.paint();
@@ -109,7 +118,7 @@ public class GameController {
         ObservableList<Node> children = rightComp.getChildren();
         for (Node child : children) {
             if (child instanceof MoveHistoryPane) {
-                ((MoveHistoryPane) child).addMove(board.getMoveHistory());
+                ((MoveHistoryPane) child).addMoveRecord(board.getMoveHistory());
                 break;
             }
         }
