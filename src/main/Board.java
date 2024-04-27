@@ -154,7 +154,12 @@ public class Board extends GridPane {
         }
 
         // add move record to move history before states change
-        moveHistory.add(new MoveRecord(move, getEnPassantTile(), move.piece.isFirstMove()));
+        if (move.piece instanceof King && Math.abs(move.newCol - move.piece.col) == 2) {
+            moveHistory.add(new MoveRecord(move, getEnPassantTile(), move.piece.isFirstMove(), true));
+        } else {
+            moveHistory.add(new MoveRecord(move, getEnPassantTile(), move.piece.isFirstMove(), false));
+        }
+
 
         if (move.piece instanceof Pawn) {
             movePawn(move);

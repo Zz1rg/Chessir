@@ -99,6 +99,12 @@ public class GameController {
         lastPiece.setxPos(lastMove.getOldCol() * board.tileSize);
         lastPiece.setyPos(lastMove.getOldRow() * board.tileSize);
         lastPiece.setFirstMove(lastMoveRecord.isPieceFirstMove());
+        if (lastMoveRecord.isCastle()) {
+            Piece rook = board.getPiece(lastMove.getNewCol() == 6 ? 5 : 3, lastMove.getNewRow());
+            rook.setCol(lastMove.getNewCol() == 6 ? 7 : 0);
+            rook.setxPos(rook.getCol() * board.tileSize);
+            rook.setFirstMove(lastMoveRecord.isPieceFirstMove());
+        }
 
         Piece lastCapturedPiece = lastMove.getCapturedPiece();
         if (lastCapturedPiece != null) {
@@ -128,12 +134,14 @@ public class GameController {
         switch (team) {
             case WHITE: {
                 board.getWhiteStopwatch().stopTimer();
+                //board.getBlackStopwatch().stopTimer();
 //                System.out.println("WHITE TIMEOUT");
                 SceneController.switchToEndGame(EndGame.TIMEOUT, Team.BLACK);
                 break;
             }
             case BLACK: {
                 board.getBlackStopwatch().stopTimer();
+                //board.getWhiteStopwatch().stopTimer();
 //                System.out.println("BLACK TIMEOUT");
                 SceneController.switchToEndGame(EndGame.TIMEOUT, Team.WHITE);
                 break;

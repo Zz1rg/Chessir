@@ -33,7 +33,7 @@ public final class SceneController {
         root.getChildren().add(backBtn);
 
         BorderPane borderPane = new BorderPane();
-        borderPane.setPadding(new Insets(60, 85, 150, 0));
+        borderPane.setPadding(new Insets(30, 85, 150, 0));
         borderPane.setPrefHeight(720);
         borderPane.setPrefWidth(1000);
         borderPane.setBackground(new Background(new BackgroundFill(Color.GRAY, null, null)));
@@ -120,6 +120,7 @@ public final class SceneController {
 
         Text endGameText = new Text();
         String winnerStr = winner == Team.WHITE ? "White" : "Black";
+        String LoserStr = winner == Team.WHITE ? "Black" : "White";
         String imgPath = "";
         if (endGame == EndGame.CHECKMATE) {
             imgPath = winner == Team.WHITE ? ClassLoader.getSystemResource("white_king.png").toString() :
@@ -131,11 +132,11 @@ public final class SceneController {
         } else if (endGame == EndGame.TIMEOUT) {
             imgPath = winner == Team.WHITE ? ClassLoader.getSystemResource("white_king.png").toString() :
                     ClassLoader.getSystemResource("black_king.png").toString();
-            endGameText.setText("Timeout! " + winnerStr + " wins!");
+            endGameText.setText(LoserStr + " Timeout! " + winnerStr + " wins!");
         }
         ImageView img = new ImageView(new Image(imgPath, 200, 200, true, true));
         endGameText.setFill(Color.color(0, 233.0 / 255, 66.0 / 255));
-        endGameText.setFont(Font.font("", FontWeight.BOLD, 50));
+        endGameText.setFont(Font.font("Serif", FontWeight.BOLD, 50));
         endGameText.setStroke(Color.BLACK);
         root.getChildren().add(img);
         root.getChildren().add(endGameText);

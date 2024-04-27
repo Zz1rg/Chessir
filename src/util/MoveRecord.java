@@ -2,5 +2,5 @@ package util;
 
 import main.Move;
 
-public record MoveRecord(Move move, int enPassantTile, boolean isPieceFirstMove) {
+public record MoveRecord(Move move, int enPassantTile, boolean isPieceFirstMove, boolean isCastle) {
 }
