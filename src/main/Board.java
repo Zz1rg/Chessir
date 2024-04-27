@@ -44,7 +44,9 @@ public class Board extends GridPane {
         this.root = root;
         this.gamemode = gamemode;
         this.setPrefHeight(rows * tileSize);
+        this.setMaxHeight(rows * tileSize);
         this.setPrefWidth(cols * tileSize);
+        this.setMaxWidth(cols * tileSize);
         this.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(5))));
 
         this.whiteStopwatch = new Stopwatch(Team.WHITE, gamemode.getSeconds(), gamemode.getIncrementSecs());
