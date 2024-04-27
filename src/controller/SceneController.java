@@ -25,15 +25,23 @@ import static main.Main.appStage;
 public final class SceneController {
 
     public static void switchToBoard(Gamemode gamemode) {
-        BorderPane root = new BorderPane();
-        root.setPadding(new Insets(60, 85, 150, 0));
-        root.setPrefHeight(720);
-        root.setPrefWidth(1000);
-        root.setBackground(new Background(new BackgroundFill(Color.GRAY, null, null)));
+        VBox root = new VBox();
+        root.setBackground(Background.fill(Color.GRAY));
+        root.setPadding(new Insets(10, 0, 0, 10));
+        Button backBtn = new Button("Back to main menu");
+        backBtn.setOnAction(actionEvent -> switchToMainMenu());
+        root.getChildren().add(backBtn);
+
+        BorderPane borderPane = new BorderPane();
+        borderPane.setPadding(new Insets(60, 85, 150, 0));
+        borderPane.setPrefHeight(720);
+        borderPane.setPrefWidth(1000);
+        borderPane.setBackground(new Background(new BackgroundFill(Color.GRAY, null, null)));
+        root.getChildren().add(borderPane);
 
         // Board
-        Board board = new Board(root, gamemode);
-        root.setCenter(board);
+        Board board = new Board(borderPane, gamemode);
+        borderPane.setCenter(board);
 
         // Buttons
         HBox buttons = new HBox();
@@ -53,12 +61,12 @@ public final class SceneController {
         rightMenu.getRowConstraints().add(new RowConstraints(515));
         rightMenu.setVgap(0);
         rightMenu.setAlignment(Pos.CENTER);
-        root.setRight(rightMenu);
+        borderPane.setRight(rightMenu);
         BorderPane.setMargin(rightMenu, new Insets(20, 0, 20, 0));
 
         BorderPane.setMargin(board, new Insets(20, 60, 20, 95));
-        root.setTop(board.getBlackStopwatch());
-        root.setBottom(board.getWhiteStopwatch());
+        borderPane.setTop(board.getBlackStopwatch());
+        borderPane.setBottom(board.getWhiteStopwatch());
         board.getBlackStopwatch().setPadding(new Insets(0, 217, 0, 0));
         board.getWhiteStopwatch().setPadding(new Insets(0, 217, 0, 0));
         board.getWhiteStopwatch().stopTimer();
