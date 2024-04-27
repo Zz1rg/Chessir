@@ -63,6 +63,11 @@ public final class SceneController {
         board.getWhiteStopwatch().setPadding(new Insets(0, 217, 0, 0));
         board.getWhiteStopwatch().stopTimer();
 
+//        Button backBtn = new Button("Back to main menu");
+//        backBtn.setOnAction(actionEvent -> switchToMainMenu());
+//        backBtn.setAlignment(Pos.TOP_LEFT);
+//        BorderPane.setAlignment(backBtn, Pos.TOP_LEFT);
+//        root.setTop(backBtn);
         showScene(root);
     }
 
@@ -71,36 +76,27 @@ public final class SceneController {
         root.setAlignment(Pos.CENTER);
         root.setBackground(Background.fill(Color.GRAY));
         Text gameTitle = new Text("Chessir!");
-        gameTitle.setFill(Color.color(97.0/255, 124.0/255, 253.0/255));
+        gameTitle.setFill(Color.color(97.0 / 255, 124.0 / 255, 253.0 / 255));
         gameTitle.setFont(Font.font("Serif", FontWeight.BOLD, 100));
         gameTitle.setStroke(Color.BLACK);
         root.getChildren().add(gameTitle);
 
         GamemodeRow bulletRow = new GamemodeRow("bullet");
-        GamemodeBtn bullet1 = new GamemodeBtn(Gamemode.Bullet1);
-        bullet1.setText("1 min");
-        GamemodeBtn bullet2 = new GamemodeBtn(Gamemode.Bullet1i1);
-        bullet2.setText("1 | 1");
-        GamemodeBtn bullet3 = new GamemodeBtn(Gamemode.Bullet2i1);
-        bullet3.setText("2 | 1");
+        GamemodeBtn bullet1 = new GamemodeBtn(Gamemode.BULLET1, "1 min");
+        GamemodeBtn bullet2 = new GamemodeBtn(Gamemode.BULLET1I1, "1 | 1");
+        GamemodeBtn bullet3 = new GamemodeBtn(Gamemode.BULLET2I1, "2 | 1");
         bulletRow.getChildren().addAll(new GamemodeBtn[]{bullet1, bullet2, bullet3});
 
         GamemodeRow blitzRow = new GamemodeRow("blitz");
-        GamemodeBtn blitz1 = new GamemodeBtn(Gamemode.Blitz3);
-        blitz1.setText("3 min");
-        GamemodeBtn blitz2 = new GamemodeBtn(Gamemode.Blitz3i2);
-        blitz2.setText("3 | 2");
-        GamemodeBtn blitz3 = new GamemodeBtn(Gamemode.Blitz5);
-        blitz3.setText("5 min");
+        GamemodeBtn blitz1 = new GamemodeBtn(Gamemode.BLITZ3, "3 min");
+        GamemodeBtn blitz2 = new GamemodeBtn(Gamemode.BLITZ3I2, "3 | 2");
+        GamemodeBtn blitz3 = new GamemodeBtn(Gamemode.BLITZ5, "5 min");
         blitzRow.getChildren().addAll(new GamemodeBtn[]{blitz1, blitz2, blitz3});
 
         GamemodeRow rapidRow = new GamemodeRow("rapid");
-        GamemodeBtn rapid1 = new GamemodeBtn(Gamemode.Rapid10);
-        rapid1.setText("10 min");
-        GamemodeBtn rapid2 = new GamemodeBtn(Gamemode.Rapid15i10);
-        rapid2.setText("15 | 10");
-        GamemodeBtn rapid3 = new GamemodeBtn(Gamemode.Rapid30);
-        rapid3.setText("30 min");
+        GamemodeBtn rapid1 = new GamemodeBtn(Gamemode.RAPID10, "10 min");
+        GamemodeBtn rapid2 = new GamemodeBtn(Gamemode.RAPID15I10, "15 | 10");
+        GamemodeBtn rapid3 = new GamemodeBtn(Gamemode.RAPID30, "30 min");
         rapidRow.getChildren().addAll(new GamemodeBtn[]{rapid1, rapid2, rapid3});
 
         root.getChildren().addAll(new GamemodeRow[]{bulletRow, blitzRow, rapidRow});
@@ -130,7 +126,7 @@ public final class SceneController {
             endGameText.setText("Timeout! " + winnerStr + " wins!");
         }
         ImageView img = new ImageView(new Image(imgPath, 200, 200, true, true));
-        endGameText.setFill(Color.color(0, 233.0/255, 66.0/255));
+        endGameText.setFill(Color.color(0, 233.0 / 255, 66.0 / 255));
         endGameText.setFont(Font.font("", FontWeight.BOLD, 50));
         endGameText.setStroke(Color.BLACK);
         root.getChildren().add(img);
@@ -167,13 +163,14 @@ public final class SceneController {
     }
 
     private static class GamemodeBtn extends Button {
-        GamemodeBtn(Gamemode gamemode) {
+        GamemodeBtn(Gamemode gamemode, String text) {
             setOnAction(actionEvent -> {
                 switchToBoard(gamemode);
             });
             setPrefWidth(200);
             setPrefHeight(100);
             setFont(Font.font(36));
+            setText(text);
         }
     }
 

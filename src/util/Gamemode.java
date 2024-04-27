@@ -1,15 +1,15 @@
 package util;
 
 public enum Gamemode {
-    Bullet1(1, 0),
-    Bullet1i1(1, 1),
-    Bullet2i1(2, 1),
-    Blitz3(3, 0),
-    Blitz3i2(3, 2),
-    Blitz5(5, 0),
-    Rapid10(10, 0),
-    Rapid15i10(15, 10),
-    Rapid30(30, 0);
+    BULLET1(1, 0),
+    BULLET1I1(1, 1),
+    BULLET2I1(2, 1),
+    BLITZ3(3, 0),
+    BLITZ3I2(3, 2),
+    BLITZ5(5, 0),
+    RAPID10(10, 0),
+    RAPID15I10(15, 10),
+    RAPID30(30, 0);
 
     private final int minutes;
     private final int incrementSecs;
