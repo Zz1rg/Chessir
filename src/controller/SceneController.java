@@ -28,20 +28,25 @@ public final class SceneController {
         VBox root = new VBox();
         root.setBackground(Background.fill(Color.GRAY));
         root.setPadding(new Insets(10, 0, 0, 10));
-        Button backBtn = new Button("Back to main menu");
-        backBtn.setOnAction(actionEvent -> switchToMainMenu());
-        root.getChildren().add(backBtn);
 
         BorderPane borderPane = new BorderPane();
         borderPane.setPadding(new Insets(30, 85, 150, 0));
         borderPane.setPrefHeight(720);
         borderPane.setPrefWidth(1000);
         borderPane.setBackground(new Background(new BackgroundFill(Color.GRAY, null, null)));
-        root.getChildren().add(borderPane);
 
         // Board
         Board board = new Board(borderPane, gamemode);
         borderPane.setCenter(board);
+
+        Button backBtn = new Button("Back to main menu");
+        backBtn.setOnAction(actionEvent -> {
+            board.getWhiteStopwatch().stopTimer();
+            board.getBlackStopwatch().stopTimer();
+            switchToMainMenu();
+        });
+        root.getChildren().add(backBtn);
+        root.getChildren().add(borderPane);
 
         // Buttons
         HBox buttons = new HBox();

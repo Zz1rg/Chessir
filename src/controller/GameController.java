@@ -134,14 +134,14 @@ public class GameController {
         switch (team) {
             case WHITE: {
                 board.getWhiteStopwatch().stopTimer();
-                //board.getBlackStopwatch().stopTimer();
+                board.getBlackStopwatch().stopTimer();
 //                System.out.println("WHITE TIMEOUT");
                 SceneController.switchToEndGame(EndGame.TIMEOUT, Team.BLACK);
                 break;
             }
             case BLACK: {
                 board.getBlackStopwatch().stopTimer();
-                //board.getWhiteStopwatch().stopTimer();
+                board.getWhiteStopwatch().stopTimer();
 //                System.out.println("BLACK TIMEOUT");
                 SceneController.switchToEndGame(EndGame.TIMEOUT, Team.WHITE);
                 break;
