@@ -6,16 +6,11 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import main.Board;
 import main.Move;
 import pieces.Piece;
 import util.EndGame;
 import util.Team;
-
-import java.util.ArrayList;
 
 public class GameController {
     private final Board board;
@@ -87,16 +82,7 @@ public class GameController {
     }
 
     public void resetGame() {
-        board.getChildren().clear();
-        board.pieceList.clear();
-        board.moveHistory.clear();
-        board.initBoard();
-        board.getBlackStopwatch().stopTimer();
-        board.getWhiteStopwatch().stopTimer();
-        board.getBlackStopwatch().resetTimer(board.getGamemode().getSeconds(), board.getGamemode().getIncrementSecs());
-        board.getWhiteStopwatch().resetTimer(board.getGamemode().getSeconds(), board.getGamemode().getIncrementSecs());
-        isWhiteTurn = true;
-        updateMoveHistory();
+        SceneController.switchToBoard(board.getGamemode());
     }
 
     public void undoMove() {
@@ -133,13 +119,13 @@ public class GameController {
         switch (team) {
             case WHITE: {
                 board.getWhiteStopwatch().stopTimer();
-                System.out.println("WHITE TIMEOUT");
+//                System.out.println("WHITE TIMEOUT");
                 SceneController.switchToEndGame(EndGame.TIMEOUT, Team.BLACK);
                 break;
             }
             case BLACK: {
                 board.getBlackStopwatch().stopTimer();
-                System.out.println("BLACK TIMEOUT");
+//                System.out.println("BLACK TIMEOUT");
                 SceneController.switchToEndGame(EndGame.TIMEOUT, Team.WHITE);
                 break;
             }
