@@ -38,14 +38,17 @@ public class Board extends GridPane {
 
     public BorderPane root;
 
+    public Gamemode gamemode;
+
     public Board(BorderPane root, Gamemode gamemode) {
         this.root = root;
+        this.gamemode = gamemode;
         this.setPrefHeight(rows * tileSize);
         this.setPrefWidth(cols * tileSize);
         this.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(5))));
 
         this.whiteStopwatch = new Stopwatch(Team.WHITE, gamemode.getSeconds(), gamemode.getIncrementSecs());
-        this.blackStopwatch = new Stopwatch(Team.WHITE, gamemode.getSeconds(), gamemode.getIncrementSecs());
+        this.blackStopwatch = new Stopwatch(Team.BLACK, gamemode.getSeconds(), gamemode.getIncrementSecs());
         // gameController must go after stopwatch
         this.gameController = new GameController(this);
 
@@ -62,7 +65,6 @@ public class Board extends GridPane {
             int row = (int) (e.getY() / tileSize);
             Piece clickedPiece = getPiece(col, row);
 
-            // TODO: This looks too complicated, simplify it? ----IT's FINE
             if (selectedPiece == null) {
                 selectPiece(clickedPiece);
             } else {
@@ -74,10 +76,6 @@ public class Board extends GridPane {
                     } else {
                         Move move = new Move(this, selectedPiece, col, row);
                         makeMove(move);
-                        // TODO: Move isValidMove(move) into makeMove(Move)? ----DONE
-                        // (Not important) Check clickedPiece != selectedPiece in isValidMove(Move)? ----Not needed
-                        // TODO: makeMove(Move) should also clear selectedPiece? a bit redundant but it probably should do that ----DONE
-                        // TODO: Move swapTurn into makeMove(Move) ----DONE
                     }
                 }
             }
@@ -131,10 +129,10 @@ public class Board extends GridPane {
         pieceList.add(new Queen(this, 3, 0, false));
         pieceList.add(new Queen(this, 3, 7, true));
 
-        /*pieceList.add(new Queen(this, 1, 2, true));
-        pieceList.add(new Queen(this, 0, 1, true));
-        pieceList.add(new King(this, 7, 7, true));
-        pieceList.add(new King(this, 7, 0, false));*/
+        /*pieceList.add(new Queen(this, 1, 2, false));
+        pieceList.add(new Queen(this, 0, 1, false));
+        pieceList.add(new King(this, 7, 7, false));
+        pieceList.add(new King(this, 7, 0, true));*/
     }
 
     public Piece getPiece(int col, int row) {
@@ -412,4 +410,7 @@ public class Board extends GridPane {
         return whiteStopwatch;
     }
 
+    public Gamemode getGamemode() {
+        return gamemode;
+    }
 }

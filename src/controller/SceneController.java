@@ -13,8 +13,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import main.Board;
+import util.EndGame;
 import util.Gamemode;
+import util.Team;
 
 import static main.Main.appStage;
 
@@ -57,6 +61,7 @@ public final class SceneController {
         root.setBottom(board.getWhiteStopwatch());
         board.getBlackStopwatch().setPadding(new Insets(0, 217, 0, 0));
         board.getWhiteStopwatch().setPadding(new Insets(0, 217, 0, 0));
+        board.getWhiteStopwatch().stopTimer();
 
         showScene(root);
     }
@@ -65,6 +70,11 @@ public final class SceneController {
         VBox root = new VBox();
         root.setAlignment(Pos.CENTER);
         root.setBackground(Background.fill(Color.GRAY));
+        Text gameTitle = new Text("Chessir!");
+        gameTitle.setFill(Color.color(97.0/255, 124.0/255, 253.0/255));
+        gameTitle.setFont(Font.font("Serif", FontWeight.BOLD, 100));
+        gameTitle.setStroke(Color.BLACK);
+        root.getChildren().add(gameTitle);
 
         GamemodeRow bulletRow = new GamemodeRow("bullet");
         GamemodeBtn bullet1 = new GamemodeBtn(Gamemode.Bullet1);
@@ -94,6 +104,58 @@ public final class SceneController {
         rapidRow.getChildren().addAll(new GamemodeBtn[]{rapid1, rapid2, rapid3});
 
         root.getChildren().addAll(new GamemodeRow[]{bulletRow, blitzRow, rapidRow});
+
+        showScene(root);
+    }
+
+    public static void switchToEndGame(EndGame endGame, Team winner) {
+        VBox root = new VBox();
+        root.setAlignment(Pos.CENTER);
+        root.setBackground(Background.fill(Color.GRAY));
+        root.setSpacing(20);
+
+        Text endGameText = new Text();
+        String winnerStr = winner == Team.WHITE ? "White" : "Black";
+        String imgPath = "";
+        if (endGame == EndGame.CHECKMATE) {
+            imgPath = winner == Team.WHITE ? ClassLoader.getSystemResource("white_king.png").toString() :
+                    ClassLoader.getSystemResource("black_king.png").toString();
+            endGameText.setText("Checkmate! " + winnerStr + " wins!");
+        } else if (endGame == EndGame.STALEMATE) {
+            imgPath = ClassLoader.getSystemResource("draw.png").toString();
+            endGameText.setText("Stalemate!");
+        } else if (endGame == EndGame.TIMEOUT) {
+            imgPath = winner == Team.WHITE ? ClassLoader.getSystemResource("white_king.png").toString() :
+                    ClassLoader.getSystemResource("black_king.png").toString();
+            endGameText.setText("Timeout! " + winnerStr + " wins!");
+        }
+        ImageView img = new ImageView(new Image(imgPath, 200, 200, true, true));
+        endGameText.setFill(Color.color(0, 233.0/255, 66.0/255));
+        endGameText.setFont(Font.font("", FontWeight.BOLD, 50));
+        endGameText.setStroke(Color.BLACK);
+        root.getChildren().add(img);
+        root.getChildren().add(endGameText);
+
+        HBox choices = new HBox();
+        choices.setAlignment(Pos.CENTER);
+        choices.setSpacing(20);
+        Button endGameBtn = new Button("Exit");
+        endGameBtn.setOnAction(actionEvent -> {
+            System.exit(0);
+        });
+        endGameBtn.setPrefWidth(150);
+        endGameBtn.setPrefHeight(60);
+        endGameBtn.setFont(Font.font("", FontWeight.BOLD, 24));
+        Button restartBtn = new Button("Restart");
+        restartBtn.setOnAction(actionEvent -> {
+            switchToMainMenu();
+        });
+        restartBtn.setPrefWidth(150);
+        restartBtn.setPrefHeight(60);
+        restartBtn.setFont(Font.font("", FontWeight.BOLD, 24));
+        choices.getChildren().addAll(endGameBtn, restartBtn);
+
+        root.getChildren().add(choices);
 
         showScene(root);
     }

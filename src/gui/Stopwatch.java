@@ -132,4 +132,10 @@ public class Stopwatch extends HBox {
     public void setGameController(GameController gameController) {
         this.gameController = gameController;
     }
+
+    public void resetTimer(int seconds, int incrementSecs) {
+        setTimerMs(seconds * 1000L);
+        setIncrementMs(incrementSecs * 1000L);
+        setTimeText(this.timerMs);
+    }
 }

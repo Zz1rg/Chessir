@@ -12,6 +12,7 @@ import javafx.scene.text.Text;
 import main.Board;
 import main.Move;
 import pieces.Piece;
+import util.EndGame;
 import util.Team;
 
 import java.util.ArrayList;
@@ -65,20 +66,16 @@ public class GameController {
         //Checkmate
         if (board.checkScanner.isKingChecked(new Move(board, king, king.getCol(), king.getRow()), false)) {
             System.out.println("Checkmate");
-            Text checkMateText = new Text("Checkmate!");
-            checkMateText.setFill(Color.WHITE);
-            checkMateText.setFont(Font.font(50));
-            root.getChildren().clear();
-            root.setCenter(checkMateText);
+            board.getBlackStopwatch().stopTimer();
+            board.getWhiteStopwatch().stopTimer();
+            SceneController.switchToEndGame(EndGame.CHECKMATE, isWhite ? Team.BLACK : Team.WHITE);
         }
         //Stalemate
         else {
             System.out.println("Stalemate");
-            Text staleMateText = new Text("Stalemate!");
-            staleMateText.setFill(Color.WHITE);
-            staleMateText.setFont(Font.font(50));
-            root.getChildren().clear();
-            root.setCenter(staleMateText);
+            board.getBlackStopwatch().stopTimer();
+            board.getWhiteStopwatch().stopTimer();
+            SceneController.switchToEndGame(EndGame.STALEMATE, null);
         }
     }
 
@@ -94,6 +91,10 @@ public class GameController {
         board.pieceList.clear();
         board.moveHistory.clear();
         board.initBoard();
+        board.getBlackStopwatch().stopTimer();
+        board.getWhiteStopwatch().stopTimer();
+        board.getBlackStopwatch().resetTimer(board.getGamemode().getSeconds(), board.getGamemode().getIncrementSecs());
+        board.getWhiteStopwatch().resetTimer(board.getGamemode().getSeconds(), board.getGamemode().getIncrementSecs());
         isWhiteTurn = true;
         updateMoveHistory();
     }
@@ -131,13 +132,15 @@ public class GameController {
     public void timeout(Team team) {
         switch (team) {
             case WHITE: {
-//                blackStopwatch.stopTimer();
+                board.getWhiteStopwatch().stopTimer();
                 System.out.println("WHITE TIMEOUT");
+                SceneController.switchToEndGame(EndGame.TIMEOUT, Team.BLACK);
                 break;
             }
             case BLACK: {
-//                whiteStopwatch.stopTimer();
+                board.getBlackStopwatch().stopTimer();
                 System.out.println("BLACK TIMEOUT");
+                SceneController.switchToEndGame(EndGame.TIMEOUT, Team.WHITE);
                 break;
             }
         }
