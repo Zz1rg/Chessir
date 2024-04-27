@@ -99,6 +99,7 @@ public class Stopwatch extends HBox {
         String secondsStr = (seconds / 10 == 0 ? "0" : "") + seconds;
         String msStr = (ms / 100 == 0 ? "0" : "") + (ms / 10 == 0 ? "0" : "") + ms;
         String timeStr = minutesStr + ":" + secondsStr + ":" + msStr;
+        //System.out.println(timeStr);
         timeLabel.setText(timeStr);
     }
 

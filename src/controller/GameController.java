@@ -83,6 +83,8 @@ public class GameController {
     }
 
     public void resetGame() {
+        board.getWhiteStopwatch().stopTimer();
+        board.getBlackStopwatch().stopTimer();
         SceneController.switchToBoard(board.getGamemode());
     }
 
