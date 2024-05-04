@@ -57,7 +57,7 @@ public final class SceneController {
         buttons.setAlignment(Pos.CENTER);
 
         // Move History
-        MoveHistoryPane moveHistoryPane = new MoveHistoryPane(board);
+        MoveHistoryPane moveHistoryPane = new MoveHistoryPane();
         //Right Menu
         GridPane rightMenu = new GridPane();
         rightMenu.setPrefSize(250, 720);

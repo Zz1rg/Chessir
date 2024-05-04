@@ -76,13 +76,6 @@ public class Stopwatch extends HBox {
         this(team, 0, 0);
     }
 
-    public void startTimer(int countdownSec) {
-        stopTimer();
-        setTimerMs(countdownSec);
-        setTimeText(timerMs);
-        animationTimer.start();
-    }
-
     public void startTimer() {
         animationTimer.start();
     }
@@ -134,9 +127,4 @@ public class Stopwatch extends HBox {
         this.gameController = gameController;
     }
 
-    public void resetTimer(int seconds, int incrementSecs) {
-        setTimerMs(seconds * 1000L);
-        setIncrementMs(incrementSecs * 1000L);
-        setTimeText(this.timerMs);
-    }
 }

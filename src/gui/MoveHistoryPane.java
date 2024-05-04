@@ -6,7 +6,6 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import main.Board;
 import main.Move;
 import pieces.Knight;
 import pieces.Pawn;
@@ -15,7 +14,6 @@ import util.MoveRecord;
 import java.util.ArrayList;
 
 public class MoveHistoryPane extends Pane {
-    private final Board board;
 
     private final VBox moveHistory = new VBox();
 
@@ -23,8 +21,7 @@ public class MoveHistoryPane extends Pane {
 
     private final char[] colNames = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
 
-    public MoveHistoryPane(Board board) {
-        this.board = board;
+    public MoveHistoryPane() {
         this.setStyle("-fx-background-color: #E4E9F1; " + // Set background color to white
                 "-fx-background-radius: 10; " + // Set corner radius to 10px
                 "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,1), 10, 0, 0, 0);");
