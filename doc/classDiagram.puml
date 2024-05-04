@@ -1,6 +1,5 @@
 @startuml
 class gui.RestartButton {
-~ Board board
 + <<Create>> RestartButton(Board)
 }
 enum util.MoveType {
@@ -33,13 +32,13 @@ class main.Board {
 - boolean kingChecked
 - Stopwatch whiteStopwatch
 - GameController gameController
-+ ArrayList<Piece> pieceList
-+ ArrayList<MoveRecord> moveHistory
-+ Piece selectedPiece
+- ArrayList<Piece> pieceList
+- ArrayList<MoveRecord> moveHistory
+- Piece selectedPiece
 + CheckScanner checkScanner
 - int enPassantTile
-+ BorderPane root
-+ Gamemode gamemode
+- BorderPane root
+- Gamemode gamemode
 + <<Create>> Board(BorderPane,Gamemode)
 + void initBoard()
 - void selectPiece(Piece)
@@ -66,14 +65,14 @@ class main.Board {
 + Stopwatch getWhiteStopwatch()
 + Gamemode getGamemode()
 + int getEnPassantTile()
++ Piece getSelectedPiece()
 + void setEnPassantTile(int)
 }
 class gui.MoveHistoryPane {
-- Board board
 - VBox moveHistory
 - ScrollPane scrollPane
 - char[] colNames
-+ <<Create>> MoveHistoryPane(Board)
++ <<Create>> MoveHistoryPane()
 + void initScrollPane()
 + void initMoveHistory()
 + void addMoveRecord(ArrayList<MoveRecord>)
@@ -105,14 +104,14 @@ enum util.Team {
 +  WHITE
 }
 abstract class pieces.Piece {
-+ boolean isFirstMove
-+ int col
-+ int xPos
-+ boolean isWhite
-+ String name
-+ int value
-~ Image sprite
-~ Board board
+# boolean isFirstMove
+# int col
+# int xPos
+# boolean isWhite
+# String name
+# int value
+# Image sprite
+# Board board
 + <<Create>> Piece(Board)
 + boolean isValidMovement(int,int)
 + boolean moveCollidesWithPiece(int,int)
@@ -133,6 +132,7 @@ abstract class pieces.Piece {
 + Coordinate getCoordinate()
 + {abstract}boolean canMove()
 # boolean checkMovesFrom(ArrayList<Coordinate>)
++ String getName()
 }
 class controller.GameController {
 - Board board
@@ -156,7 +156,7 @@ class main.Move {
 + int newCol
 + int newRow
 + Piece piece
-+ Piece capturedPiece
+- Piece capturedPiece
 + <<Create>> Move(Board,Piece,int,int)
 + <<Create>> Move(Board,Piece,Coordinate)
 + int getOldCol()
@@ -165,6 +165,7 @@ class main.Move {
 + int getNewRow()
 + Piece getPiece()
 + Piece getCapturedPiece()
++ void setCapturedPiece(Piece)
 }
 enum util.Gamemode {
 +  BULLET1
@@ -199,7 +200,6 @@ class util.MoveRecord {
 + int enPassantTile()
 }
 class gui.UndoButton {
-~ Board board
 + <<Create>> UndoButton(Board)
 }
 class pieces.Knight {
@@ -215,15 +215,6 @@ class main.Main {
 }
 class util.CoordinateRC {
 + <<Create>> CoordinateRC(int,int)
-}
-class gui.StopwatchWithThread {
-- Label label
-- int second
-+ <<Create>> StopwatchWithThread(int)
-+ Label getLabel()
-+ void run()
-+ void startTimer(int)
-+ void startTimer()
 }
 class pieces.Queen {
 + <<Create>> Queen(Board,int,int,boolean)
@@ -260,7 +251,6 @@ class gui.Stopwatch {
 - Label timeLabel
 + <<Create>> Stopwatch(Team,int,int)
 + <<Create>> Stopwatch(Team)
-+ void startTimer(int)
 + void startTimer()
 + void stopTimer()
 - void setTimeText(long)
@@ -269,7 +259,6 @@ class gui.Stopwatch {
 + Team getTeam()
 + void addIncrement()
 + void setGameController(GameController)
-+ void resetTimer(int,int)
 }
 class main.CheckScanner {
 - Board board
@@ -301,7 +290,6 @@ javafx.scene.control.Button <|-- gui.UndoButton
 pieces.Piece <|-- pieces.Knight
 javafx.application.Application <|-- main.Main
 util.Coordinate <|-- util.CoordinateRC
-gui.Thread <|-- gui.StopwatchWithThread
 pieces.Piece <|-- pieces.Queen
 pieces.Piece <|-- pieces.Bishop
 pieces.Piece <|-- pieces.Rook
