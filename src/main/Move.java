@@ -4,13 +4,13 @@ import pieces.Piece;
 import util.Coordinate;
 
 public class Move {
-    public int oldCol;
-    public int oldRow;
-    public int newCol;
-    public int newRow;
+    public final int oldCol;
+    public final int oldRow;
+    public final int newCol;
+    public final int newRow;
 
-    public Piece piece;
-    public Piece capturedPiece;
+    public final Piece piece;
+    private Piece capturedPiece;
 
     public Move(Board board, Piece piece, int newCol, int newRow) {
         this.piece = piece;
@@ -47,5 +47,9 @@ public class Move {
 
     public Piece getCapturedPiece() {
         return capturedPiece;
+    }
+
+    public void setCapturedPiece(Piece capturedPiece) {
+        this.capturedPiece = capturedPiece;
     }
 }

@@ -170,7 +170,7 @@ public class Board extends GridPane {
                 move.piece.firstMoved();
             }
 
-            capture(move.capturedPiece);
+            capture(move.getCapturedPiece());
             gameController.swapTurn();
         }
         selectedPiece = null;
@@ -178,7 +178,7 @@ public class Board extends GridPane {
         gameController.updateMoveHistory();
         AudioClip sound;
         URL resource;
-        if (move.capturedPiece == null) {
+        if (move.getCapturedPiece() == null) {
             resource = ClassLoader.getSystemResource("move-self.mp3");
         } else {
             resource = ClassLoader.getSystemResource("capture.mp3");
@@ -211,7 +211,7 @@ public class Board extends GridPane {
             move.piece.firstMoved();
         }
 
-        capture(move.capturedPiece);
+        capture(move.getCapturedPiece());
         gameController.swapTurn();
     }
 
@@ -221,7 +221,7 @@ public class Board extends GridPane {
         int promotionRow = move.piece.isWhite() ? 0 : 7;
 
         if (getTileNum(move.newCol, move.newRow) == enPassantTile) {
-            move.capturedPiece = getPiece(move.newCol, move.newRow + colorIndex);
+            move.setCapturedPiece(getPiece(move.newCol, move.newRow + colorIndex));
         }
         if (Math.abs(move.newRow - move.piece.getRow()) == 2) {
             enPassantTile = getTileNum(move.newCol, move.newRow + colorIndex);
@@ -243,7 +243,7 @@ public class Board extends GridPane {
             move.piece.firstMoved();
         }
 
-        capture(move.capturedPiece);
+        capture(move.getCapturedPiece());
         gameController.swapTurn();
     }
 
@@ -257,7 +257,7 @@ public class Board extends GridPane {
     }
 
     public boolean isValidMove(Move move) {
-        if (sameTeam(move.piece, move.capturedPiece)) {
+        if (sameTeam(move.piece, move.getCapturedPiece())) {
             return false;
         }
         if (!move.piece.isValidMovement(move.newCol, move.newRow)) {
