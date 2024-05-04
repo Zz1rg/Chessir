@@ -76,11 +76,6 @@ public final class SceneController {
         board.getWhiteStopwatch().setPadding(new Insets(0, 217, 0, 0));
         board.getWhiteStopwatch().stopTimer();
 
-//        Button backBtn = new Button("Back to main menu");
-//        backBtn.setOnAction(actionEvent -> switchToMainMenu());
-//        backBtn.setAlignment(Pos.TOP_LEFT);
-//        BorderPane.setAlignment(backBtn, Pos.TOP_LEFT);
-//        root.setTop(backBtn);
         showScene(root);
     }
 
@@ -115,9 +110,7 @@ public final class SceneController {
         root.getChildren().addAll(new GamemodeRow[]{bulletRow, blitzRow, rapidRow});
 
         Button exitBtn = new Button("Exit");
-        exitBtn.setOnAction(actionEvent -> {
-            System.exit(0);
-        });
+        exitBtn.setOnAction(actionEvent -> System.exit(0));
         exitBtn.setPrefWidth(150);
         exitBtn.setPrefHeight(60);
         exitBtn.setFont(Font.font("", FontWeight.BOLD, 24));
@@ -159,16 +152,12 @@ public final class SceneController {
         choices.setAlignment(Pos.CENTER);
         choices.setSpacing(20);
         Button endGameBtn = new Button("Exit");
-        endGameBtn.setOnAction(actionEvent -> {
-            System.exit(0);
-        });
+        endGameBtn.setOnAction(actionEvent -> System.exit(0));
         endGameBtn.setPrefWidth(150);
         endGameBtn.setPrefHeight(60);
         endGameBtn.setFont(Font.font("", FontWeight.BOLD, 24));
         Button restartBtn = new Button("Restart");
-        restartBtn.setOnAction(actionEvent -> {
-            switchToMainMenu();
-        });
+        restartBtn.setOnAction(actionEvent -> switchToMainMenu());
         restartBtn.setPrefWidth(150);
         restartBtn.setPrefHeight(60);
         restartBtn.setFont(Font.font("", FontWeight.BOLD, 24));
@@ -187,9 +176,7 @@ public final class SceneController {
 
     private static class GamemodeBtn extends Button {
         GamemodeBtn(Gamemode gamemode, String text) {
-            setOnAction(actionEvent -> {
-                switchToBoard(gamemode);
-            });
+            setOnAction(actionEvent -> switchToBoard(gamemode));
             setPrefWidth(200);
             setPrefHeight(100);
             setFont(Font.font(36));

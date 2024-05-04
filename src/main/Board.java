@@ -274,11 +274,7 @@ public class Board extends GridPane {
         if (move.newCol < 0 || move.newCol > 7 || move.newRow < 0 || move.newRow > 7) {
             return false;
         }
-        if (checkScanner.isKingChecked(move, false)) {
-            return false;
-        }
-
-        return true;
+        return !checkScanner.isKingChecked(move, false);
     }
 
     public boolean sameTeam(Piece piece1, Piece piece2) {

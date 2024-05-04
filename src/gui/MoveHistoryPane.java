@@ -17,9 +17,9 @@ import java.util.ArrayList;
 public class MoveHistoryPane extends Pane {
     private final Board board;
 
-    private VBox moveHistory = new VBox();
+    private final VBox moveHistory = new VBox();
 
-    private ScrollPane scrollPane = new ScrollPane();
+    private final ScrollPane scrollPane = new ScrollPane();
 
     private final char[] colNames = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
 

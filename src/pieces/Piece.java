@@ -103,7 +103,7 @@ public abstract class Piece extends HBox {
         for (Coordinate relativeCoordinate : relativeCoordinates) {
             Move move = new Move(board, this, getCoordinate().add(relativeCoordinate));
             if (board.isValidMove(move)) {
-                System.out.println(getClass().toString() + " at rc(" + move.getNewRow() + "," + move.getNewCol() + ")");
+                System.out.println(getClass() + " at rc(" + move.getNewRow() + "," + move.getNewCol() + ")");
                 return true;
             }
         }
