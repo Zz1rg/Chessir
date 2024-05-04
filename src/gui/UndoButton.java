@@ -6,7 +6,7 @@ import javafx.scene.input.MouseEvent;
 import main.Board;
 
 public class UndoButton extends Button {
-    Board board;
+    private Board board;
 
     public UndoButton(Board board) {
         this.board = board;
