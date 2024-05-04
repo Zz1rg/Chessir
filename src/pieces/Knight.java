@@ -10,15 +10,15 @@ public class Knight extends Piece {
         super(board);
         this.col = col;
         this.row = row;
-        this.xPos = col * board.TILE_SIZE;
-        this.yPos = row * board.TILE_SIZE;
+        this.xPos = col * Board.TILE_SIZE;
+        this.yPos = row * Board.TILE_SIZE;
 
         this.isWhite = isWhite;
         this.name = "Knight";
 
         String imagePath = isWhite ? "white_knight.png" : "black_knight.png";
         String classLoaderPath = ClassLoader.getSystemResource(imagePath).toString();
-        this.sprite = new Image(classLoaderPath, board.TILE_SIZE, board.TILE_SIZE, false, false);
+        this.sprite = new Image(classLoaderPath, Board.TILE_SIZE, Board.TILE_SIZE, false, false);
 
         ImageView imageView = new ImageView(sprite);
         this.getChildren().add(imageView);

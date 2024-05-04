@@ -13,15 +13,15 @@ public class Pawn extends Piece {
         super(board);
         this.col = col;
         this.row = row;
-        this.xPos = col * board.TILE_SIZE;
-        this.yPos = row * board.TILE_SIZE;
+        this.xPos = col * Board.TILE_SIZE;
+        this.yPos = row * Board.TILE_SIZE;
 
         this.isWhite = isWhite;
         this.name = "Pawn";
 
         String imagePath = isWhite ? "white_pawn.png" : "black_pawn.png";
         String classLoaderPath = ClassLoader.getSystemResource(imagePath).toString();
-        this.sprite = new Image(classLoaderPath, board.TILE_SIZE, board.TILE_SIZE, false, false);
+        this.sprite = new Image(classLoaderPath, Board.TILE_SIZE, Board.TILE_SIZE, false, false);
 
         ImageView imageView = new ImageView(sprite);
         this.getChildren().add(imageView);
@@ -62,7 +62,7 @@ public class Pawn extends Piece {
 
     @Override
     public boolean canMove() {
-        ArrayList<Coordinate> possibleRelativeCoordinates = new ArrayList<Coordinate>();
+        ArrayList<Coordinate> possibleRelativeCoordinates = new ArrayList<>();
         // Use PAWN_FIRST_MOVE, so it'll always check everything
         if (isWhite()) {
             possibleRelativeCoordinates.addAll(MoveType.WHITE_PAWN_ATTACK.getRelativeCoordinates());
