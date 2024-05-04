@@ -1,0 +1,11 @@
+Compiled from "StopwatchWithThread.java"
+public class gui.StopwatchWithThread extends java.lang.Thread {
+  private final javafx.scene.control.Label label;
+  private int second;
+  public gui.StopwatchWithThread(int);
+  public javafx.scene.control.Label getLabel();
+  public void run();
+  public void startTimer(int);
+  public void startTimer();
+  private void lambda$run$0();
+}

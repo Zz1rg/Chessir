@@ -1,0 +1,22 @@
+Compiled from "Gamemode.java"
+public final class util.Gamemode extends java.lang.Enum<util.Gamemode> {
+  public static final util.Gamemode BULLET1;
+  public static final util.Gamemode BULLET1I1;
+  public static final util.Gamemode BULLET2I1;
+  public static final util.Gamemode BLITZ3;
+  public static final util.Gamemode BLITZ3I2;
+  public static final util.Gamemode BLITZ5;
+  public static final util.Gamemode RAPID10;
+  public static final util.Gamemode RAPID15I10;
+  public static final util.Gamemode RAPID30;
+  private final int minutes;
+  private final int incrementSecs;
+  private static final util.Gamemode[] $VALUES;
+  public static util.Gamemode[] values();
+  public static util.Gamemode valueOf(java.lang.String);
+  private util.Gamemode(int, int);
+  public int getSeconds();
+  public int getIncrementSecs();
+  private static util.Gamemode[] $values();
+  static {};
+}

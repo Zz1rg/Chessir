@@ -1,0 +1,5 @@
+Compiled from "SceneController.java"
+class controller.SceneController$GamemodeBtn extends javafx.scene.control.Button {
+  controller.SceneController$GamemodeBtn(util.Gamemode, java.lang.String);
+  private static void lambda$new$0(util.Gamemode, javafx.event.ActionEvent);
+}

@@ -1,0 +1,15 @@
+Compiled from "MoveRecord.java"
+public final class util.MoveRecord extends java.lang.Record {
+  private final main.Move move;
+  private final int enPassantTile;
+  private final boolean isPieceFirstMove;
+  private final boolean isCastle;
+  public util.MoveRecord(main.Move, int, boolean, boolean);
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public main.Move move();
+  public int enPassantTile();
+  public boolean isPieceFirstMove();
+  public boolean isCastle();
+}

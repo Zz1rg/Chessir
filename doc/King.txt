@@ -1,0 +1,7 @@
+Compiled from "King.java"
+public class pieces.King extends pieces.Piece {
+  public pieces.King(main.Board, int, int, boolean);
+  public boolean isValidMovement(int, int);
+  public boolean canMove();
+  private boolean canCastle(int, int);
+}

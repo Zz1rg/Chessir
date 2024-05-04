@@ -1,0 +1,18 @@
+Compiled from "GameController.java"
+public class controller.GameController {
+  private final main.Board board;
+  private final gui.Stopwatch blackStopwatch;
+  private final gui.Stopwatch whiteStopwatch;
+  private boolean isWhiteTurn;
+  public controller.GameController(main.Board);
+  public void swapTurn();
+  public void switchTimer();
+  public boolean isWhiteTurn();
+  public void endGame();
+  public void checkForMate(java.lang.Boolean);
+  private boolean currentPlayerCanMove();
+  public void resetGame();
+  public void undoMove();
+  public void updateMoveHistory();
+  public void timeout(util.Team);
+}

@@ -1,0 +1,24 @@
+Compiled from "MoveType.java"
+public final class util.MoveType extends java.lang.Enum<util.MoveType> {
+  public static final util.MoveType HORIZONTAL;
+  public static final util.MoveType VERTICAL;
+  public static final util.MoveType CROSS;
+  public static final util.MoveType DIAGONAL;
+  public static final util.MoveType KING;
+  public static final util.MoveType KNIGHT;
+  public static final util.MoveType WHITE_PAWN_ATTACK;
+  public static final util.MoveType BLACK_PAWN_ATTACK;
+  public static final util.MoveType WHITE_PAWN_FIRST_MOVE;
+  public static final util.MoveType BLACK_PAWN_FIRST_MOVE;
+  public static final util.MoveType WHITE_PAWN_NORMAL_MOVE;
+  public static final util.MoveType BLACK_PAWN_NORMAL_MOVE;
+  private final java.util.ArrayList<util.Coordinate> relativeCoordinates;
+  private static final util.MoveType[] $VALUES;
+  public static util.MoveType[] values();
+  public static util.MoveType valueOf(java.lang.String);
+  private util.MoveType(java.util.ArrayList<util.Coordinate>);
+  private util.MoveType();
+  public java.util.ArrayList<util.Coordinate> getRelativeCoordinates();
+  private static util.MoveType[] $values();
+  static {};
+}

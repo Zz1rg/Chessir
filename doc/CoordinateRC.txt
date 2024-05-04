@@ -1,0 +1,4 @@
+Compiled from "CoordinateRC.java"
+public class util.CoordinateRC extends util.Coordinate {
+  public util.CoordinateRC(int, int);
+}

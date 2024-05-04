@@ -1,0 +1,5 @@
+Compiled from "GameController.java"
+class controller.GameController$1 {
+  static final int[] $SwitchMap$util$Team;
+  static {};
+}

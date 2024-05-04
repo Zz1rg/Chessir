@@ -1,0 +1,4 @@
+Compiled from "CoordinateCR.java"
+public class util.CoordinateCR extends util.Coordinate {
+  public util.CoordinateCR(int, int);
+}

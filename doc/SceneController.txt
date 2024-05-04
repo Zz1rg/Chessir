@@ -1,0 +1,12 @@
+Compiled from "SceneController.java"
+public final class controller.SceneController {
+  public controller.SceneController();
+  public static void switchToBoard(util.Gamemode);
+  public static void switchToMainMenu();
+  public static void switchToEndGame(util.EndGame, util.Team);
+  private static void showScene(javafx.scene.Parent);
+  private static void lambda$switchToEndGame$3(javafx.event.ActionEvent);
+  private static void lambda$switchToEndGame$2(javafx.event.ActionEvent);
+  private static void lambda$switchToMainMenu$1(javafx.event.ActionEvent);
+  private static void lambda$switchToBoard$0(main.Board, javafx.event.ActionEvent);
+}

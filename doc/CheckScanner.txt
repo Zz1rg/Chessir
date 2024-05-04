@@ -1,0 +1,16 @@
+Compiled from "CheckScanner.java"
+public class main.CheckScanner {
+  main.Board board;
+  static final boolean $assertionsDisabled;
+  public main.CheckScanner(main.Board);
+  public boolean isKingChecked(main.Move, boolean);
+  private boolean hitByRook(int, int, pieces.Piece, int, int, int, int, boolean);
+  private boolean hitByBishop(int, int, pieces.Piece, int, int, int, int, boolean);
+  private boolean hitByKnight(int, int, pieces.Piece, int, int);
+  private boolean checkKnight(pieces.Piece, pieces.Piece, int, int);
+  private boolean hitByKing(pieces.Piece, int, int);
+  private boolean checkKing(pieces.Piece, pieces.Piece);
+  private boolean hitByPawn(int, int, pieces.Piece, int, int);
+  private boolean checkPawn(pieces.Piece, pieces.Piece, int, int);
+  static {};
+}

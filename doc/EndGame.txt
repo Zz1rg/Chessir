@@ -1,0 +1,12 @@
+Compiled from "EndGame.java"
+public final class util.EndGame extends java.lang.Enum<util.EndGame> {
+  public static final util.EndGame CHECKMATE;
+  public static final util.EndGame STALEMATE;
+  public static final util.EndGame TIMEOUT;
+  private static final util.EndGame[] $VALUES;
+  public static util.EndGame[] values();
+  public static util.EndGame valueOf(java.lang.String);
+  private util.EndGame();
+  private static util.EndGame[] $values();
+  static {};
+}

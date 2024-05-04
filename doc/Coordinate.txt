@@ -1,0 +1,9 @@
+Compiled from "Coordinate.java"
+public abstract class util.Coordinate {
+  protected final int row;
+  protected final int col;
+  protected util.Coordinate(int, int);
+  public int getRow();
+  public int getCol();
+  public util.Coordinate add(util.Coordinate);
+}

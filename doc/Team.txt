@@ -1,0 +1,11 @@
+Compiled from "Team.java"
+public final class util.Team extends java.lang.Enum<util.Team> {
+  public static final util.Team BLACK;
+  public static final util.Team WHITE;
+  private static final util.Team[] $VALUES;
+  public static util.Team[] values();
+  public static util.Team valueOf(java.lang.String);
+  private util.Team();
+  private static util.Team[] $values();
+  static {};
+}

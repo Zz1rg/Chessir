@@ -1,0 +1,21 @@
+Compiled from "Stopwatch.java"
+public class gui.Stopwatch extends javafx.scene.layout.HBox {
+  private final util.Team team;
+  private controller.GameController gameController;
+  private long timerMs;
+  private long incrementMs;
+  private final javafx.animation.AnimationTimer animationTimer;
+  private final javafx.scene.control.Label timeLabel;
+  public gui.Stopwatch(util.Team, int, int);
+  public gui.Stopwatch(util.Team);
+  public void startTimer(int);
+  public void startTimer();
+  public void stopTimer();
+  private void setTimeText(long);
+  public void setTimerMs(long);
+  public void setIncrementMs(long);
+  public util.Team getTeam();
+  public void addIncrement();
+  public void setGameController(controller.GameController);
+  public void resetTimer(int, int);
+}

@@ -1,0 +1,7 @@
+Compiled from "UndoButton.java"
+class gui.UndoButton$1 implements javafx.event.EventHandler<javafx.scene.input.MouseEvent> {
+  final main.Board val$board;
+  gui.UndoButton$1();
+  public void handle(javafx.scene.input.MouseEvent);
+  public void handle(javafx.event.Event);
+}

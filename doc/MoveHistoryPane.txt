@@ -1,0 +1,12 @@
+Compiled from "MoveHistoryPane.java"
+public class gui.MoveHistoryPane extends javafx.scene.layout.Pane {
+  private final main.Board board;
+  private final javafx.scene.layout.VBox moveHistory;
+  private final javafx.scene.control.ScrollPane scrollPane;
+  private final char[] colNames;
+  public gui.MoveHistoryPane(main.Board);
+  public void initScrollPane();
+  public void initMoveHistory();
+  public void addMoveRecord(java.util.ArrayList<util.MoveRecord>);
+  public void reset();
+}

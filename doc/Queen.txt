@@ -1,0 +1,7 @@
+Compiled from "Queen.java"
+public class pieces.Queen extends pieces.Piece {
+  public pieces.Queen(main.Board, int, int, boolean);
+  public boolean isValidMovement(int, int);
+  public boolean moveCollidesWithPiece(int, int);
+  public boolean canMove();
+}

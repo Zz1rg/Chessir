@@ -1,0 +1,7 @@
+Compiled from "RestartButton.java"
+class gui.RestartButton$1 implements javafx.event.EventHandler<javafx.scene.input.MouseEvent> {
+  final main.Board val$board;
+  gui.RestartButton$1();
+  public void handle(javafx.scene.input.MouseEvent);
+  public void handle(javafx.event.Event);
+}

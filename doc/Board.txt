@@ -1,0 +1,45 @@
+Compiled from "Board.java"
+public class main.Board extends javafx.scene.layout.GridPane {
+  public final int tileSize;
+  public final int cols;
+  public final int rows;
+  private boolean kingChecked;
+  private final gui.Stopwatch whiteStopwatch;
+  private final gui.Stopwatch blackStopwatch;
+  private final controller.GameController gameController;
+  public java.util.ArrayList<pieces.Piece> pieceList;
+  public java.util.ArrayList<util.MoveRecord> moveHistory;
+  public pieces.Piece selectedPiece;
+  public main.CheckScanner checkScanner;
+  private int enPassantTile;
+  public javafx.scene.layout.BorderPane root;
+  public util.Gamemode gamemode;
+  public main.Board(javafx.scene.layout.BorderPane, util.Gamemode);
+  public void initBoard();
+  private void selectPiece(pieces.Piece);
+  public void addPieces();
+  public pieces.Piece getPiece(int, int);
+  public void makeMove(main.Move);
+  private void moveKing(main.Move);
+  public void movePawn(main.Move);
+  public void promotePawn(main.Move);
+  public void capture(pieces.Piece);
+  public boolean isValidMove(main.Move);
+  public boolean sameTeam(pieces.Piece, pieces.Piece);
+  public int getTileNum(int, int);
+  public pieces.Piece findKing(boolean);
+  public void paint();
+  public controller.GameController getGameController();
+  public main.Board getBoard();
+  public boolean isKingChecked();
+  public void setKingChecked(boolean);
+  public java.util.ArrayList<pieces.Piece> getPieceList();
+  public java.util.ArrayList<util.MoveRecord> getMoveHistory();
+  public javafx.scene.layout.BorderPane getRoot();
+  public gui.Stopwatch getBlackStopwatch();
+  public gui.Stopwatch getWhiteStopwatch();
+  public util.Gamemode getGamemode();
+  public int getEnPassantTile();
+  public void setEnPassantTile(int);
+  private void lambda$new$0(javafx.scene.input.MouseEvent);
+}

@@ -1,0 +1,6 @@
+Compiled from "Main.java"
+class main.Main$1 implements java.lang.Runnable {
+  final javafx.scene.media.MediaPlayer val$bgm;
+  main.Main$1();
+  public void run();
+}

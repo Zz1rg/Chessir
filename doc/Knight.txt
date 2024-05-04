@@ -1,0 +1,7 @@
+Compiled from "Knight.java"
+public class pieces.Knight extends pieces.Piece {
+  public pieces.Knight(main.Board, int, int, boolean);
+  public boolean isValidMovement(int, int);
+  public boolean moveCollidesWithPiece(int, int);
+  public boolean canMove();
+}

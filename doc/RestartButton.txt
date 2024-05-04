@@ -1,0 +1,5 @@
+Compiled from "RestartButton.java"
+public class gui.RestartButton extends javafx.scene.control.Button {
+  main.Board board;
+  public gui.RestartButton(main.Board);
+}

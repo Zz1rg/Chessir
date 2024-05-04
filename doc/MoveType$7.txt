@@ -1,0 +1,4 @@
+Compiled from "MoveType.java"
+class util.MoveType$7 extends java.util.ArrayList<util.Coordinate> {
+  util.MoveType$7();
+}

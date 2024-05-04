@@ -1,0 +1,9 @@
+Compiled from "Stopwatch.java"
+class gui.Stopwatch$1 extends javafx.animation.AnimationTimer {
+  private long startingMs;
+  private long startingTime;
+  final gui.Stopwatch this$0;
+  gui.Stopwatch$1(gui.Stopwatch);
+  public void handle(long);
+  public void stop();
+}

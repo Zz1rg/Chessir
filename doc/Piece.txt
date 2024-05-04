@@ -1,0 +1,33 @@
+Compiled from "Piece.java"
+public abstract class pieces.Piece extends javafx.scene.layout.HBox {
+  public boolean isFirstMove;
+  public int col;
+  public int row;
+  public int xPos;
+  public int yPos;
+  public boolean isWhite;
+  public java.lang.String name;
+  public int value;
+  javafx.scene.image.Image sprite;
+  main.Board board;
+  public pieces.Piece(main.Board);
+  public boolean isValidMovement(int, int);
+  public boolean moveCollidesWithPiece(int, int);
+  public void firstMoved();
+  public int getCol();
+  public void setCol(int);
+  public int getRow();
+  public void setRow(int);
+  public int getxPos();
+  public void setxPos(int);
+  public int getyPos();
+  public void setyPos(int);
+  public boolean isFirstMove();
+  public void setFirstMove(boolean);
+  public boolean isWhite();
+  public int getValue();
+  public void setValue(int);
+  public util.Coordinate getCoordinate();
+  public abstract boolean canMove();
+  protected boolean checkMovesFrom(java.util.ArrayList<util.Coordinate>);
+}

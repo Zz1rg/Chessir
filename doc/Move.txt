@@ -1,0 +1,17 @@
+Compiled from "Move.java"
+public class main.Move {
+  public int oldCol;
+  public int oldRow;
+  public int newCol;
+  public int newRow;
+  public pieces.Piece piece;
+  public pieces.Piece capturedPiece;
+  public main.Move(main.Board, pieces.Piece, int, int);
+  public main.Move(main.Board, pieces.Piece, util.Coordinate);
+  public int getOldCol();
+  public int getOldRow();
+  public int getNewCol();
+  public int getNewRow();
+  public pieces.Piece getPiece();
+  public pieces.Piece getCapturedPiece();
+}
