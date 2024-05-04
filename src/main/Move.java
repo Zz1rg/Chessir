@@ -14,8 +14,8 @@ public class Move {
 
     public Move(Board board, Piece piece, int newCol, int newRow) {
         this.piece = piece;
-        this.oldCol = piece.col;
-        this.oldRow = piece.row;
+        this.oldCol = piece.getCol();
+        this.oldRow = piece.getRow();
         this.newCol = newCol;
         this.newRow = newRow;
         this.capturedPiece = board.getPiece(newCol, newRow);

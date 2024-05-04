@@ -61,7 +61,7 @@ public class MoveHistoryPane extends Pane {
         for (MoveRecord moveRecord : moveRecords) {
             HBox moveBox = new HBox();
             Move move = moveRecord.move();
-            if (move.getPiece().isWhite) {
+            if (move.getPiece().isWhite()) {
                 moveBox.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, null, null)));
             } else {
                 moveBox.setBackground(new Background(new BackgroundFill(Color.GRAY, null, null)));
@@ -72,7 +72,7 @@ public class MoveHistoryPane extends Pane {
                 if (move.getPiece() instanceof Knight) {
                     moveString += "N ";
                 } else {
-                    moveString += move.getPiece().name.charAt(0) + " ";
+                    moveString += move.getPiece().getName().charAt(0) + " ";
                 }
             }
             moveString += colNames[move.getOldCol()] + "" + (move.getOldRow() + 1);

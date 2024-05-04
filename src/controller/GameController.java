@@ -76,7 +76,7 @@ public class GameController {
 
     private boolean currentPlayerCanMove() {
         for (Piece piece : board.pieceList) {
-            if (piece.isWhite == isWhiteTurn() && piece.canMove()) return true;
+            if (piece.isWhite() == isWhiteTurn() && piece.canMove()) return true;
         }
         return false;
     }

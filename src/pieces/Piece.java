@@ -11,22 +11,22 @@ import java.util.ArrayList;
 
 public abstract class Piece extends HBox {
 
-    public boolean isFirstMove = true;
-    public int col, row;
-    public int xPos, yPos;
+    protected boolean isFirstMove = true;
+    protected int col, row;
+    protected int xPos, yPos;
 
-    public boolean isWhite;
-    public String name;
-    public int value;
+    protected boolean isWhite;
+    protected String name;
+    protected int value;
 
-    Image sprite;
-
-    Board board;
+    protected Image sprite;
+    
+    protected Board board;
 
     public Piece(Board board) {
         this.board = board;
-        this.setPrefHeight(board.TILE_SIZE);
-        this.setPrefWidth(board.TILE_SIZE);
+        this.setPrefHeight(Board.TILE_SIZE);
+        this.setPrefWidth(Board.TILE_SIZE);
     }
 
     public boolean isValidMovement(int col, int row) {
@@ -109,4 +109,9 @@ public abstract class Piece extends HBox {
         }
         return false;
     }
+
+    public String getName() {
+        return name;
+    }
+
 }

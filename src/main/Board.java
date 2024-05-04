@@ -100,7 +100,7 @@ public class Board extends GridPane {
         if (piece == null) {
             return;
         }
-        if (piece.isWhite != gameController.isWhiteTurn()) {
+        if (piece.isWhite() != gameController.isWhiteTurn()) {
             return;
         }
         selectedPiece = piece;
@@ -135,7 +135,7 @@ public class Board extends GridPane {
 
     public Piece getPiece(int col, int row) {
         for (Piece piece : pieceList) {
-            if (piece.col == col && piece.row == row) {
+            if (piece.getCol() == col && piece.getRow() == row) {
                 return piece;
             }
         }
@@ -149,7 +149,7 @@ public class Board extends GridPane {
         }
 
         // add move record to move history before states change
-        if (move.piece instanceof King && Math.abs(move.newCol - move.piece.col) == 2) {
+        if (move.piece instanceof King && Math.abs(move.newCol - move.piece.getCol()) == 2) {
             moveHistory.add(new MoveRecord(move, getEnPassantTile(), move.piece.isFirstMove(), true));
         } else {
             moveHistory.add(new MoveRecord(move, getEnPassantTile(), move.piece.isFirstMove(), false));
@@ -161,10 +161,10 @@ public class Board extends GridPane {
         } else if (move.piece instanceof King) {
             moveKing(move);
         } else {
-            move.piece.col = move.newCol;
-            move.piece.row = move.newRow;
-            move.piece.xPos = move.newCol * TILE_SIZE;
-            move.piece.yPos = move.newRow * TILE_SIZE;
+            move.piece.setCol(move.newCol);
+            move.piece.setRow(move.newRow);
+            move.piece.setxPos(move.newCol * TILE_SIZE);
+            move.piece.setyPos(move.newRow * TILE_SIZE);
 
             if (move.piece.isFirstMove()) {
                 move.piece.firstMoved();
@@ -189,25 +189,25 @@ public class Board extends GridPane {
 
     private void moveKing(Move move) {
         //castling
-        if (Math.abs(move.newCol - move.piece.col) == 2) {
+        if (Math.abs(move.newCol - move.piece.getCol()) == 2) {
             Piece rook;
-            if (move.piece.col < move.newCol) {
-                rook = getPiece(7, move.piece.row);
+            if (move.piece.getCol() < move.newCol) {
+                rook = getPiece(7, move.piece.getRow());
                 rook.setCol(5);
             } else {
-                rook = getPiece(0, move.piece.row);
+                rook = getPiece(0, move.piece.getRow());
                 rook.setCol(3);
             }
             rook.setFirstMove(false);
             rook.setxPos(rook.getCol() * TILE_SIZE);
         }
 
-        move.piece.col = move.newCol;
-        move.piece.row = move.newRow;
-        move.piece.xPos = move.newCol * TILE_SIZE;
-        move.piece.yPos = move.newRow * TILE_SIZE;
+        move.piece.setCol(move.newCol);
+        move.piece.setRow(move.newRow);
+        move.piece.setxPos(move.newCol * TILE_SIZE);
+        move.piece.setyPos(move.newRow * TILE_SIZE);
 
-        if (move.piece.isFirstMove) {
+        if (move.piece.isFirstMove()) {
             move.piece.firstMoved();
         }
 
@@ -217,13 +217,13 @@ public class Board extends GridPane {
 
     public void movePawn(Move move) {
         //enPassant
-        int colorIndex = move.piece.isWhite ? 1 : -1;
-        int promotionRow = move.piece.isWhite ? 0 : 7;
+        int colorIndex = move.piece.isWhite() ? 1 : -1;
+        int promotionRow = move.piece.isWhite() ? 0 : 7;
 
         if (getTileNum(move.newCol, move.newRow) == enPassantTile) {
             move.capturedPiece = getPiece(move.newCol, move.newRow + colorIndex);
         }
-        if (Math.abs(move.newRow - move.piece.row) == 2) {
+        if (Math.abs(move.newRow - move.piece.getRow()) == 2) {
             enPassantTile = getTileNum(move.newCol, move.newRow + colorIndex);
         } else {
             enPassantTile = -1;
@@ -234,12 +234,12 @@ public class Board extends GridPane {
             promotePawn(move);
         }
 
-        move.piece.col = move.newCol;
-        move.piece.row = move.newRow;
-        move.piece.xPos = move.newCol * TILE_SIZE;
-        move.piece.yPos = move.newRow * TILE_SIZE;
+        move.piece.setCol(move.newCol);
+        move.piece.setRow(move.newRow);
+        move.piece.setxPos(move.newCol * TILE_SIZE);
+        move.piece.setyPos(move.newRow * TILE_SIZE);
 
-        if (move.piece.isFirstMove) {
+        if (move.piece.isFirstMove()) {
             move.piece.firstMoved();
         }
 
@@ -248,7 +248,7 @@ public class Board extends GridPane {
     }
 
     public void promotePawn(Move move) {
-        pieceList.add(new Queen(this, move.newCol, move.newRow, move.piece.isWhite));
+        pieceList.add(new Queen(this, move.newCol, move.newRow, move.piece.isWhite()));
         capture(move.piece);
     }
 
@@ -276,7 +276,7 @@ public class Board extends GridPane {
         if (piece1 == null || piece2 == null) {
             return false;
         }
-        return piece1.isWhite == piece2.isWhite;
+        return piece1.isWhite() == piece2.isWhite();
     }
 
     public int getTileNum(int col, int row) {
@@ -285,7 +285,7 @@ public class Board extends GridPane {
 
     public Piece findKing(boolean isWhite) {
         for (Piece piece : pieceList) {
-            if (piece instanceof King && piece.isWhite == isWhite) {
+            if (piece instanceof King && piece.isWhite() == isWhite) {
                 return piece;
             }
         }
@@ -338,7 +338,7 @@ public class Board extends GridPane {
 
         Piece king = findKing(gameController.isWhiteTurn());
         //paint checked king
-        if (checkScanner.isKingChecked(new Move(this, king, king.col, king.row), true) && !this.isKingChecked()) {
+        if (checkScanner.isKingChecked(new Move(this, king, king.getCol(), king.getRow()), true) && !this.isKingChecked()) {
             //System.out.println("King is checked");
             //checked king tile
             setKingChecked(true);
@@ -346,16 +346,16 @@ public class Board extends GridPane {
             redPane.setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
             redPane.setPrefHeight(TILE_SIZE);
             redPane.setPrefWidth(TILE_SIZE);
-            this.add(redPane, king.col, king.row);
+            this.add(redPane, king.getCol(), king.getRow());
             AudioClip sound = new AudioClip(ClassLoader.getSystemResource("notify.mp3").toString());
             sound.play();
-        } else if (checkScanner.isKingChecked(new Move(this, king, king.col, king.row), true) && this.isKingChecked()) {
+        } else if (checkScanner.isKingChecked(new Move(this, king, king.getCol(), king.getRow()), true) && this.isKingChecked()) {
             //System.out.println("King is still checked");
             Pane redPane = new Pane();
             redPane.setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
             redPane.setPrefHeight(TILE_SIZE);
             redPane.setPrefWidth(TILE_SIZE);
-            this.add(redPane, king.col, king.row);
+            this.add(redPane, king.getCol(), king.getRow());
         } else {
             //System.out.println("King is not checked");
             setKingChecked(false);
@@ -363,7 +363,7 @@ public class Board extends GridPane {
 
         //paint pieces
         for (Piece piece : pieceList) {
-            this.add(piece, piece.xPos / TILE_SIZE, piece.yPos / TILE_SIZE);
+            this.add(piece, piece.getxPos() / TILE_SIZE, piece.getyPos() / TILE_SIZE);
         }
     }
 
