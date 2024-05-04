@@ -131,11 +131,6 @@ public class Board extends GridPane {
         pieceList.add(new Bishop(this, 5, 7, true));
         pieceList.add(new Queen(this, 3, 0, false));
         pieceList.add(new Queen(this, 3, 7, true));
-
-        /*pieceList.add(new Queen(this, 1, 2, false));
-        pieceList.add(new Queen(this, 0, 1, false));
-        pieceList.add(new King(this, 7, 7, false));
-        pieceList.add(new King(this, 7, 0, true));*/
     }
 
     public Piece getPiece(int col, int row) {
@@ -179,7 +174,7 @@ public class Board extends GridPane {
             gameController.swapTurn();
         }
         selectedPiece = null;
-        gameController.checkForMate(gameController.isWhiteTurn(), root);
+        gameController.checkForMate(gameController.isWhiteTurn());
         gameController.updateMoveHistory();
         AudioClip sound;
         URL resource;
@@ -386,14 +381,6 @@ public class Board extends GridPane {
 
     public void setKingChecked(boolean kingChecked) {
         this.kingChecked = kingChecked;
-    }
-
-    public int getCols() {
-        return cols;
-    }
-
-    public int getRows() {
-        return rows;
     }
 
     public ArrayList<Piece> getPieceList() {

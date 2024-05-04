@@ -4,7 +4,6 @@ import gui.MoveHistoryPane;
 import gui.Stopwatch;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import main.Board;
 import main.Move;
@@ -55,7 +54,7 @@ public class GameController {
     }
 
     // Called everytime after making a move
-    public void checkForMate(Boolean isWhite, BorderPane root) {
+    public void checkForMate(Boolean isWhite) {
         if (currentPlayerCanMove()) return;
 
         Piece king = board.findKing(isWhite);
