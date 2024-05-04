@@ -4,7 +4,7 @@ import pieces.*;
 
 public class CheckScanner {
 
-    Board board;
+    private Board board;
 
     public CheckScanner(Board board) {
         this.board = board;
