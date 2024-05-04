@@ -75,7 +75,7 @@ public class GameController {
     }
 
     private boolean currentPlayerCanMove() {
-        for (Piece piece : board.pieceList) {
+        for (Piece piece : board.getPieceList()) {
             if (piece.isWhite() == isWhiteTurn() && piece.canMove()) return true;
         }
         return false;
@@ -88,9 +88,9 @@ public class GameController {
     }
 
     public void undoMove() {
-        if (board.moveHistory.isEmpty()) return;
-        MoveRecord lastMoveRecord = board.moveHistory.get(board.moveHistory.size() - 1);
-        board.moveHistory.remove(board.getMoveHistory().size() - 1);
+        if (board.getMoveHistory().isEmpty()) return;
+        MoveRecord lastMoveRecord = board.getMoveHistory().get(board.getMoveHistory().size() - 1);
+        board.getMoveHistory().remove(board.getMoveHistory().size() - 1);
         Move lastMove = lastMoveRecord.move();
         board.setEnPassantTile(lastMoveRecord.enPassantTile());
 

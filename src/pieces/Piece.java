@@ -20,7 +20,7 @@ public abstract class Piece extends HBox {
     protected int value;
 
     protected Image sprite;
-    
+
     protected Board board;
 
     public Piece(Board board) {

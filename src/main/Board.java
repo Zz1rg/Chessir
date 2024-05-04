@@ -24,22 +24,22 @@ public class Board extends GridPane {
     private final Stopwatch whiteStopwatch, blackStopwatch;
     private final GameController gameController;
 
-    public ArrayList<Piece> pieceList = new ArrayList<>();
+    private final ArrayList<Piece> pieceList = new ArrayList<>();
 
-    public ArrayList<MoveRecord> moveHistory = new ArrayList<>();
+    private final ArrayList<MoveRecord> moveHistory = new ArrayList<>();
 
-    public Piece selectedPiece;
+    private Piece selectedPiece;
 
     // TODO: migrate game logic into GameController class ?
     //  (e.g. checkScanner, enPassantTile, makeMove, isValidMove, sameTeam, getPiece, findKing, capture, getTileNum, paint)
 
-    public CheckScanner checkScanner = new CheckScanner(this);
+    public final CheckScanner checkScanner = new CheckScanner(this);
 
     private int enPassantTile = -1;
 
-    public BorderPane root;
+    private final BorderPane root;
 
-    public Gamemode gamemode;
+    private final Gamemode gamemode;
 
     public Board(BorderPane root, Gamemode gamemode) {
         this.root = root;
@@ -409,6 +409,10 @@ public class Board extends GridPane {
 
     public int getEnPassantTile() {
         return enPassantTile;
+    }
+
+    public Piece getSelectedPiece() {
+        return selectedPiece;
     }
 
     public void setEnPassantTile(int enPassantTile) {
