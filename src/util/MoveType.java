@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 public enum MoveType {
     HORIZONTAL(new ArrayList<>() {{
-        // actually it's Board.BOARD_ROWS - 1, but just in case
         for (int i = 1; i < Board.BOARD_ROWS; i++) {
             add(new CoordinateRC(0, -i));
             add(new CoordinateRC(0, i));
