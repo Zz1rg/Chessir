@@ -17,7 +17,7 @@ public abstract class Coordinate {
         return col;
     }
 
-    public Coordinate add(Coordinate coordinate) {
+    public Coordinate add(final Coordinate coordinate) {
         return new CoordinateRC(this.row + coordinate.getRow(), this.col + coordinate.getCol());
     }
 }
