@@ -15,9 +15,9 @@ import java.util.ArrayList;
 
 public class Board extends GridPane {
 
-    public final int tileSize = 75;
-    public final int cols = 8;
-    public final int rows = 8;
+    public static final int TILE_SIZE = 75;
+    public static final int BOARD_COLS = 8;
+    public static final int BOARD_ROWS = 8;
 
     private boolean kingChecked = false;
 
@@ -44,10 +44,10 @@ public class Board extends GridPane {
     public Board(BorderPane root, Gamemode gamemode) {
         this.root = root;
         this.gamemode = gamemode;
-        this.setPrefHeight(rows * tileSize);
-        this.setMaxHeight(rows * tileSize);
-        this.setPrefWidth(cols * tileSize);
-        this.setMaxWidth(cols * tileSize);
+        this.setPrefHeight(BOARD_ROWS * TILE_SIZE);
+        this.setMaxHeight(BOARD_ROWS * TILE_SIZE);
+        this.setPrefWidth(BOARD_COLS * TILE_SIZE);
+        this.setMaxWidth(BOARD_COLS * TILE_SIZE);
         this.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(5))));
 
         this.whiteStopwatch = new Stopwatch(Team.WHITE, gamemode.getSeconds(), gamemode.getIncrementSecs());
@@ -56,16 +56,16 @@ public class Board extends GridPane {
         this.gameController = new GameController(this);
 
         //set numbers of col and row
-        for (int i = 0; i < cols; i++) {
-            this.getColumnConstraints().add(new ColumnConstraints(tileSize));
+        for (int i = 0; i < BOARD_COLS; i++) {
+            this.getColumnConstraints().add(new ColumnConstraints(TILE_SIZE));
         }
-        for (int i = 0; i < rows; i++) {
-            this.getRowConstraints().add(new RowConstraints(tileSize));
+        for (int i = 0; i < BOARD_ROWS; i++) {
+            this.getRowConstraints().add(new RowConstraints(TILE_SIZE));
         }
 
         this.setOnMousePressed(e -> {
-            int col = (int) (e.getX() / tileSize);
-            int row = (int) (e.getY() / tileSize);
+            int col = (int) (e.getX() / TILE_SIZE);
+            int row = (int) (e.getY() / TILE_SIZE);
             Piece clickedPiece = getPiece(col, row);
 
             if (selectedPiece == null) {
@@ -163,8 +163,8 @@ public class Board extends GridPane {
         } else {
             move.piece.col = move.newCol;
             move.piece.row = move.newRow;
-            move.piece.xPos = move.newCol * tileSize;
-            move.piece.yPos = move.newRow * tileSize;
+            move.piece.xPos = move.newCol * TILE_SIZE;
+            move.piece.yPos = move.newRow * TILE_SIZE;
 
             if (move.piece.isFirstMove()) {
                 move.piece.firstMoved();
@@ -199,13 +199,13 @@ public class Board extends GridPane {
                 rook.setCol(3);
             }
             rook.setFirstMove(false);
-            rook.setxPos(rook.getCol() * tileSize);
+            rook.setxPos(rook.getCol() * TILE_SIZE);
         }
 
         move.piece.col = move.newCol;
         move.piece.row = move.newRow;
-        move.piece.xPos = move.newCol * tileSize;
-        move.piece.yPos = move.newRow * tileSize;
+        move.piece.xPos = move.newCol * TILE_SIZE;
+        move.piece.yPos = move.newRow * TILE_SIZE;
 
         if (move.piece.isFirstMove) {
             move.piece.firstMoved();
@@ -236,8 +236,8 @@ public class Board extends GridPane {
 
         move.piece.col = move.newCol;
         move.piece.row = move.newRow;
-        move.piece.xPos = move.newCol * tileSize;
-        move.piece.yPos = move.newRow * tileSize;
+        move.piece.xPos = move.newCol * TILE_SIZE;
+        move.piece.yPos = move.newRow * TILE_SIZE;
 
         if (move.piece.isFirstMove) {
             move.piece.firstMoved();
@@ -280,7 +280,7 @@ public class Board extends GridPane {
     }
 
     public int getTileNum(int col, int row) {
-        return row * rows + col;
+        return row * BOARD_ROWS + col;
     }
 
     public Piece findKing(boolean isWhite) {
@@ -294,18 +294,18 @@ public class Board extends GridPane {
 
     public void paint() {
         //paint board
-        for (int r = 0; r < rows; r++) {
-            for (int c = 0; c < cols; c++) {
+        for (int r = 0; r < BOARD_ROWS; r++) {
+            for (int c = 0; c < BOARD_COLS; c++) {
                 //black tile
                 Pane blackPane = new Pane();
                 blackPane.setBackground(new Background(new BackgroundFill(Color.color(234.0 / 255, 191.0 / 255, 153.0 / 255), null, null)));
-                blackPane.setPrefHeight(tileSize);
-                blackPane.setPrefWidth(tileSize);
+                blackPane.setPrefHeight(TILE_SIZE);
+                blackPane.setPrefWidth(TILE_SIZE);
                 //white tile
                 Pane whitePane = new Pane();
                 whitePane.setBackground(new Background(new BackgroundFill(Color.color(178.0 / 255, 110.0 / 255, 55.0 / 255), null, null)));
-                whitePane.setPrefHeight(tileSize);
-                whitePane.setPrefWidth(tileSize);
+                whitePane.setPrefHeight(TILE_SIZE);
+                whitePane.setPrefWidth(TILE_SIZE);
                 if ((c + r) % 2 == 0) {
                     this.add(blackPane, c, r);
                 } else {
@@ -318,18 +318,18 @@ public class Board extends GridPane {
             // paint selected piece
             Pane bluePane = new Pane();
             bluePane.setBackground(new Background(new BackgroundFill(Color.color(80.0 / 255, 64.0 / 255, 1, 0.8), null, null)));
-            bluePane.setPrefHeight(tileSize);
-            bluePane.setPrefWidth(tileSize);
+            bluePane.setPrefHeight(TILE_SIZE);
+            bluePane.setPrefWidth(TILE_SIZE);
             this.add(bluePane, selectedPiece.getCol(), selectedPiece.getRow());
             //paint movable squares
-            for (int r = 0; r < rows; r++) {
-                for (int c = 0; c < cols; c++) {
+            for (int r = 0; r < BOARD_ROWS; r++) {
+                for (int c = 0; c < BOARD_COLS; c++) {
                     if (isValidMove(new Move(this, selectedPiece, c, r))) {
                         //available move tile
                         Pane greenPane = new Pane();
                         greenPane.setBackground(new Background(new BackgroundFill(Color.color(0, 255.0 / 255, 0, 50.0 / 100), null, null)));
-                        greenPane.setPrefHeight(tileSize);
-                        greenPane.setPrefWidth(tileSize);
+                        greenPane.setPrefHeight(TILE_SIZE);
+                        greenPane.setPrefWidth(TILE_SIZE);
                         this.add(greenPane, c, r);
                     }
                 }
@@ -344,8 +344,8 @@ public class Board extends GridPane {
             setKingChecked(true);
             Pane redPane = new Pane();
             redPane.setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
-            redPane.setPrefHeight(tileSize);
-            redPane.setPrefWidth(tileSize);
+            redPane.setPrefHeight(TILE_SIZE);
+            redPane.setPrefWidth(TILE_SIZE);
             this.add(redPane, king.col, king.row);
             AudioClip sound = new AudioClip(ClassLoader.getSystemResource("notify.mp3").toString());
             sound.play();
@@ -353,8 +353,8 @@ public class Board extends GridPane {
             //System.out.println("King is still checked");
             Pane redPane = new Pane();
             redPane.setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
-            redPane.setPrefHeight(tileSize);
-            redPane.setPrefWidth(tileSize);
+            redPane.setPrefHeight(TILE_SIZE);
+            redPane.setPrefWidth(TILE_SIZE);
             this.add(redPane, king.col, king.row);
         } else {
             //System.out.println("King is not checked");
@@ -363,7 +363,7 @@ public class Board extends GridPane {
 
         //paint pieces
         for (Piece piece : pieceList) {
-            this.add(piece, piece.xPos / tileSize, piece.yPos / tileSize);
+            this.add(piece, piece.xPos / TILE_SIZE, piece.yPos / TILE_SIZE);
         }
     }
 

@@ -20,7 +20,7 @@ import util.EndGame;
 import util.Gamemode;
 import util.Team;
 
-import static main.Main.appStage;
+import static main.Main.APP_STAGE;
 
 public final class SceneController {
 
@@ -170,8 +170,8 @@ public final class SceneController {
 
     private static void showScene(Parent root) {
         Scene scene = new Scene(root, 1100, 950);
-        appStage.setScene(scene);
-        appStage.show();
+        APP_STAGE.setScene(scene);
+        APP_STAGE.show();
     }
 
     private static class GamemodeBtn extends Button {

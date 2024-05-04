@@ -1,31 +1,48 @@
 package util;
 
+import main.Board;
+
 import java.util.ArrayList;
 
 public enum MoveType {
-    HORIZONTAL(new ArrayList<Coordinate>() {{
-        add(new CoordinateRC(0, -1));
-        add(new CoordinateRC(0, 1));
+    HORIZONTAL(new ArrayList<>() {{
+        // actually it's Board.BOARD_ROWS - 1, but just in case
+        for (int i = 1; i < Board.BOARD_ROWS; i++) {
+            add(new CoordinateRC(0, -i));
+            add(new CoordinateRC(0, i));
+        }
     }}),
-    VERTICAL(new ArrayList<Coordinate>() {{
-        add(new CoordinateRC(-1, 0));
-        add(new CoordinateRC(1, 0));
+    VERTICAL(new ArrayList<>() {{
+        for (int i = 1; i < Board.BOARD_COLS; i++) {
+            add(new CoordinateRC(-i, 0));
+            add(new CoordinateRC(i, 0));
+        }
     }}),
-    CROSS(new ArrayList<Coordinate>() {{
+    CROSS(new ArrayList<>() {{
         addAll(MoveType.HORIZONTAL.getRelativeCoordinates());
         addAll(MoveType.VERTICAL.getRelativeCoordinates());
     }}),
-    DIAGONAL(new ArrayList<Coordinate>() {{
+    DIAGONAL(new ArrayList<>() {{
+        // assuming BOARD_COLS == BOARD_ROWS
+        for (int i = 1; i < Board.BOARD_COLS; i++) {
+            add(new CoordinateRC(-i, -i));
+            add(new CoordinateRC(-i, i));
+            add(new CoordinateRC(i, -i));
+            add(new CoordinateRC(i, i));
+        }
+    }}),
+    KING(new ArrayList<>() {{
         add(new CoordinateRC(-1, -1));
+        add(new CoordinateRC(-1, 0));
         add(new CoordinateRC(-1, 1));
+        add(new CoordinateRC(0, -1));
+//      add(new CoordinateRC(0, 0));
+        add(new CoordinateRC(0, 1));
         add(new CoordinateRC(1, -1));
+        add(new CoordinateRC(1, 0));
         add(new CoordinateRC(1, 1));
     }}),
-    KING(new ArrayList<Coordinate>() {{
-        addAll(MoveType.CROSS.getRelativeCoordinates());
-        addAll(MoveType.DIAGONAL.getRelativeCoordinates());
-    }}),
-    KNIGHT(new ArrayList<Coordinate>() {{
+    KNIGHT(new ArrayList<>() {{
         add(new CoordinateRC(-1, -2));
         add(new CoordinateRC(-2, -1));
         add(new CoordinateRC(-2, 1));
@@ -36,31 +53,31 @@ public enum MoveType {
         add(new CoordinateRC(1, -2));
     }}),
 
-    WHITE_PAWN_ATTACK(new ArrayList<Coordinate>() {{
+    WHITE_PAWN_ATTACK(new ArrayList<>() {{
         add(new CoordinateRC(-1, -1));
         add(new CoordinateRC(-1, 1));
     }}),
 
-    BLACK_PAWN_ATTACK(new ArrayList<Coordinate>() {{
+    BLACK_PAWN_ATTACK(new ArrayList<>() {{
         add(new CoordinateRC(1, -1));
         add(new CoordinateRC(1, 1));
     }}),
 
-    WHITE_PAWN_FIRST_MOVE(new ArrayList<Coordinate>() {{
+    WHITE_PAWN_FIRST_MOVE(new ArrayList<>() {{
         add(new CoordinateRC(-1, 0));
         add(new CoordinateRC(-2, 0));
     }}),
 
-    BLACK_PAWN_FIRST_MOVE(new ArrayList<Coordinate>() {{
+    BLACK_PAWN_FIRST_MOVE(new ArrayList<>() {{
         add(new CoordinateRC(1, 0));
         add(new CoordinateRC(2, 0));
     }}),
 
-    WHITE_PAWN_NORMAL_MOVE(new ArrayList<Coordinate>() {{
+    WHITE_PAWN_NORMAL_MOVE(new ArrayList<>() {{
         add(new CoordinateRC(-1, 0));
     }}),
 
-    BLACK_PAWN_NORMAL_MOVE(new ArrayList<Coordinate>() {{
+    BLACK_PAWN_NORMAL_MOVE(new ArrayList<>() {{
         add(new CoordinateRC(1, 0));
     }});
 

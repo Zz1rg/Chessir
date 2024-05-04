@@ -97,13 +97,13 @@ public class GameController {
         Piece lastPiece = lastMove.getPiece();
         lastPiece.setCol(lastMove.getOldCol());
         lastPiece.setRow(lastMove.getOldRow());
-        lastPiece.setxPos(lastMove.getOldCol() * board.tileSize);
-        lastPiece.setyPos(lastMove.getOldRow() * board.tileSize);
+        lastPiece.setxPos(lastMove.getOldCol() * board.TILE_SIZE);
+        lastPiece.setyPos(lastMove.getOldRow() * board.TILE_SIZE);
         lastPiece.setFirstMove(lastMoveRecord.isPieceFirstMove());
         if (lastMoveRecord.isCastle()) {
             Piece rook = board.getPiece(lastMove.getNewCol() == 6 ? 5 : 3, lastMove.getNewRow());
             rook.setCol(lastMove.getNewCol() == 6 ? 7 : 0);
-            rook.setxPos(rook.getCol() * board.tileSize);
+            rook.setxPos(rook.getCol() * board.TILE_SIZE);
             rook.setFirstMove(lastMoveRecord.isPieceFirstMove());
         }
 

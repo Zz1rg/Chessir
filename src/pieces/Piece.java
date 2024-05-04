@@ -25,8 +25,8 @@ public abstract class Piece extends HBox {
 
     public Piece(Board board) {
         this.board = board;
-        this.setPrefHeight(board.tileSize);
-        this.setPrefWidth(board.tileSize);
+        this.setPrefHeight(board.TILE_SIZE);
+        this.setPrefWidth(board.TILE_SIZE);
     }
 
     public boolean isValidMovement(int col, int row) {

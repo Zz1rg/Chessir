@@ -10,23 +10,19 @@ import javafx.util.Duration;
 import java.net.URL;
 
 public class Main extends Application {
-    public static Stage appStage;
+    public static Stage APP_STAGE;
 
     public static void main(String[] args) {
         URL resource = ClassLoader.getSystemResource("sincerely.mp3");
         MediaPlayer bgm = new MediaPlayer(new Media(resource.toString()));
-        bgm.setOnEndOfMedia(new Runnable() {
-            public void run() {
-                bgm.seek(Duration.ZERO);
-            }
-        });
+        bgm.setOnEndOfMedia(() -> bgm.seek(Duration.ZERO));
         bgm.play();
         launch();
     }
 
     @Override
     public void start(Stage stage) throws Exception {
-        appStage = stage;
+        APP_STAGE = stage;
         stage.setResizable(false);
         stage.setTitle("Chessir");
         SceneController.switchToMainMenu();
