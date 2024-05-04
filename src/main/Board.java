@@ -371,10 +371,6 @@ public class Board extends GridPane {
         return gameController;
     }
 
-    public Board getBoard() {
-        return this;
-    }
-
     public boolean isKingChecked() {
         return kingChecked;
     }
