@@ -6,7 +6,7 @@ import javafx.scene.input.MouseEvent;
 import main.Board;
 
 public class RestartButton extends Button {
-    Board board;
+    private Board board;
 
     public RestartButton(Board board) {
         this.board = board;
