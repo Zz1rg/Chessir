@@ -21,7 +21,7 @@ public abstract class Piece extends HBox {
 
     protected Image sprite;
 
-    protected Board board;
+    protected final Board board;
 
     public Piece(Board board) {
         this.board = board;

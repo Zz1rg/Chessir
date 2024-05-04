@@ -21,7 +21,7 @@ public class Main extends Application {
     }
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
         APP_STAGE = stage;
         stage.setResizable(false);
         stage.setTitle("Chessir");
