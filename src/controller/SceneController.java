@@ -169,7 +169,7 @@ public final class SceneController {
     }
 
     private static void showScene(Parent root) {
-        Scene scene = new Scene(root, 1100, 950);
+        Scene scene = new Scene(root, 1100, 900);
         APP_STAGE.setScene(scene);
         APP_STAGE.show();
     }
