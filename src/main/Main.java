@@ -10,7 +10,7 @@ import javafx.util.Duration;
 import java.net.URL;
 
 public class Main extends Application {
-    public static Stage APP_STAGE;
+    private static Stage APP_STAGE;
 
     public static void main(String[] args) {
         URL resource = ClassLoader.getSystemResource("sincerely.mp3");
@@ -26,5 +26,9 @@ public class Main extends Application {
         stage.setResizable(false);
         stage.setTitle("Chessir");
         SceneController.switchToMainMenu();
+    }
+
+    public static Stage getAppStage() {
+        return APP_STAGE;
     }
 }

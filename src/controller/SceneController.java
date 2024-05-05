@@ -16,11 +16,10 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import main.Board;
+import main.Main;
 import util.EndGame;
 import util.Gamemode;
 import util.Team;
-
-import static main.Main.APP_STAGE;
 
 public final class SceneController {
 
@@ -170,8 +169,8 @@ public final class SceneController {
 
     private static void showScene(Parent root) {
         Scene scene = new Scene(root, 1100, 900);
-        APP_STAGE.setScene(scene);
-        APP_STAGE.show();
+        Main.getAppStage().setScene(scene);
+        Main.getAppStage().show();
     }
 
     private static class GamemodeBtn extends Button {
