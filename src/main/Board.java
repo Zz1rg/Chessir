@@ -30,7 +30,7 @@ public class Board extends GridPane {
 
     private Piece selectedPiece;
 
-    public final CheckScanner checkScanner = new CheckScanner(this);
+    private final CheckScanner checkScanner = new CheckScanner(this);
 
     private int enPassantTile = -1;
 
@@ -414,4 +414,9 @@ public class Board extends GridPane {
         }
         this.enPassantTile = enPassantTile;
     }
+
+    public CheckScanner getCheckScanner() {
+        return checkScanner;
+    }
+
 }

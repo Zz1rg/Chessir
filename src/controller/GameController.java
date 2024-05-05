@@ -59,7 +59,7 @@ public class GameController {
 
         Piece king = board.findKing(isWhite);
         //Checkmate
-        if (board.checkScanner.isKingChecked(new Move(board, king, king.getCol(), king.getRow()), false)) {
+        if (board.getCheckScanner().isKingChecked(new Move(board, king, king.getCol(), king.getRow()), false)) {
             System.out.println("Checkmate");
             board.getBlackStopwatch().stopTimer();
             board.getWhiteStopwatch().stopTimer();
