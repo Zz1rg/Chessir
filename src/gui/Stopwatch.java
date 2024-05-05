@@ -97,7 +97,7 @@ public class Stopwatch extends HBox {
     }
 
 
-    public void setTimerMs(long timerMs) {
+    private void setTimerMs(long timerMs) {
         long maxMs = (99 * 60 + 59) * 1000;
         if (timerMs < 0) {
             timerMs = 0;
@@ -107,7 +107,7 @@ public class Stopwatch extends HBox {
         this.timerMs = timerMs;
     }
 
-    public void setIncrementMs(long incrementMs) {
+    private void setIncrementMs(long incrementMs) {
         if (incrementMs < 0) {
             incrementMs = 0;
         }
