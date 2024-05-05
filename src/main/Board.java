@@ -30,9 +30,6 @@ public class Board extends GridPane {
 
     private Piece selectedPiece;
 
-    // TODO: migrate game logic into GameController class ?
-    //  (e.g. checkScanner, enPassantTile, makeMove, isValidMove, sameTeam, getPiece, findKing, capture, getTileNum, paint)
-
     public final CheckScanner checkScanner = new CheckScanner(this);
 
     private int enPassantTile = -1;
