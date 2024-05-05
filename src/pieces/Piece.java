@@ -17,7 +17,6 @@ public abstract class Piece extends HBox {
 
     protected boolean isWhite;
     protected String name;
-    protected int value;
 
     protected Image sprite;
 
@@ -83,14 +82,6 @@ public abstract class Piece extends HBox {
 
     public boolean isWhite() {
         return isWhite;
-    }
-
-    public int getValue() {
-        return value;
-    }
-
-    public void setValue(int value) {
-        this.value = value;
     }
 
     public Coordinate getCoordinate() {
