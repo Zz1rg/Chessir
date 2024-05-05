@@ -6,6 +6,8 @@ public class CheckScanner {
 
     private final Board board;
 
+    private Piece lePiece;
+
     public CheckScanner(Board board) {
         this.board = board;
     }
@@ -13,6 +15,8 @@ public class CheckScanner {
     public boolean isKingChecked(Move move, boolean forPaint) {
         Piece king = board.findKing(move.piece.isWhite());
         assert king != null;
+
+        lePiece = move.piece;
 
         int kingCol = king.getCol();
         int kingRow = king.getRow();
@@ -44,14 +48,14 @@ public class CheckScanner {
             }
             Piece piece = board.getPiece(kingCol + (i * colVal), kingRow + (i * rowVal));
             if (forPaint) {
-                if (piece != null && piece != king) {
+                if (piece != null && piece != king && piece != lePiece) {
                     if (!board.sameTeam(piece, king) && (piece instanceof Rook || piece instanceof Queen)) {
                         return true;
                     }
                     break;
                 }
             } else {
-                if (piece != null && piece != board.getSelectedPiece() && piece != king) {
+                if (piece != null && piece != board.getSelectedPiece() && piece != king && piece != lePiece) {
                     if (!board.sameTeam(piece, king) && (piece instanceof Rook || piece instanceof Queen)) {
                         return true;
                     }
