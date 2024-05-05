@@ -9,11 +9,13 @@ import util.CoordinateRC;
 
 import java.util.ArrayList;
 
-public abstract class Piece extends HBox {
+public abstract class Piece extends HBox implements Movable {
 
     protected boolean isFirstMove = true;
-    protected int col, row;
-    protected int xPos, yPos;
+    protected int col;
+    protected int row;
+    protected int xPos;
+    protected int yPos;
 
     protected boolean isWhite;
     protected String name;

@@ -1,0 +1,301 @@
+@startuml
+class gui.RestartButton {
++ <<Create>> RestartButton(Board)
+}
+enum util.MoveType {
++  HORIZONTAL
++  VERTICAL
++  CROSS
++  DIAGONAL
++  KING
++  KNIGHT
++  WHITE_PAWN_ATTACK
++  BLACK_PAWN_ATTACK
++  WHITE_PAWN_FIRST_MOVE
++  BLACK_PAWN_FIRST_MOVE
++  WHITE_PAWN_NORMAL_MOVE
++  BLACK_PAWN_NORMAL_MOVE
+- ArrayList<Coordinate> relativeCoordinates
+~ <<Create>> MoveType(ArrayList<Coordinate>)
+~ <<Create>> MoveType()
++ ArrayList<Coordinate> getRelativeCoordinates()
+}
+class pieces.Pawn {
++ <<Create>> Pawn(Board,int,int,boolean)
++ boolean isValidMovement(int,int)
++ boolean canMove()
+}
+class main.Board {
++ {static} int TILE_SIZE
++ {static} int BOARD_COLS
++ {static} int BOARD_ROWS
+- boolean kingChecked
+- Stopwatch whiteStopwatch
+- GameController gameController
+- ArrayList<Piece> pieceList
+- ArrayList<MoveRecord> moveHistory
+- Piece selectedPiece
++ CheckScanner checkScanner
+- int enPassantTile
+- BorderPane root
+- Gamemode gamemode
++ <<Create>> Board(BorderPane,Gamemode)
++ void initBoard()
+- void selectPiece(Piece)
++ void addPieces()
++ Piece getPiece(int,int)
++ void makeMove(Move)
+- void moveKing(Move)
++ void movePawn(Move)
++ void promotePawn(Move)
++ void capture(Piece)
++ boolean isValidMove(Move)
++ boolean sameTeam(Piece,Piece)
++ int getTileNum(int,int)
++ Piece findKing(boolean)
++ void paint()
++ GameController getGameController()
++ boolean isKingChecked()
++ void setKingChecked(boolean)
++ ArrayList<Piece> getPieceList()
++ ArrayList<MoveRecord> getMoveHistory()
++ BorderPane getRoot()
++ Stopwatch getBlackStopwatch()
++ Stopwatch getWhiteStopwatch()
++ Gamemode getGamemode()
++ int getEnPassantTile()
++ Piece getSelectedPiece()
++ void setEnPassantTile(int)
+}
+class gui.MoveHistoryPane {
+- VBox moveHistory
+- ScrollPane scrollPane
+- char[] colNames
++ <<Create>> MoveHistoryPane()
++ void initScrollPane()
++ void initMoveHistory()
++ void addMoveRecord(ArrayList<MoveRecord>)
++ void reset()
+}
+class controller.SceneController {
++ {static} void switchToBoard(Gamemode)
++ {static} void switchToMainMenu()
++ {static} void switchToEndGame(EndGame,Team)
+- {static} void showScene(Parent)
+}
+class controller.SceneController$GamemodeBtn {
+~ <<Create>> GamemodeBtn(Gamemode,String)
+}
+class controller.SceneController$GamemodeRow {
+~ <<Create>> GamemodeRow(String)
+}
+interface pieces.Movable {
+~ boolean isValidMovement(int,int)
+~ boolean moveCollidesWithPiece(int,int)
+~ void firstMoved()
+}
+class pieces.King {
++ <<Create>> King(Board,int,int,boolean)
++ boolean isValidMovement(int,int)
++ boolean canMove()
+- boolean canCastle(int,int)
+}
+class util.CoordinateCR {
++ <<Create>> CoordinateCR(int,int)
+}
+enum util.Team {
++  BLACK
++  WHITE
+}
+abstract class pieces.Piece {
+# boolean isFirstMove
+# int col
+# int row
+# int xPos
+# int yPos
+# boolean isWhite
+# String name
+# Image sprite
+# Board board
++ <<Create>> Piece(Board)
++ boolean isValidMovement(int,int)
++ boolean moveCollidesWithPiece(int,int)
++ void firstMoved()
++ int getCol()
++ void setCol(int)
++ int getRow()
++ void setRow(int)
++ int getxPos()
++ void setxPos(int)
++ int getyPos()
++ void setyPos(int)
++ boolean isFirstMove()
++ void setFirstMove(boolean)
++ boolean isWhite()
++ Coordinate getCoordinate()
++ {abstract}boolean canMove()
+# boolean checkMovesFrom(ArrayList<Coordinate>)
++ String getName()
+}
+class controller.GameController {
+- Board board
+- Stopwatch blackStopwatch
+- boolean isWhiteTurn
++ <<Create>> GameController(Board)
++ void swapTurn()
++ void switchTimer()
++ boolean isWhiteTurn()
++ void endGame()
++ void checkForMate(Boolean)
+- boolean currentPlayerCanMove()
++ void resetGame()
++ void undoMove()
++ void updateMoveHistory()
++ void timeout(Team)
+}
+class main.Move {
++ int oldCol
++ int oldRow
++ int newCol
++ int newRow
++ Piece piece
+- Piece capturedPiece
++ <<Create>> Move(Board,Piece,int,int)
++ <<Create>> Move(Board,Piece,Coordinate)
++ int getOldCol()
++ int getOldRow()
++ int getNewCol()
++ int getNewRow()
++ Piece getPiece()
++ Piece getCapturedPiece()
++ void setCapturedPiece(Piece)
+}
+enum util.Gamemode {
++  BULLET1
++  BULLET1I1
++  BULLET2I1
++  BLITZ3
++  BLITZ3I2
++  BLITZ5
++  RAPID10
++  RAPID15I10
++  RAPID30
+- int minutes
+- int incrementSecs
+~ <<Create>> Gamemode(int,int)
++ int getSeconds()
++ int getIncrementSecs()
+}
+enum util.EndGame {
++  CHECKMATE
++  STALEMATE
++  TIMEOUT
+}
+class util.MoveRecord {
+- Move move
+- int enPassantTile
+- boolean isPieceFirstMove
+- boolean isCastle
++ <<Create>> MoveRecord(Move,int,boolean,boolean)
++ boolean isCastle()
++ boolean isPieceFirstMove()
++ Move move()
++ int enPassantTile()
+}
+class gui.UndoButton {
++ <<Create>> UndoButton(Board)
+}
+class pieces.Knight {
++ <<Create>> Knight(Board,int,int,boolean)
++ boolean isValidMovement(int,int)
++ boolean moveCollidesWithPiece(int,int)
++ boolean canMove()
+}
+class main.Main {
++ {static} Stage APP_STAGE
++ {static} void main(String[])
++ void start(Stage)
+}
+class util.CoordinateRC {
++ <<Create>> CoordinateRC(int,int)
+}
+class pieces.Queen {
++ <<Create>> Queen(Board,int,int,boolean)
++ boolean isValidMovement(int,int)
++ boolean moveCollidesWithPiece(int,int)
++ boolean canMove()
+}
+abstract class util.Coordinate {
+# int row
+# int col
+# <<Create>> Coordinate(int,int)
++ int getRow()
++ int getCol()
++ Coordinate add(Coordinate)
+}
+class pieces.Bishop {
++ <<Create>> Bishop(Board,int,int,boolean)
++ boolean isValidMovement(int,int)
++ boolean moveCollidesWithPiece(int,int)
++ boolean canMove()
+}
+class pieces.Rook {
++ <<Create>> Rook(Board,int,int,boolean)
++ boolean isValidMovement(int,int)
++ boolean moveCollidesWithPiece(int,int)
++ boolean canMove()
+}
+class gui.Stopwatch {
+- Team team
+- GameController gameController
+- long timerMs
+- long incrementMs
+- AnimationTimer animationTimer
+- Label timeLabel
++ <<Create>> Stopwatch(Team,int,int)
++ <<Create>> Stopwatch(Team)
++ void startTimer()
++ void stopTimer()
+- void setTimeText(long)
++ void setTimerMs(long)
++ void setIncrementMs(long)
++ Team getTeam()
++ void addIncrement()
++ void setGameController(GameController)
+}
+class main.CheckScanner {
+- Board board
++ <<Create>> CheckScanner(Board)
++ boolean isKingChecked(Move,boolean)
+- boolean hitByRook(int,int,Piece,int,int,int,int,boolean)
+- boolean hitByBishop(int,int,Piece,int,int,int,int,boolean)
+- boolean hitByKnight(int,int,Piece,int,int)
+- boolean checkKnight(Piece,Piece,int,int)
+- boolean hitByKing(Piece,int,int)
+- boolean checkKing(Piece,Piece)
+- boolean hitByPawn(int,int,Piece,int,int)
+- boolean checkPawn(Piece,Piece,int,int)
+}
+
+
+javafx.scene.control.Button <|-- gui.RestartButton
+pieces.Piece <|-- pieces.Pawn
+main.GridPane <|-- main.Board
+gui.Pane <|-- gui.MoveHistoryPane
+controller.SceneController +.. controller.SceneController$GamemodeBtn
+controller.Button <|-- controller.SceneController$GamemodeBtn
+controller.SceneController +.. controller.SceneController$GamemodeRow
+controller.HBox <|-- controller.SceneController$GamemodeRow
+pieces.Piece <|-- pieces.King
+util.Coordinate <|-- util.CoordinateCR
+pieces.Movable <|.. pieces.Piece
+javafx.scene.layout.HBox <|-- pieces.Piece
+javafx.scene.control.Button <|-- gui.UndoButton
+pieces.Piece <|-- pieces.Knight
+javafx.application.Application <|-- main.Main
+util.Coordinate <|-- util.CoordinateRC
+pieces.Piece <|-- pieces.Queen
+pieces.Piece <|-- pieces.Bishop
+pieces.Piece <|-- pieces.Rook
+javafx.scene.layout.HBox <|-- gui.Stopwatch
+@enduml
