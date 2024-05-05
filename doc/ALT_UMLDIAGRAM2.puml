@@ -212,9 +212,10 @@ class pieces.Knight {
 + boolean canMove()
 }
 class main.Main {
-+ {static} Stage APP_STAGE
+- {static} Stage APP_STAGE
 + {static} void main(String[])
 + void start(Stage)
++ {static} Stage getAppStage()
 }
 class util.CoordinateRC {
 + <<Create>> CoordinateRC(int,int)
